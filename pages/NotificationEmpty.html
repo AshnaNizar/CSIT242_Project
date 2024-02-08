@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+    <style>
+        div.notification {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 450px;
+            width: 350px;
+            border-radius: 25px;
+            background: #ffffff;
+            box-shadow:  7px 7px 37px #c9c9c9,
+                        -7px -7px 37px #ffffff;
+        }
+        div.notificationHeader {
+            padding: 20px 0px 10px 20px;
+            font-weight: 700;
+            font-size: large;
+            border-bottom: 0.5px solid #284489;
+        }
+        div.notificationBody {
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            height: 80%;
+        }
+        div.notificationBody img {
+            margin-top: -45px; 
+            margin-left: -25px;/* Adjust the margin to move the image up */
+        }
+        .CBL{
+            font-weight: 450;
+            margin-top: -3%;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification">
+        <div class="notificationHeader">
+            Notification
+        </div>
+        <div class="notificationBody">
+            <img src="../Images/EmptyNotification.png" width="298" height="235.5"/>
+            <h3>No Notifications Yet </h3>
+            <h5 class="CBL">Come Back Later</h5>
+
+        </div>
+        
+    </div>
+</body>
+</html>
