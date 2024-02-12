@@ -4,8 +4,10 @@ function clickSection(clickedLink) {
     // Loop through each paragraph
     links.forEach(function (link) {
         // Remove any existing bottom border
+        if(link.id!=="deleteAcc"){
         link.style.color = 'black';
         link.style.fontWeight = '100';
+        }
 
     });
     document.getElementById("selectedForm").innerHTML = "Settings / " + clickedLink.textContent;
@@ -97,4 +99,11 @@ function showPayment(){
     var content="<div><p>COMING SOON whenever i finish</p>"+
     "</div>";
     paymentDetails.innerHTML=content;
+}
+
+function deleteAccount(){
+    confirm("Are you sure you want to delete your account?");
+    if(confirm){
+        window.location.href = '../pages/Login.html'    }
+
 }

@@ -10,6 +10,13 @@
     color: rgb(146, 144, 144);
 }
 
+#deleteAcc{
+    color: grey;
+}
+#deleteAcc:hover{
+    color: red ;
+}
+
 .links {
     display: flex;
     flex-direction: column; /* Arrange links vertically */
@@ -20,6 +27,14 @@
     list-style-type: none;
     font-size: 12px;
     position: relative; 
+    width:fit-content;
+
+}
+
+.links > li> hr {
+    margin-top: 10px;
+    bottom: -2px;
+    width: 14vh;
 }
 
 .menuLink {
@@ -32,8 +47,9 @@
 .menuLink::after {
     content: '';
     display: block;
+    margin-top: 5px;
     width: 0;
-    height: 2px;
+    height: 1px;
     background: #000;
     transition: width .3s;
 }
