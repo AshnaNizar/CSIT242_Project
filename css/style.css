@@ -223,7 +223,7 @@ ul.navbar li a:hover:not(.active) {
 }
 
 .section-1-wrapper {
-    width: 70%;
+    width: 80%;
     margin: 5%;
 }
 
@@ -248,12 +248,12 @@ ul.navbar li a:hover:not(.active) {
 }
 
 .categories .img {
-    width: 200px;
-    height: 200px;
+    width: 10.5vw;
+    height: 22vh;
     background: url(../images/keyboard.png);
     background-size: contain;
     background-position: center;
-    margin: 20px 100px 0 0;
+    margin: 2.19vh 5.2vw 0 0;
     border-radius: 10px;
     background-repeat: no-repeat;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -270,12 +270,14 @@ ul.navbar li a:hover:not(.active) {
     background: url(../images/case.png);
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .categories .img-4 {
     background: url(../images/deskpad.webp);
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .categories .img-5 {
@@ -316,12 +318,13 @@ ul.navbar li a:hover:not(.active) {
 }
 
 .gw {
-    width: 200px;
-    height: 200px;
+    width: 10.5vw;
+    height: 22vh;
     background: url(../images/keychron.webp);
     background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-    margin: 30px 150px 0 0;
+    margin: 3.3vh 7.8vw 0 0;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -336,6 +339,7 @@ ul.navbar li a:hover:not(.active) {
     background: url(../images/logitech.png);
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .gw-3 {
@@ -343,23 +347,26 @@ ul.navbar li a:hover:not(.active) {
     background-color: #fff;
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .gw-4 {
     background: url(../images/Casetify_logo.png);
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .gw-5 {
     background: url(../images/scuff.webp);
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .section-2 {
     width: 100%;
-    height: 70vh;
+    height: 80vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.767), rgba(0, 0, 0, 0.712)),
         url(../images/flame.jpg);
     background-size: cover;
@@ -383,8 +390,8 @@ ul.navbar li a:hover:not(.active) {
 }
 
 .p-image {
-    width: 300px;
-    height: 300px;
+    height: 33vh;
+    width: 15.6vw;
     background: url(../images/premiumkey\ .png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -404,12 +411,14 @@ ul.navbar li a:hover:not(.active) {
     background: url(../images/order.png);
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .p-image-3 {
     background: url(../images/global.png);
-    background-size: cover;
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .section-2 p {
@@ -422,7 +431,7 @@ ul.navbar li a:hover:not(.active) {
 
 .section-3 {
     width: 100%;
-    height: 70vh;
+    height: 80vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/controller.jpg);
     background-size: cover;
     background-position: center;
@@ -447,7 +456,7 @@ ul.navbar li a:hover:not(.active) {
     color: #fff;
     text-align: left;
     font-weight: 400;
-    width: 500px;
+    width: 26vw;
 }
 
 .images {
@@ -470,7 +479,7 @@ ul.navbar li a:hover:not(.active) {
     background-color: #fec53a;
     padding: 20px;
     width: 50%;
-    height: 300px;
+    height: 33vh;
 }
 
 .gaming-icons-container {
