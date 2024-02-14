@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-rNHZJN2x4j6cCFHVwK/p2Zs6jZdyUZqyKPp9FijzTaztPj+rdmFf9YdC4oYrzP0CFkUsWZjFu6stBggpx5L/Vw=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container" id="home">
+        <header>
+            <div class="logo">
+                <img src="./images/Logo.png">
+            </div>
+            <ul class="navbar">
+                <li><a href="#" class="active" onclick="smoothScroll('#home')">HOME</a></li>
+                <li><a href="#" onclick="smoothScroll('#products')">PRODUCTS</a></li>
+                <li><a href="#" onclick="smoothScroll('#partners')">PARTNERS</a></li>
+                <li><a href="#" onclick="smoothScroll('#keyfeatures')">KEY FEATURES</a></li>
+                <li><a href="#" onclick="smoothScroll('#download')">DOWNLOAD</a></li>
+            </ul>
+            <button type="button" id="btn"><i class="fas fa-play"></i>LOGIN</button>
+        </header>
+
+        <div class="content-wrapper">
+            <div class="content-desc">
+                <h1>ZENKEY</h1>
+                <h2>All your <span>Tech Accesories</span> online<span>.</span></h2><br />
+                <p>Complete your setup with <span>us.</span></p><br />
+
+                <button id="btn2">Sign Up Now</button>
+            </div>
+
+            <div class="rakuto"></div>
+        </div>
+    </div>
+
+    <div class="logo-section">
+        <img src="./images/Logo.png">
+    </div>
+
+    <section class="section-1">
+        <div class="section-1-wrapper" id="products">
+            <h1>Explore Our Wide Range of Products</h1>
+            <br />
+            <br />
+            <h2>Categories</h2>
+            <br />
+            <div class="categories">
+                <a href="#">
+                    <div class="img img-1"></div>
+                </a>
+                <a href="#">
+                    <div class="img img-2"></div>
+                </a>
+                <a href="#">
+                    <div class="img img-3"></div>
+                </a>
+                <a href="#">
+                    <div class="img img-4"></div>
+                </a>
+                <a href="#">
+                    <div class="img img-5"></div>
+                </a>
+                <a href="#">
+                    <div class="img img-6"></div>
+                </a>
+            </div>
+        </div>
+
+        <div class="brands" id="partners">
+            <h2>Partners</h2>
+            <div class="game-wrapper">
+                <a href="#">
+                    <div class="gw gw-1"></div>
+                </a>
+                <a href="#">
+                    <div class="gw gw-2"></div>
+                </a>
+                <a href="#">
+                    <div class="gw gw-3"></div>
+                </a>
+                <a href="#">
+                    <div class="gw gw-4"></div>
+                </a>
+                <a href="#">
+                    <div class="gw gw-5"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- New section is down here below -->
+
+    <section class="section-2" id="keyfeatures">
+        <h1>Why Choose Us?</h1>
+        <div class="players">
+            <div class="p-image p-image-1"></div>
+            <span>Premium Products</span>
+            <p>We have partnered with the leading brands in the market, to provide the best products for your space.</p>
+        </div>
+        <!-- Player 2 -->
+        <div class="players">
+            <div class="p-image p-image-2"></div>
+            <span>Easy Ordering</span>
+            <p>It is as easy as selecting a producting you like, adding to cart and completing your order.</p>
+        </div>
+        <!-- Player 3 -->
+        <div class="players">
+            <div class="p-image p-image-3"></div>
+            <span>Fast Delivery</span>
+            <p>We promise to deliver your orders anywhere on the globe, within a week.</p>
+        </div>
+    </section>
+    <section class="section-3" id="download">
+        <div class="section-3-wrapper">
+            <h1>Put us in your pocket</h1>
+            <br /><br />
+            <p>Download our app from google play or app store and you won’t have to worry about your accessories
+                anymore.</p>
+            <div class="images">
+                <br />
+                <img src="./images/appstore.png">
+                <img src="./images/playstore.png">
+            </div>
+            <div class="gaming-container">
+                <div class="gaming-icons-container"></div>
+                <img src="./images/Logo.png" alt="Gaming Background" class="gaming-background">
+            </div>
+    </section>
+
+    <footer>
+        <div class="footer-body">
+            <div class="logo footer-logo">
+                <img src="./images/Logo.png">
+            </div>
+            <ul>
+                <h3>Short Links</h3>
+                <li><a href="#home" onclick="smoothScroll('#home')">HOME</a></li>
+                <li><a href="#products" onclick="smoothScroll('#products')">PRODUCTS</a></li>
+                <li><a href="#partners" onclick="smoothScroll('#partners')">PARTNERS</a></li>
+                <li><a href="#keyfeatures" onclick="smoothScroll('#keyfeatures')">KEY FEATURES</a></li>
+                <li><a href="#download" onclick="smoothScroll('#download')">DOWNLOAD</a></li>
+            </ul>
+            <ul>
+                <h3>Get In Touch</h3>
+                <li><a href="#"><i class="fab fa-facebook"></i>Facebook</a></li>
+                <li><a href="#"><i class="fab fa-instagram"></i>Instagram</a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i>Twitter</a></li>
+                <li><a href="#"><i class="fab fa-linkedin"></i>Linkedin</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        //scroll bar flip
+        window.addEventListener("scroll", function () {
+            var scrollDirection = (window.scrollY > this.lastScroll) ? "down" : "up";
+            this.lastScroll = window.scrollY;
+            var thumb = document.querySelector("body::-webkit-scrollbar-thumb");
+
+            if (scrollDirection === "up") {
+                document.body.style.setProperty("--scroll-gradient-start", "#FEC53A");
+                document.body.style.setProperty("--scroll-gradient-end", "black");
+            } else {
+                document.body.style.setProperty("--scroll-gradient-start", "black");
+                document.body.style.setProperty("--scroll-gradient-end", "#FEC53A");
+            }
+        });
+
+        //Navbar smooth scroll
+        function smoothScroll(target) {
+            const element = document.querySelector(target);
+            const offset = 70;
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        //download page animation
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.querySelector('.gaming-icons-container');
+            const numIcons = 30; // Number of icons
+
+            for (let i = 0; i < numIcons; i++) {
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-keyboard';
+                icon.style.fontSize = `${Math.floor(Math.random() * 5) + 1}em`; // Randomize icon size
+                icon.style.color = '#00000';
+                icon.style.position = 'absolute';
+                icon.style.left = `${Math.random() * 100}%`; // Randomize horizontal position
+                icon.style.top = `${Math.random() * 100}%`; // Randomize vertical position
+                container.appendChild(icon);
+
+                animateIcon(icon);
+            }
+        });
+
+        function animateIcon(icon) {
+            const duration = Math.random() * 10 + 5; // Randomize animation duration (5 to 15 seconds)
+            const startX = parseFloat(icon.style.left);
+            const startY = parseFloat(icon.style.top);
+            const endX = Math.random() * 100;
+            const endY = Math.random() * 100;
+
+            icon.animate([
+                { left: `${startX}%`, top: `${startY}%` },
+                { left: `${endX}%`, top: `${endY}%` }
+            ], {
+                duration: duration * 1000,
+                iterations: Infinity,
+                easing: 'linear'
+            });
+        }
+    </script>
+</body>
+
+</html>
