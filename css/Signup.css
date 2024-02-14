@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+
+.wrapper {
+
+    justify-content: center;
+    align-items: center;
+    width: 55vh;
+    height: 75vh;
+    display: flex;
+    color: black;
+    padding: 3vh;
+    padding-top: 0vh;
+    margin: auto;
+    margin-top: 8vh;
+    background-color: white;
+    border-radius: 5vh;
+    text-align: center;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+}
+
+.inputFieldDiv {
+
+    margin-bottom: 4vh;
+
+}
+
+.submitButton {
+    background-color: blue;
+    border: 1px;
+    border-radius: 3vh;
+    width: 37vh;
+    height: 5vh;
+    color: white;
+    font-family: Poppins;
+    font-weight: 500;
+}
+
+
+.formButtonDiv {
+
+    display: flex;
+    align-items: center;
+}
+
+body {
+    font-family: Poppins;
+    background-image: url("../images/bgOrange.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    
+
+}
+
+h2{
+    font-size: 20px;
+}
+
+p{
+    font-size: 11px;
+    color: rgb(146, 144, 144);
+
+}
+input {
+    height: 3.5vh;
+    width: 35vh;
+    border-radius: 1vh;
+    border: 0.5px solid grey;
+    padding: 1vh;
+    font-family: Poppins;
+    font-size: 10px;
+}
+
+#passError{
+    color:red;
+    font-size: 9px;
+    margin-bottom: 4vh;
+    text-align: center;
+}

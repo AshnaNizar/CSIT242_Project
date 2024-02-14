@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zenkey</title>
+    <link rel="stylesheet" href="../css/Signup.css">
+    <script type="text/javascript" src="../scripts/Signup.js"></script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <form onsubmit="return validatePassword()">
+            <h2>Create an account</h2>
+            <p>Join Zentkey today!</p>
+            <div class="inputFieldDiv">
+                <input type="text" id="firstname" name="firstname" placeholder="First and last name" pattern="^[a-z|A-Z]{2,}$" required>
+            </div>
+            <div class="inputFieldDiv">
+                <input type="email" id="email" name="email" placeholder="Email" pattern="^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$" required>
+            </div>
+            <div class="inputFieldDiv">
+                <input type="password" id="password" name="password" placeholder="Password"                                 title="Password must be between 6-15 characters and must include atleast one lowercase, uppercase, number, and special character"
+                required>
+            </div>
+            <div class="inputFieldDiv">
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" required>
+            </div>
+            <span id="passError"></span>
+
+            <div class="formButtonDiv">
+                <input class="submitButton" type="submit" value="Register">
+            </div>
+            <div>
+                <p>Already have an account? <a href="Login.html">Login here</a></p>
+            </div>
+        </form>
+    </div>
+
+   
+</body>
+</html>

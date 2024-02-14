@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zenkey</title>
+    <link rel="stylesheet" href="../css/Account.css">
+    <script type="text/javascript" src="../scripts/Account.js"></script>
+</head>
+
+<body>
+    <!--Insert header here-->
+    <h2>Account Settings</h2>
+    <p id="selectedForm">Settings / Profile</p>
+
+    <div class="wrapper">
+        <div class="MenuItems">
+            <ul class="links">
+                <li onclick="clickSection(this)" class="menuLink" id="profile">Profile</li>
+
+                <li onclick="clickSection(this)" class="menuLink" id="orders">My Orders</li>
+
+                <li onclick="clickSection(this)" class="menuLink" id="payment">Payment Info</li>
+                
+                <li><hr></li>
+
+                <li onclick="deleteAccount()" id="deleteAcc"> Delete Account</li>
+            </ul>
+        </div>
+
+        <div id="UserSelection">
+            <div id="UserForm">
+                <div class="inputFieldDiv">
+                    <input type="text" id="firstname" name="firstname" placeholder="First and last name"
+                        pattern="^[a-z|A-Z]{2,}$" required>
+                </div>
+                <div class="inputFieldDiv">
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <hr>
+                <p id="passwordChange">Change Password</p>
+                <div class="inputFieldDiv">
+                    <input type="password" id="password" name="password" placeholder="Password" 
+                    title="Password must be between 6-15 characters and must include atleast one lowercase, uppercase, number, and special character" 
+                    required>
+                </div>
+                <div class="inputFieldDiv">
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" required>
+                </div>
+                <div class="formButtonDiv">
+                    <input class="submitButton" type="submit" value="Save">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

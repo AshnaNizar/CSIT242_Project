@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
+    <script src="../scripts/Cartpage.js" defer></script>
+    <link rel="stylesheet" href="../css/Navbar.css">
+    <link rel="stylesheet" href="../css/Cart.css">
+    <title>Cart</title>
+</head>
+
+<body>
+    <!-- Replace navbar here -->
+    <header>
+        <ul class="navbar">
+          <li class="left"> <a href="Home"> <img src="../Images/User.png" width="26" height="26" /></a></li>
+    
+          <li class="left"><a href="Home" class="active">Home</a></li>
+          <!-- <li ><a href="Products">Products</a></li> -->
+    
+          <li class="right"> <a href="Profile"> <img src="../Images/User.png" width="26" height="26" /></a></li>
+          <li class="right"> <a href="../pages/Cart.html"> <img src="../Images/Cart.png" width="25" height="25" /></a></li>
+          <li class="right"> <a href="Orders"> <img src="../Images/Orders.png" width="24" height="24" /></a></li>
+          <li class="right"> <a href="Orders"> <img src="../Images/Notification.png" width="24" height="24" /></a></li>
+    
+          <li class="right">
+            <form action="/action_page.php" class="search-form">
+              <div class="search-container">
+                <input type="text" placeholder="Search..." name="search" class="search-input">
+                <button type="submit" class="search-btn">
+                  <img src="../Images/Search.png" width="18" height="18" />
+                </button>
+              </div>
+            </form>
+          </li>
+        </ul>
+        <div class="filterDiv">
+          <div class="ulDiv">
+            <ul class="filter">
+              <li> <a href="keyboards" style="border-left: 2px solid #ee5417;"> Keyboards</a></li>
+    
+              <!-- <li ><a href="Products">Products</a></li> -->
+    
+              <li> <a href="mice">Mice</a></li>
+              <li> <a href="accessories"> Accessories</a></li>
+    
+            </ul>
+          </div>
+        </div>
+      </header>
+    
+    <div class="cart-page">
+        <div class="breadcrumbs">
+            Home > <span class="breadcrumbs-active"> Cart </span>
+        </div>
+
+        <div class="cart-grid" id="cartGrid">
+            <div class="cart-items">
+                <a href="../pages/Products.html">
+                    <div class="cart-items-back">
+                        <i class="fa-solid fa-angle-left fa-sm"></i>
+                        Continue Shopping
+                    </div>
+                </a>
+
+                <div class="cart-items-title">
+                    Shopping Cart
+                </div>
+
+                <div class="cart-items-subtitle" id="cartItemCount">
+                    <!-- Number of items in cart will be dynamically inserted here -->
+                </div>
+
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+
+            <div class="cart-summary">
+                <div class="cart-summary-title">
+                    Payment Summary
+                </div>
+                <div class="cart-summary-subtitles">
+                    <div class="cart-summary-subtitle">
+                        Subtotal:
+                    </div>
+                    <div class="cart-summary-subtitle" id="subtotal">
+                        $0.00
+                    </div>
+                </div>
+                <div class="cart-summary-subtitles">
+                    <div class="cart-summary-subtitle">
+                        Shipping:
+                    </div>
+                    <div class="cart-summary-subtitle" id="shipping">
+                        0$
+                    </div>
+                </div>
+                <div class="cart-summary-subtitles">
+                    <div class="cart-summary-subtitle">
+                        Total:
+                    </div>
+                    <div class="cart-summary-subtitle" id="total">
+                        $0.00
+                    </div>
+                </div>
+
+                <button class="checkout-button">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="tick-icon">
+            <i class="fa-solid fa-check-circle fa-lg" style="color: #c90303;"></i>
+        </div>
+        Item successfully removed from cart
+    </div>
+
+</body>
+
+</html>

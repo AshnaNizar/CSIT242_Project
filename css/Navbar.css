@@ -1,24 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+}
 
 body {margin: 0;}
 div.filterDiv{
   border-bottom: 1px solid #d8d8d8; 
 }
-div.ulDiv{
-  display: table;  
-	margin: 0px auto;}
+
+div.ulDiv {
+  display: table;
+  margin: 0px auto;
+}
+
 ul.filter {
   list-style-type: none;
   padding: 0;
   overflow: hidden;
   margin: 10px;
 }
+
 ul.filter li {
- display:inline;
+  display: inline;
 }
 
 ul.filter li a {
   /* display: block; */
-  color: rgb(0, 0, 0);
+  color: rgb(254, 254, 254);
+  font-family: Poppins;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -27,27 +37,34 @@ ul.filter li a {
 
 ul.navbar {
   list-style-type: none;
-  margin: 0px ;
+  margin: 0px;
   padding: 0;
   overflow: hidden;
   background-color: #231f20;}
 
-ul.navbar li.left {float: left;padding-left: 20px; }
-ul.navbar li.right {float: right; padding-right: 20px;}
+ul.navbar li.left {
+  float: left;
+  padding-left: 20px;
+}
+
+ul.navbar li.right {
+  float: right;
+  padding-right: 20px;
+}
 
 ul.navbar li a,ul.navbar li div {
   /* display: block; */
   color:#ee5417;
   display: flex;
   /* justify-content: center; */
-  align-items: flex-end; 
+  align-items: flex-end;
   /* text-align: center; */
   padding: 17px 16px;
   text-decoration: none;
   font-weight: 500;
-  font-size: large;  
+  font-size: large;
   height: 25px;
- 
+
   /* margin-top: 5px;*/
 }
 ul.navbar li a:hover:not(.active),ul.navbar li div:hover:not(.active) { padding-bottom:8px;border-bottom: 1px solid #d8d8d8;}
@@ -59,16 +76,24 @@ ul.navbar li a.active {  color:#d8d8d8; padding-bottom:8px;border-bottom: 1px so
 
 
 ul.navbar li button {
-    all: unset;
-   
+  all: unset;
+
 }
 
 @media screen and (max-width: 900px) {
-  ul.navbar li.right, 
-  ul.navbar li.left:not(.search-form) { padding: 0px 0px 0px 0px;display:flex; justify-content: center; }
+
+  ul.navbar li.right,
+  ul.navbar li.left:not(.search-form) {
+    padding: 0px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+  }
+
   /* ul.navbar li a{  padding-top: 5px ; padding-bottom: 5px; padding-right: 100%;padding-left: 100%;} */
-  ul.navbar li form{display: none;}
-    
+  ul.navbar li form {
+    display: none;
+  }
+
 }
 
 
@@ -91,8 +116,8 @@ ul.navbar li button {
 -moz-box-shadow: 8px 7px 20px 0px rgba(0,0,0,0.38); */
 }
 
-.search-container:hover > .search-input{
-    width: 300px;
+.search-container:hover>.search-input {
+  width: 300px;
 }
 
 .search-container .search-input{

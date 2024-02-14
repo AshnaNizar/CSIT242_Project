@@ -1,0 +1,160 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#selectedForm{
+    color: rgb(146, 144, 144);
+}
+
+#deleteAcc{
+    color: grey;
+}
+#deleteAcc:hover{
+    color: red ;
+}
+
+.links {
+    display: flex;
+    flex-direction: column; /* Arrange links vertically */
+}
+
+.links > li {
+    margin-bottom: 10px; 
+    list-style-type: none;
+    font-size: 12px;
+    position: relative; 
+    width:fit-content;
+
+}
+
+.links > li> hr {
+    margin-top: 10px;
+    bottom: -2px;
+    width: 14vh;
+}
+
+.menuLink {
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+   
+}
+
+.menuLink::after {
+    content: '';
+    display: block;
+    margin-top: 5px;
+    width: 0;
+    height: 1px;
+    background: #000;
+    transition: width .3s;
+}
+
+.menuLink:hover::after {
+    width: 100%;
+}
+
+#profile{
+    color:#ee5417;
+    font-weight: bold;
+}
+
+#UserSelection{
+    margin-left: 10vh;
+    margin-top: 2vh;
+}
+
+.UserForm {
+    display: block;
+    padding-top: 30vh;
+}
+.inputFieldDiv {
+    margin-bottom: 4vh;
+}
+
+input {
+    height: 3.5vh;
+    width: 35vh;
+    border-radius: 1vh;
+    border: 0.5px solid grey;
+    padding: 1vh;
+    font-family: Poppins;
+    font-size: 10px;
+}
+
+body{
+    margin-left: 50vh;
+    margin-top: 10vh;
+    font-family: Poppins;
+}
+
+p{
+    color: black;
+    font-size: 11px;
+}
+
+.submitButton {
+    background-color: blue;
+    border: 1px;
+    border-radius: 3vh;
+    width: 10vh;
+    height: 4vh;
+    color: white;
+    font-family: Poppins;
+    font-weight: 500;
+    align-items: center;
+}
+
+.formButtonDiv {
+    display: flex;
+    align-items: center;
+    padding-top: 3vh;
+}
+
+
+.orderItem {
+    display: flex;
+    width: 70vh;
+    height: 20vh;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    margin-bottom: 40px;
+    font-size:10px;
+}
+
+.orderItem img {
+    height: 70%; 
+    width: 30%;
+    border-radius: 10px;
+    padding-left: 10px;
+
+}
+
+.orderDetails {
+    flex: 1;
+    padding: 20px;
+    padding-top:0px;
+}
+
+.orderDetails h2 {
+    margin-top: 30px;
+    font-size: 13px;
+}
+
+.orderDetails ul {
+    margin-top: 10px; 
+    list-style-type: none;
+    padding-left: 0;
+
+}
+
+.specifics{
+    color:#ee5417;
+    font-weight: bold;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zenkey</title>
+    <link rel="stylesheet" href="../css/Login.css">
+    <script type="text/javascript" src="../scripts/Login.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <form onsubmit="return validatePassword()">
+            <h2>Login </h2>
+            <p>Login to continue shopping!</p>
+
+            <div class="inputFieldDiv">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+
+            <div class="inputFieldDiv">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <span id="passError"></span>
+
+            <div class="formButtonDiv">
+                <input class="submitButton" type="submit" value="Login">
+            </div>
+            
+            <div>
+                <p>Don't have an account? <a href="Signup.html"> Signup here</a></p>
+            </div>
+    
+        </form>
+    </div>
+</body>
+
+</html>
