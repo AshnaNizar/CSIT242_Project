@@ -59,7 +59,7 @@ function showOrderDetails() {
     // Get the orderDetails div
     var orderDetails = document.getElementById('UserSelection');
     var content = "<div class=\"orderItem\">" +
-        "<img src=\"../images/keyboard.png\" alt=\"Product Image\">" +
+        "<img src=\"../images/keyboard1.png\" alt=\"Product Image\">" +
         "<div class=\"orderDetails\">" +
         "<h2>RGB Keyboard</h2>" +
         "<p>17\"x18\"Standard white keyboard with rgb lights. </p>" +
