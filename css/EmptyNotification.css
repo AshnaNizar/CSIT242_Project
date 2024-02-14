@@ -16,14 +16,14 @@
             font-size: large;
             border-bottom: 0.5px solid #284489;
         }
-        div.notificationBody {
+        div.notificationBodyEmpty {
             display: flex; 
             flex-direction: column;
             justify-content: center; 
             align-items: center; 
             height: 80%;
         }
-        div.notificationBody img {
+        div.notificationBodyEmpty img {
             margin-top: -45px; 
             margin-left: -25px;/* Adjust the margin to move the image up */
         }

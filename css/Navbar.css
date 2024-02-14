@@ -1,7 +1,7 @@
 
 body {margin: 0;}
 div.filterDiv{
-  border-bottom: 1px solid #bbb6ba; 
+  border-bottom: 1px solid #d8d8d8; 
 }
 div.ulDiv{
   display: table;  
@@ -10,6 +10,7 @@ ul.filter {
   list-style-type: none;
   padding: 0;
   overflow: hidden;
+  margin: 10px;
 }
 ul.filter li {
  display:inline;
@@ -21,7 +22,7 @@ ul.filter li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  border-right: 1px solid #3c4b71;
+  border-right: 1px solid #ee5417;
 }
 
 ul.navbar {
@@ -29,14 +30,14 @@ ul.navbar {
   margin: 0px ;
   padding: 0;
   overflow: hidden;
-  background-color: #3c4b71;}
+  background-color: #231f20;}
 
 ul.navbar li.left {float: left;padding-left: 20px; }
 ul.navbar li.right {float: right; padding-right: 20px;}
 
-ul.navbar li a {
+ul.navbar li a,ul.navbar li div {
   /* display: block; */
-  color: white;
+  color:#ee5417;
   display: flex;
   /* justify-content: center; */
   align-items: flex-end; 
@@ -49,8 +50,8 @@ ul.navbar li a {
  
   /* margin-top: 5px;*/
 }
-ul.navbar li a:hover:not(.active) { padding-bottom:8px;border-bottom: 1px solid #bbb6ba;}
-ul.navbar li a.active {  padding-bottom:8px;border-bottom: 1px solid #bbb6ba;text-shadow: 1px 2px 4px rgba(0,0,0,0.6); }
+ul.navbar li a:hover:not(.active),ul.navbar li div:hover:not(.active) { padding-bottom:8px;border-bottom: 1px solid #d8d8d8;}
+ul.navbar li a.active {  color:#d8d8d8; padding-bottom:8px;border-bottom: 1px solid #d8d8d8;text-shadow: 1px 2px 4px rgba(0,0,0,0.6); }
 
 
 
@@ -72,19 +73,22 @@ ul.navbar li button {
 
 
 .search-container{
-    background: #fff;
-    height: 25px;
+  /* float: none; */
+    /* height: 25px;
     border-radius: 30px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     margin: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    cursor: pointer; */
+    all:unset;
+    /* background: #fff; */
+
     transition: 0.9s;
-    box-shadow: 8px 7px 20px 0px rgba(0,0,0,0.30);
+    /* box-shadow: 8px 7px 20px 0px rgba(0,0,0,0.30);
 -webkit-box-shadow: 8px 7px 20px 0px rgba(0,0,0,0.38);
--moz-box-shadow: 8px 7px 20px 0px rgba(0,0,0,0.38);
+-moz-box-shadow: 8px 7px 20px 0px rgba(0,0,0,0.38); */
 }
 
 .search-container:hover > .search-input{
@@ -93,9 +97,13 @@ ul.navbar li button {
 
 .search-container .search-input{
     all:unset;
+    color: #ee5417;
     width: 0px;
     font-weight: 500;
     font-size: 16px;
     transition: 0.8s;
 
+}
+.search-container .search-input::placeholder{
+color: #ee5417;
 }

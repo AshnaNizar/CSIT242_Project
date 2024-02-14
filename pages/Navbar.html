@@ -5,9 +5,110 @@
     <title>sx</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="../css/Navbar.css">
+<link rel="stylesheet" href="../css/Notification.css">
+
+<style>
+  /* Styles for the overlay */
+  /* #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* background-color: rgba(0, 0, 0, 0.5); 
+      z-index: 9999;
+  }
+
+  /* Styles for the notification container within the overlay *
+  #notificationContainer {
+      position: absolute;
+      top: 50%;
+      left: 85%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  } */
+  #overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 65px; /* Position relative to the navbar */
+    /* left: 0px; Position relative to the right side of the viewport */
+    z-index: 9999;
+}
+
+/* Styles for the notification container within the overlay */
+#notificationContainer {
+    position: absolute;
+    width: 350px;
+    max-width: 90%; /* Limiting the maximum width */
+    background-color: white;
+    padding: 7px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+</style>
+<script>
+  function openOverlay() {
+    // document.getElementById('overlay').innerHTML = '';
+      // Construct HTML for the notification overlay
+      var html = '<div id="overlay">' +
+                      '<div id="notificationContainer" class="notification">' +
+                          '<div class="notificationHeader">Notification</div>' +
+                          '<div class="notes">' +
+                              '<b>Re: Support Case (#123i219021)</b>' +
+                              '<p>Lorem ipsum dolor sit amet consectetur. Ornare massa nunc nibh tristique. Non ligula tristique ut ut libero</p>' +
+                          '</div>' +
+                          '<div class="notificationFooter">' +
+                              '<button><img src="../Images/Setting.png" width="20" height="20"/></button>&nbsp;&nbsp;' +
+                              '<button onclick="markAllRead()"><img src="../Images/double-tick.png" width="20" height="20"/><span>&nbsp;Mark all read</span></button>' +
+                          '</div>' +
+                      '</div>' +
+                  '</div>';
+
+      // Create a temporary div element to hold the HTML
+      var tempDiv = document.createElement('div');
+      // console.log(tempDiv);
+      tempDiv.innerHTML = html;
+// console.log(tempDiv.innerHTML);
+      // Append the notification overlay to the body
+      document.body.appendChild(tempDiv.firstChild);
+      // Show the overlay
+      document.getElementById('overlay').style.display = 'block';
+
+      // Add event listener to close the overlay when clicking outside of it
+      document.getElementById('overlay').addEventListener('click', function(event) {
+          if (event.target === this) {
+              this.style.display = 'none';
+          }
+      });
+  }
+
+  function markAllRead() {
+    // Get the notification container element
+    var notificationContainer = document.getElementById('notificationContainer');
+
+    // Update the content of the notification container
+    notificationContainer.innerHTML = `
+        <div class="notificationHeader">Notification</div>
+        <div class="notificationBodyEmpty">
+            <img src="../Images/EmptyNotification.png" width="258" height="235.5"/>
+            <h3>No Notifications Yet </h3>
+            <h5 class="CBL">Come Back Later</h5>
+        </div>
+    `;
+
+    // Show the overlay
+    document.getElementById('overlay').style.display = 'block';
+}
+
+</script>
 </head>
 <body>
-
 <ul class="navbar">
   <li class="left"> <a href="Home"> <img src="../Images/User.png" width="26" height="26"/></a></li>
 
@@ -16,8 +117,8 @@
  
   <li class="right"> <a href="Profile"> <img src="../Images/User.png" width="26" height="26"/></a></li>
   <li class="right"> <a href="Cart"> <img src="../Images/Cart.png" width="25" height="25"/></a></li>
-  <li class="right"> <a href="Orders"> <img src="../Images/Orders.png" width="24" height="24"/></a></li>
-  <li class="right"> <a href="Orders"> <img src="../Images/Notification.png" width="24" height="24"/></a></li>
+  <li class="right"> <div onclick="openOverlay()"> <img src="../Images/Orders.png" width="24" height="24"/></div></li> 
+  <li class="right"> <div onclick="openOverlay()"> <img src="../Images/Notification.png" width="24" height="24"/></div></li>
 
   <li class="right">
     <form action="/action_page.php" class="search-form">
@@ -31,9 +132,11 @@
   </li>
 </ul>
 <div class="filterDiv">
+  <div id="overlayContainer"></div>
 <div class="ulDiv">
 <ul class="filter">
-  <li > <a href="keyboards" style="border-left: 1px solid #3c4b71;"> Keyboards</a></li>
+  <li > <a href="allProducts" style="border-left: 1px solid #ee5417;"> All Products</a></li>
+  <li > <a href="keyboards"> Keyboards</a></li>
 
   <!-- <li ><a href="Products">Products</a></li> -->
 
