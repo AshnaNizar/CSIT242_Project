@@ -1,55 +1,72 @@
 <!DOCTYPE html>
-<!-- Navbar -  logo ------- home, products, search bar ------- orders, cart, profile – Hiba -->
 <html>
 
 <head>
     <title>sx</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../css/Navbar.css">
-<link rel="stylesheet" href="../css/Notification.css">
-<script type="text/javascript" src="../scripts/Navbar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Navbar.css">
+    <link rel="stylesheet" href="../css/Notification.css">
+    <script type="text/javascript" src="../scripts/Navbar.js"></script>
+    <script type="text/javascript" src="../scripts/Popups.js"></script>
 
-</head>
+  </head>
 
 <body>
+    <div>
+        <ul class="navbar">
+            <li class="left"> <a href="index.html"> <img src="../Images/User.png" width="26" height="26" /></a></li>
 
-  <ul class="navbar">
-    <li class="left"> <a href="Home"> <img src="../Images/User.png" width="26" height="26" /></a></li>
+            <li class="left"><a href="Home" class="active">Home</a></li>
 
-  <li class="left"><a href="Home" class="active">Home</a></li>
-  <!-- <li ><a href="Products">Products</a></li> -->
- 
-  <li class="right"> <a href="Profile"> <img src="../Images/User.png" width="26" height="26"/></a></li>
-  <li class="right"> <a href="Cart"> <img src="../Images/Cart.png" width="25" height="25"/></a></li>
-  <li class="right"> <div onclick="openOverlay()"> <img src="../Images/Orders.png" width="24" height="24"/></div></li> 
-  <li class="right"> <div onclick="openOverlay()"> <img src="../Images/Notification.png" width="24" height="24"/></div></li>
+            <li class="right"> <a href="Profile"> <img src="../Images/User.png" width="26" height="26"/></a></li>
+            <li class="right"> <a href="Cart"> <img src="../Images/Cart.png" width="25" height="25"/></a></li>
+            <li class="right"> <div onclick="openOverlay()"> <img src="../Images/Orders.png" width="24" height="24"/></div></li> 
+            <li class="right"> <div onclick="openOverlay()"> <img src="../Images/Notification.png" width="24" height="24"/></div></li>
 
-  <li class="right">
-    <form action="/action_page.php" class="search-form">
-      <div class="search-container">
-        <input type="text" placeholder="Search..." name="search" class="search-input">
-        <button type="submit" class="search-btn">
-          <img src="../Images/Search.png" width="18" height="18"/>
-        </button>
-      </div>
-    </form>
-  </li>
-</ul>
-<div class="filterDiv">
-  <div id="overlayContainer"></div>
-<div class="ulDiv">
-<ul class="filter">
-  <li > <a href="allProducts" style="border-left: 1px solid #ee5417;"> All Products</a></li>
-  <li > <a href="keyboards"> Keyboards</a></li>
-
-        <!-- <li ><a href="Products">Products</a></li> -->
-
-        <li> <a href="mice">Mice</a></li>
-        <li> <a href="accessories"> Accessories</a></li>
-
-      </ul>
+            <li class="right">
+                <form onsubmit="handleSearch(event)" class="search-form">
+                    <div class="search-container">
+                        <input type="text" placeholder="Search..." name="search" class="search-input">
+                        <button type="submit" class="search-btn">
+                            <img src="../Images/Search.png" width="18" height="18"/>
+                        </button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+        <div class="filterDiv">
+            <div id="overlayContainer"></div>
+            <div class="ulDiv">
+                <ul class="filter">
+                    <li > <a href="allProducts" style="border-left: 1px solid #ee5417;"> All Products</a></li>
+                    <li > <a href="keyboards"> Keyboards</a></li>
+                    <li> <a href="mice">Mice</a></li>
+                    <li> <a href="accessories"> Accessories</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
+    <div onclick="confirmation('s','ss')">HEELO</div>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get the search query from the input field
+            const searchInput = document.querySelector('.search-input');
+            const query = searchInput.value.trim();
+            console.log(query);
+            
+            // Get the current URL
+            let currentUrl = window.location.href;
+            
+            // Remove the last segment (substring before the last '/')
+            let modifiedUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+            
+            // Redirect to the modified URL with search query
+            window.location.href = modifiedUrl +'/'+ encodeURIComponent(query)+'.html';
+        }
+    </script>
 </body>
 
 </html>

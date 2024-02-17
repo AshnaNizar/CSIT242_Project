@@ -35,6 +35,11 @@
             border-top: 0.5px solid #ee5417;
             border-bottom: 0.5px solid #ee5417;
         }
+        div.notes span{
+            font-size:x-large;
+            margin-left: 120px;
+            cursor: pointer;
+        }
         div.notificationBodyEmpty {
             display: flex; 
             flex-direction: column;

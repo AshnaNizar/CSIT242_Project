@@ -1,11 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-body {
+ul.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left:0;
   margin: 0;
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+  background-color: #231f20;
 }
-
-body {margin: 0;}
 div.filterDiv{
+    margin-top: 65px; /* Adjust this value based on your navbar's height */
+    border-bottom: 1px solid #d8d8d8;
   border-bottom: 1px solid #d8d8d8; 
 }
 
@@ -35,12 +43,6 @@ ul.filter li a {
   border-right: 1px solid #ee5417;
 }
 
-ul.navbar {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0;
-  overflow: hidden;
-  background-color: #231f20;}
 
 ul.navbar li.left {
   float: left;

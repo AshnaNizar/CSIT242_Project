@@ -6,7 +6,7 @@ function openOverlay() {
                       '<div id="notificationContainer" class="notification">' +
                           '<div class="notificationHeader">Notification</div>' +
                           '<div class="notes">' +
-                              '<b>Re: Support Case (#123i219021)</b>' +
+                              '<b>Re: Support Case (#123i219021)</b> <span onclick="markAllRead()">-</span>' + 
                               '<p>Lorem ipsum dolor sit amet consectetur. Ornare massa nunc nibh tristique. Non ligula tristique ut ut libero</p>' +
                           '</div>' +
                           '<div class="notificationFooter">' +
