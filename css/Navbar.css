@@ -27,7 +27,7 @@ ul.filter li {
 
 ul.filter li a {
   /* display: block; */
-  color: rgb(254, 254, 254);
+  color:#231f20;
   font-family: Poppins;
   text-align: center;
   padding: 14px 16px;
