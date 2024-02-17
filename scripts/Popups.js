@@ -1,4 +1,3 @@
-// Define the HTML template string outside the function
 var htmlTemplate = `<!DOCTYPE html>
 <html>
   <head>
@@ -89,12 +88,10 @@ var htmlTemplate = `<!DOCTYPE html>
   </body>
 </html>`;
 
-// Function to generate HTML with provided headerMessage and message
 function generateHTML(headerMessage, message) {
     return htmlTemplate.replace('{headerMessage}', headerMessage).replace('{message}', message);
 }
 
-// Function to show the popup
 function confirmation(headerMessage, message) {
     var popup = document.createElement('div');
     popup.className = 'popup-container';
@@ -102,7 +99,6 @@ function confirmation(headerMessage, message) {
     document.body.appendChild(popup);
 }
 
-// Function to hide the popup
 function hidePopup() {
     var popup = document.querySelector('.popup-container');
     if (popup) {

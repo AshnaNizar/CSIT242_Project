@@ -1,7 +1,5 @@
 
 function openOverlay() {
-    // document.getElementById('overlay').innerHTML = '';
-      // Construct HTML for the notification overlay
       var html = '<div id="overlay">' +
                       '<div id="notificationContainer" class="notification">' +
                           '<div class="notificationHeader">Notification</div>' +
@@ -16,17 +14,11 @@ function openOverlay() {
                       '</div>' +
                   '</div>';
 
-      // Create a temporary div element to hold the HTML
       var tempDiv = document.createElement('div');
-      // console.log(tempDiv);
       tempDiv.innerHTML = html;
-// console.log(tempDiv.innerHTML);
-      // Append the notification overlay to the body
       document.body.appendChild(tempDiv.firstChild);
-      // Show the overlay
       document.getElementById('overlay').style.display = 'block';
 
-      // Add event listener to close the overlay when clicking outside of it
       document.getElementById('overlay').addEventListener('click', function(event) {
           if (event.target === this) {
               this.style.display = 'none';
@@ -35,10 +27,8 @@ function openOverlay() {
   }
 
   function markAllRead() {
-    // Get the notification container element
     var notificationContainer = document.getElementById('notificationContainer');
 
-    // Update the content of the notification container
     notificationContainer.innerHTML = `
         <div class="notificationHeader">Notification</div>
         <div class="notificationBodyEmpty">
@@ -48,6 +38,5 @@ function openOverlay() {
         </div>
     `;
 
-    // Show the overlay
     document.getElementById('overlay').style.display = 'block';
 }
