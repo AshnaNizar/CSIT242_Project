@@ -47,7 +47,7 @@ header {
 .logo {
     width: 300px;
     height: 10vh;
-    background: #f3c53a;
+    background: #ff660d;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -87,17 +87,17 @@ ul.navbar li a {
 }
 
 ul.navbar li a.active {
-    color: #FEC53A;
+    color: #ff660d;
 }
 
 ul.navbar li a:hover:not(.active) {
-    color: #FEC53A;
+    color: #ff660d;
 }
 
 #btn {
     width: 250px;
     height: 10vh;
-    background: #FEC53A;
+    background: #ff660d;
     color: #000;
     outline: none;
     border: none;
@@ -147,7 +147,7 @@ ul.navbar li a:hover:not(.active) {
 }
 
 .content-desc span {
-    color: #FEC53A;
+    color: #ff660d;
 }
 
 #btn2 {
@@ -156,7 +156,7 @@ ul.navbar li a:hover:not(.active) {
     padding-left: 20px;
     outline: none;
     border: none;
-    background: #FEC53A;
+    background: #ff660d;
     font-size: 1.2rem;
     font-weight: bold;
     margin-top: 15px;
@@ -229,15 +229,15 @@ ul.navbar li a:hover:not(.active) {
 
 .section-1 h1 {
     width: 900px;
-    color: #FEC53A;
-    font-size: 2.5rem;
+    color: #ff660d;
+    font-size: 2.3rem;
     position: relative;
     font-weight: 400;
 }
 
 .section-1 h2 {
     width: 500px;
-    color: #FEC53A;
+    color: #ff660d;
     font-size: 1.5rem;
     position: relative;
     font-weight: 400;
@@ -310,7 +310,7 @@ ul.navbar li a:hover:not(.active) {
 .brands h1 {
     font-size: 1.5rem;
     margin-bottom: 20px;
-    color: #FEC53A;
+    color: #ff660d;
 }
 
 .game-wrapper {
@@ -402,7 +402,7 @@ ul.navbar li a:hover:not(.active) {
 
 .players span {
     font-size: 2rem;
-    color: #FEC53A;
+    color: #ff660d;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -476,7 +476,7 @@ ul.navbar li a:hover:not(.active) {
     position: absolute;
     top: 30%;
     right:3%;
-    background-color: #fec53a;
+    background-color: #ff660d;
     padding: 20px;
     width: 50%;
     height: 33vh;
@@ -517,7 +517,7 @@ footer {
 
 .footer-logo {
     height: 12vh;
-    background-color: #FEC53A;
+    background-color: #ff660d;
     color: #000;
     line-height: 1.7rem;
 }
@@ -539,12 +539,12 @@ ul li a {
 
 ul li a .fab {
     font-size: 1.2rem;
-    color: #FEC53A;
+    color: #ff660d;
     margin-right: 15px;
 }
 
 ul li a:hover {
-    color: #FEC53A;
+    color: #ff660d;
 }
 
 .footer-bottom {
