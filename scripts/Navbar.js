@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <a href="Account.html">
                 <i class="fas fa-user"></i>
             </a>
-            <a href="Login.html">
+            <a onclick=confirmation('Are you sure?','You are about to logout.') href="Login.html">
             <i class="fa-solid fa-right-from-bracket"></i>
         </a>
         </nav>

@@ -76,13 +76,13 @@
 }
 
 #UserSelection input {
-    height: 3.5vh;
-    width: 35vh;
+    height: 3.8vh;
+    width: 40vh;
     border-radius: 1vh;
     border: 0.5px solid grey;
     padding: 1vh;
     font-family: Poppins;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 body{
@@ -93,14 +93,14 @@ body{
 
 p{
     color: black;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .submitButton {
     background-color: #ee5417;
     border: 1px #ee5417 !important;
     border-radius: 3vh;
-    width: 37vh !important;
+    width: 42vh !important;
     height: 5vh !important;
     color: white;
     font-family: 'Poppins Semibold';
@@ -116,8 +116,8 @@ p{
 
 .orderItem {
     display: flex;
-    width: 70vh;
-    height: 20vh;
+    width: 75vh;
+    height: 30vh;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);

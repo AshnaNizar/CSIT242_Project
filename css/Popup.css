@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 .main {
     position: fixed;
     top: 0%;
     left: 50%;
     transform: translate(-50%, 0%);
     background-color: #ffffff;
-    height: 150px;
+    height: 200px;
     width: 430px;
     display: flex;
     flex-direction: column;
@@ -13,11 +15,13 @@
     box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
     -webkit-box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
     -moz-box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
+    font-size: 14px;
   }
 
   .background {
-    width: auto;
-    height: 100px;
+    width: 400px;
+    height: 300px;
+
   }
 
   .mainButton {
@@ -26,8 +30,8 @@
     justify-content: center;
   }
   .message {
-    padding-left: 50px;
-    font-size: medium;
+    padding-left: 40px;
+    font-size: 12px;
   }
 
   .headerMessage {
@@ -35,7 +39,7 @@
     margin-bottom: 10px;
     padding-left: 40px;
     color: #030a0c;
-    font-size: large;
+    font-size: 16px;
     font-weight: bold;
   }
   .button1,

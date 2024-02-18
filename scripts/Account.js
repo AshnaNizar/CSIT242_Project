@@ -1,3 +1,4 @@
+
 function clickSection(clickedLink) {
     var links = document.querySelectorAll('.links > li');
 
@@ -161,9 +162,10 @@ function showPayment() {
 }
 
 function deleteAccount() {
-    confirm("Are you sure you want to delete your account?");
-    if (confirm) {
-        window.location.href = '../pages/Login.html'
-    }
+    confirmation("Are you sure?","This action will permanently delete your account.")
+    // confirm("Are you sure you want to delete your account?");
+    // if (confirm) {
+    //     window.location.href = '../pages/Login.html'
+    // }
 
 }

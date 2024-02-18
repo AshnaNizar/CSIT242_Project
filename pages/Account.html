@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/8943e9eb68.js"
       crossorigin="anonymous"></script>
     <script src="../scripts/Navbar.js" defer></script>
+    <script src="../scripts/Popups.js"></script>
     <link rel="stylesheet" href="../css/Global.css" />
     <link rel="stylesheet" href="../css/Notification.css" />
 
@@ -38,7 +39,7 @@
                     <hr>
                 </li>
 
-                <li onclick="deleteAccount()" id="deleteAcc"> Delete Account</li>
+                <li onclick="confirmation('Are you sure?','This action will permanently delete your account.')" id="deleteAcc"> Delete Account</li>
             </ul>
         </div>
 
