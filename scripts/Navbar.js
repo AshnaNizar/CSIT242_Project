@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="primary-nav">
         <div class="nav-logo">
             <a href="Home.html">
-                <img src="../Images/Logo.jpeg" alt="Logo">
+                <img src="../images/Logo.jpeg" alt="Logo">
             </a>
         </div>
 
