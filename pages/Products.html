@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/Navbar.css">
   <link rel="stylesheet" href="../css/Products.css">
   <script src="../scripts/Products.js" defer></script>
+  <script src="../scripts/Filterbox.js" defer></script>
   <title>Products</title>
 </head>
 
@@ -53,7 +54,28 @@
       </div>
     </div>
   </header>
-
+  <div class="main-content-wrapper">
+  <div class="filterBox">
+    <div class="category">
+     <b class="b">Category</b>
+     <br><br>
+     <ul>
+         <li>Keyboards</li>
+         <li>Mice</li>
+         <li>Accessories</li>
+     </ul>
+ </div>
+ <b class="b">Price Range</b> <br><br>
+ <div class="container">
+     <input type="range" min="0" max="500" value="250" id="rangeSliderleft">
+     <input type="range" min="500" max="1000" value="750" id="rangeSliderright">
+ </div>
+ <div class="valueboxMargin">
+  <span class="value-box">Dhs <span id="rangeValueLeft"></span></span> &#9135;&#9135;&#9135;
+ <span class="value-box">Dhs <span id="rangeValueRight"></span></span>
+ </div>
+  </div>
+</div>
   <!-- Products -->
   <div class="product-grid" id="productGrid">
     <!-- Products will be dynamically inserted here -->
