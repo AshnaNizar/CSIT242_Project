@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     header.innerHTML = `
     <div class="primary-nav">
         <div class="nav-logo">
-            <a href="Home.html">
+            <a href="Landing.html">
                 <img src="../Images/Logo.jpeg" alt="Logo">
             </a>
         </div>
@@ -14,48 +14,16 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
 
         <nav>
-        <a href="#">
-        <i class="fas fa-bell"></i>
+        <a href="Signup.html">
+         Sign Up
         </a>
-    
-            <a href="Cart.html">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-            <a href="Account.html">
-                <i class="fas fa-user"></i>
-            </a>
-            <a href="Login.html">
-            <i class="fa-solid fa-right-from-bracket"></i>
+
+        <a href="Login.html">
+            Login
         </a>
         </nav>
-    </div>
-    <div class="secondary-nav">
-        <ul>
-            <li><a href="Products.html">All Products</a></li>
-            <li><a href="Products.html">Keyboards</a></li>
-            <li><a href="Products.html" onclick"handleProduct()">Mice</a></li>
-            <li>
-                <a href="Products.html" onclick"handleProduct()">Accessories</a>
-                <div class="dropdown-content">
-                    <a href="Products.html" onclick"handleProduct()">Deskpads</a>
-                    <a href="Products.html" onclick"handleProduct()">Phone Cases</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div id="overlay">
-    <div id="notificationContainer" class="notification">
-        <div class="notificationHeader">Notification</div>
-        <div class="notes">
-            <b>Re: Support Case (#123i219021)</b> <span onclick="markAllRead()">-</span>
-            <p>Lorem ipsum dolor sit amet consectetur. Ornare massa nunc nibh tristique. Non ligula tristique ut ut libero</p>
-        </div>
-        <div class="notificationFooter">
-            <button><img src="../Images/Setting.png" width="20" height="20"/></button>&nbsp;&nbsp;
-            <button onclick="markAllRead()"><img src="../Images/double-tick.png" width="20" height="20"/><span>&nbsp;Mark all read</span></button>
-        </div>
-    </div>
-</div>
+
+
     `;
 
     // Append CSS styles
@@ -67,11 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
         align-items: center;
         padding: 20px 0px;
         background-color: #231f20;
-        width: 100%;
+        width: 100%; 
         flex-wrap: wrap; 
-    }
-    
-    
+    }    
 
     .nav-logo {
         margin-left: 20px;
@@ -346,41 +312,4 @@ document.addEventListener('DOMContentLoaded', function () {
     circle.classList.add('cart-count');
     circle.textContent = cartCount;
     cartLink.appendChild(circle);
-});
-
-// Function to toggle the display of the notification overlay
-function toggleOverlay() {
-    const overlay = document.getElementById('overlay');
-    overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-}
-
-// Function to mark all notifications as read
-function markAllRead() {
-    const notificationContainer = document.getElementById('notificationContainer');
-
-    notificationContainer.innerHTML = `
-        <div class="notificationHeader">Notification</div>
-        <div class="notificationBodyEmpty">
-            <img src="../Images/EmptyNotification.png" width="258" height="235.5"/>
-            <h3>No Notifications Yet</h3>
-            <h5 class="CBL">Come Back Later</h5>
-        </div>
-    `;
-
-    toggleOverlay(); // Hide the overlay after marking all notifications as read
-}
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Initially hide the notification overlay
-    const overlay = document.getElementById('overlay');
-    overlay.style.display = 'none';
-
-    // Add event listener to the bell icon to toggle the overlay
-    const bellIcon = document.querySelector('nav a[href="#"]');
-    bellIcon.addEventListener('click', toggleOverlay);
-
-    // Add event listener to the mark all read button
-    const markAllReadButton = document.querySelector('#notificationContainer button');
-    markAllReadButton.addEventListener('click', markAllRead);
 });

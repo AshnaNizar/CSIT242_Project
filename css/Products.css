@@ -29,7 +29,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 2em;
   padding: 2em;
-  margin-top: 7em ;
+  margin-top: 10em ;
 }
 /* Adjust any other existing styles as needed */
 
@@ -77,8 +77,6 @@
 }
 /* Filter Box Style */
 
-
-    
 .filterBox{
   margin-top: 50px;
   display: flex;
@@ -88,11 +86,12 @@
   padding-bottom: 200px;
   justify-content: center;
   width: 350px;
-  height: 300px;
+  height: 400px;
   /* background-color: #a9a9a9; */
 }
 .container {
-  margin-bottom: 40px;
+  margin-top: 30px;
+  margin-left: 10px;
   width: 300px;
   height: 14px;
   /* border: 1px solid #4343s43; */
@@ -153,25 +152,26 @@ box-shadow: 10px 10px 22px -2px rgba(0,0,0,0.25);
 margin-bottom: 20px;
 padding-left: 40px
 }
-.category{
+.category,.sortBy{
 margin-bottom: 30px;
+margin-top: 20px;
 }
-.category li{
+.category li,.sortBy li{
   display: flex;
   align-items: center;
   margin-right: 20px;
   padding: 8px 15px;
   /* border: 2px solid saddlebrown; */
   border-radius: 15px;
-background: #ee5417;
-
-color: rgb(233, 232, 232)
+  background: #272727;
+  color: rgb(233, 232, 232);
+  transition: 0.2s ease-out;
 }
-.category li:hover{
-  background: rgb(0, 0, 0);
+.category li:hover, .sortBy li:hover{
+  background: #ee5417;
 
 }
-.category ul {
+.category ul,.sortBy ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -185,6 +185,9 @@ color: rgb(233, 232, 232)
   display: block;
   width: 100%;
   border-bottom: 1px solid rgb(114, 114, 114);
+}
+.category li.active,.sortB li.active {
+  background-color: #ee5417; /* Change the color to your preferred color */
 }
 
 

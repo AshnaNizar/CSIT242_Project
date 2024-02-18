@@ -1,57 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/8943e9eb68.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../scripts/Productspage.js" defer></script>
+    <script src="../scripts/Navbar.js" defer></script>
+    <link rel="stylesheet" href="../css/Products.css" />
+    <link rel="stylesheet" href="../css/Global.css" />
+    <link rel="stylesheet" href="../css/Notification.css" />
+    <script src="../scripts/Products.js" defer></script>
+    <script src="../scripts/Product-view.js" defer></script>
+    <script src="../scripts/Filterbox.js" defer></script>
+    <title>Products</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
-  <script src="../scripts/Productspage.js" defer></script>
-  <script src="../scripts/Navbar.js" defer></script>
-  <link rel="stylesheet" href="../css/Products.css">
-  <link rel="stylesheet" href="../css/Global.css">
-  <script src="../scripts/Products.js" defer></script>
-  <script src="../scripts/Filterbox.js" defer></script>
-  <title>Products</title>
-</head>
+  <body>
+    <header></header>
+    <div class="main-content-wrapper">
+      <div class="filterBox">
+        <div class="category">
+          <b class="b">Category</b>
+          <br /><br />
+          <ul>
+            <li>Keyboards</li>
+            <li>Mice</li>
+            <li>Accessories</li>
+          </ul>
+        </div>
+        <b class="b">Price Range</b> <br /><br />
+                <div class="valueboxMargin">
+          <span class="value-box">Dhs <span id="rangeValueLeft"></span></span>
+          &#9135;&#9135;&#9135;
+          <span class="value-box">Dhs <span id="rangeValueRight"></span></span>
+        </div>
+        <div class="container">
+          <input
+            type="range"
+            min="0"
+            max="500"
+            value="250"
+            id="rangeSliderleft"
+          />
+          <input
+            type="range"
+            min="500"
+            max="1000"
+            value="750"
+            id="rangeSliderright"
+          />
+        </div>
 
-<body>
-  <header>
-  </header>
-  <div class="main-content-wrapper">
-  <div class="filterBox">
-    <div class="category">
-     <b class="b">Category</b>
-     <br><br>
-     <ul>
-         <li>Keyboards</li>
-         <li>Mice</li>
-         <li>Accessories</li>
-     </ul>
- </div>
- <b class="b">Price Range</b> <br><br>
- <div class="container">
-     <input type="range" min="0" max="500" value="250" id="rangeSliderleft">
-     <input type="range" min="500" max="1000" value="750" id="rangeSliderright">
- </div>
- <div class="valueboxMargin">
-  <span class="value-box">Dhs <span id="rangeValueLeft"></span></span> &#9135;&#9135;&#9135;
- <span class="value-box">Dhs <span id="rangeValueRight"></span></span>
- </div>
-  </div>
-</div>
-  <!-- Products -->
-  <div class="product-grid" id="productGrid">
-    <!-- Products will be dynamically inserted here -->
-  </div>
-
-  <!-- Pop-up element -->
-  <div class="popup" id="popup">
-    <div class="tick-icon">
-      <i class="fa-solid fa-check-circle fa-lg" style="color: #4CAF50;"></i>
+            <div class="sortBy">
+        <b class="b">Sort By</b>
+        <br /><br />
+        <ul>
+          <li onclick="sortProducts('HL')">Highest Price</li>
+          <li onclick="sortProducts('')" >Lowest Price</li>
+        </ul>
+      </div>
+      </div>
+  
     </div>
-    Item successfully added to cart
-  </div>
 
-</body>
+    <!-- Products -->
+    <div class="product-grid" id="productGrid">
+      <!-- Products will be dynamically inserted here -->
+    </div>
 
+    <!-- Pop-up element -->
+    <div class="popup" id="popup">
+      <div class="tick-icon">
+        <i class="fa-solid fa-check-circle fa-lg" style="color: #4caf50;"></i>
+      </div>
+      Item successfully added to cart
+    </div>
+  </body>
 </html>

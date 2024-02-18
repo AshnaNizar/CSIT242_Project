@@ -123,3 +123,67 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error('Selected product not found.');
     }
 });
+
+   // Add event listeners to filter buttons
+   document.addEventListener("DOMContentLoaded", function () {
+    const filterButtons = document.querySelectorAll('.filterBox .category li');
+  
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const filterValue = this.textContent.trim();
+        localStorage.setItem('productFiltered', filterValue);
+        
+        // Remove the 'active' class from all buttons before adding it to the clicked button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add the 'active' class to the clicked button
+        this.classList.add('active');
+  
+        location.reload();
+      });
+    });
+  
+    // Get the filter value from localStorage
+    const selectedFilter = localStorage.getItem('productFiltered');
+  
+    // Find the button corresponding to the selected filter value and add the 'active' class
+    if (selectedFilter) {
+      filterButtons.forEach(button => {
+        if (button.textContent.trim() === selectedFilter) {
+          button.classList.add('active');
+        }
+      });
+    }
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    const filterButtons = document.querySelectorAll('.filterBox .category li');
+  
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const filterValue = this.textContent.trim();
+        localStorage.setItem('productFiltered', filterValue);
+        
+        // Remove the 'active' class from all buttons before adding it to the clicked button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add the 'active' class to the clicked button
+        this.classList.add('active');
+  
+        location.reload();
+      });
+    });
+  
+    // Get the filter value from localStorage
+    const selectedFilter = localStorage.getItem('productFiltered');
+  
+    // Find the button corresponding to the selected filter value and add the 'active' class
+    if (selectedFilter) {
+      filterButtons.forEach(button => {
+        if (button.textContent.trim() === selectedFilter) {
+          button.classList.add('active');
+        }
+      });
+    }
+  });
+  
+  
