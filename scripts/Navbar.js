@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     header.innerHTML = `
     <div class="primary-nav">
         <div class="nav-logo">
-            <a href="LandingPage.html">
-                <img src="../Images/Logo.jpeg" alt="Logo">
+            <a href="Home.html">
+                <img src="../images/Logo.jpeg" alt="Logo">
             </a>
         </div>
 

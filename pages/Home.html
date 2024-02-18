@@ -25,6 +25,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@400;500;700&display=swap"
     rel="stylesheet">
+
+  <script src="../scripts/Navbar.js" defer></script>
+  <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../css/Global.css">
+
+
 </head>
 
 <body id="top">
@@ -32,114 +38,7 @@
   <!-- 
     - #HEADER
   -->
-
-  <header class="header">
-
-    <!-- 
-      - overlay
-    -->
-    <div class="overlay" data-overlay></div>
-
-    <div class="container">
-
-      <a href="#" class="logo">
-        <img src="../images/logo.jpeg" alt="GameX logo">
-      </a>
-
-      <button class="nav-open-btn" data-nav-open-btn>
-        <ion-icon name="menu-outline"></ion-icon>
-      </button>
-
-      <nav class="navbar" data-nav>
-
-        <div class="navbar-top">
-
-          <a href="#" class="logo">
-            <img src="../images/logo.jpeg" alt="GameX logo">
-          </a>
-
-          <button class="nav-close-btn" data-nav-close-btn>
-            <ion-icon name="close-outline"></ion-icon>
-          </button>
-
-        </div>
-
-        <ul class="navbar-list">
-
-          <li>
-            <a href="#hero" class="navbar-link">Home</a>
-          </li>
-
-          <li>
-            <a href="#about" class="navbar-link">About</a>
-          </li>
-
-          <li>
-            <a href="#contact" class="navbar-link">Products</a>
-          </li>
-
-          <li>
-            <a href="#contact" class="navbar-link">Contact</a>
-          </li>
-
-        </ul>
-
-        <ul class="nav-social-list">
-
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="social-link">
-              <ion-icon name="logo-youtube"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </nav>
-
-      <div class="header-actions">
-
-        <button class="search">
-          <ion-icon name="search-outline"></ion-icon>
-        </button>
-
-        <button class="btn-sign_in">
-
-          <div class="icon-box">
-            <ion-icon name="log-in-outline"></ion-icon>
-          </div>
-
-          <span>Log-in</span>
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-
-
-
+  <header></header>
   <main>
     <article>
 
@@ -156,7 +55,7 @@
 
           <div class="btn-group">
 
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" onclick="window.location.href='Products.html'" >
               <span>Explore Products</span>
 
               <ion-icon name="play-circle"></ion-icon>
@@ -184,7 +83,7 @@
 
             <figure class="about-banner">
 
-              <img src="../images/case_build.webp" alt="M shape" class="about-img">
+              <img src="../images/PhoneCaseOrange.jpg" alt="M shape" class="about-img">
 
 
             </figure>
@@ -226,8 +125,6 @@
                   <figure>
                     <img id="key" src="../images/premiumkey .png" alt="Team member image">
                   </figure>
-
-                  <ion-icon name="link-outline"></ion-icon>
                 </a>
               </li>
 
@@ -237,7 +134,6 @@
                     <img src="../images/mouse (2).png" alt="Team member image">
                   </figure>
 
-                  <ion-icon name="link-outline"></ion-icon>
                 </a>
               </li>
 
@@ -247,7 +143,6 @@
                     <img src="../images/deskpad.webp" alt="Team member image">
                   </figure>
 
-                  <ion-icon name="link-outline"></ion-icon>
                 </a>
               </li>
 
@@ -257,12 +152,11 @@
                     <img src="../images/case.png" alt="Team member image">
                   </figure>
 
-                  <ion-icon name="link-outline"></ion-icon>
                 </a>
               </li>
             </ul>
 
-            <button class="btn btn-primary">view all products</button>
+            <button class="btn btn-primary" onclick="window.location.href='Products.html'">view all products</button>
 
           </div>
         </section>
@@ -291,9 +185,6 @@
                       <img src="../images/key1.png" alt="Headphone">
                     </a>
 
-                    <button class="share">
-                      <ion-icon name="share-social"></ion-icon>
-                    </button>
 
                     <div class="card-time-wrapper">
                       <ion-icon name="time-outline"></ion-icon>
@@ -325,9 +216,7 @@
                       <span>Add to cart</span>
                     </button>
 
-                    <button class="btn card-btn">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
+
 
                   </div>
 
@@ -342,10 +231,6 @@
                     <a href="#">
                       <img src="../images/mouse5.png" alt="Controller">
                     </a>
-
-                    <button class="share">
-                      <ion-icon name="share-social"></ion-icon>
-                    </button>
 
                     <div class="card-time-wrapper">
                       <ion-icon name="time-outline"></ion-icon>
@@ -377,9 +262,6 @@
                       <span>Add to cart</span>
                     </button>
 
-                    <button class="btn card-btn">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
 
                   </div>
 
@@ -395,10 +277,6 @@
                       <img src="../images/key4.png" alt="Gaming mask">
                     </a>
 
-                    <button class="share">
-                      <ion-icon name="share-social"></ion-icon>
-                    </button>
-
                     <div class="card-time-wrapper">
                       <ion-icon name="time-outline"></ion-icon>
 
@@ -411,7 +289,7 @@
 
                     <div class="card-title-wrapper">
 
-                      <h3 class="h3 card-title">Keychron Q1 Pro QMK/VIA Wireless</h3>
+                      <h3 class="h3 card-title">Keychron Q1P Wireless</h3>
 
                       <p class="card-subtitle">Custom Mechanical Keyboard</p>
 
@@ -429,9 +307,7 @@
                       <span>Add to cart</span>
                     </button>
 
-                    <button class="btn card-btn">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
+
 
                   </div>
 
@@ -471,23 +347,6 @@
               <li>
                 <a href="#about" class="footer-menu-link">About</a>
               </li>
-
-              <li>
-                <a href="#tournament" class="footer-menu-link">Tournament</a>
-              </li>
-
-              <li>
-                <a href="#team" class="footer-menu-link">Team</a>
-              </li>
-
-              <li>
-                <a href="#gears" class="footer-menu-link">Gears</a>
-              </li>
-
-              <li>
-                <a href="#" class="footer-menu-link">Contact</a>
-              </li>
-
             </ul>
 
             <div class="footer-input-wrapper">
@@ -503,27 +362,7 @@
         </div>
 
         <div class="footer-quicklinks">
-
-          <ul class="quicklink-list">
-
-            <li>
-              <a href="#" class="quicklink-item">Faq</a>
-            </li>
-
-            <li>
-              <a href="#" class="quicklink-item">Help center</a>
-            </li>
-
-            <li>
-              <a href="#" class="quicklink-item">Terms of use</a>
-            </li>
-
-            <li>
-              <a href="#" class="quicklink-item">Privacy</a>
-            </li>
-
-          </ul>
-
+          
           <ul class="footer-social-list">
 
             <li>
@@ -562,10 +401,6 @@
         <p class="copyright">
           Copyright &copy; 2024 <a href="#">ZENKEY</a>. all rights reserved
         </p>
-
-        <figure class="footer-bottom-img">
-          <img src="../images/footer-bottom-img.png" alt="Online payment companies logo">
-        </figure>
       </div>
     </div>
 
