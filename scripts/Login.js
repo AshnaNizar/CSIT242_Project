@@ -11,6 +11,6 @@ function validatePassword() {
         return false;
     }
 
-    window.location.href = '../pages/Signup.html';
+    window.location.href = '../pages/Home.html';
     return false;
 }
