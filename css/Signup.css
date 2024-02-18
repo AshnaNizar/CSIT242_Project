@@ -12,7 +12,8 @@
     padding: 3vh;
     padding-top: 0vh;
     margin: auto;
-    margin-top: 8vh;
+    margin-top: 10em;
+    margin-bottom: 10em;
     background-color: white;
     border-radius: 5vh;
     text-align: center;
@@ -52,7 +53,6 @@ body {
     background-image: url("../images/bgOrange.jpg");
     background-size:cover;
     background-repeat: no-repeat;
-    
 
 }
 

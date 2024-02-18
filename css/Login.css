@@ -12,7 +12,8 @@
     padding: 3vh;
     padding-top: 7vh;
     margin: auto;
-    margin-top: 15vh;
+    margin-top: 10em;
+    margin-bottom: 10em;
     background-color: white;
     border-radius: 5vh;
     text-align: center;
@@ -53,7 +54,7 @@ body {
     background-image: url("../images/bgOrangeLogin.jpg");
     background-size:cover;
     background-repeat: no-repeat;
-    
+
 
 }
 
