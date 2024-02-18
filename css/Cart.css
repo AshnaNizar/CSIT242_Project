@@ -201,7 +201,6 @@
     cursor: pointer;
 }
 
-/* Media query to adjust grid columns based on viewport width */
 @media (min-width: 1750px) {
     .cart-grid {
         grid-template-columns: 75% 25%;

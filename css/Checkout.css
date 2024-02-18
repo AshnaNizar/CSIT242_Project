@@ -195,7 +195,6 @@
     background-color: #ee5417;
 }
 
-/* Media query to adjust grid columns based on viewport width */
 @media (min-width: 1078px) {
     .checkout-grid {
         display: grid;

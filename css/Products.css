@@ -83,7 +83,6 @@
   margin-top: 50px;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   padding-left: 20px;
   padding-bottom: 200px;
   justify-content: center;
@@ -98,9 +97,6 @@
   margin-left: 10px;
   width: 300px;
   height: 14px;
-
-  /* border: 1px solid #4343s43; */
- /* background-color: #d8d8d8; */
  
 }
 
@@ -130,10 +126,8 @@ background-color:#d8d8d8;
 input[type='range']::-webkit-slider-runnable-track {
 height: 15px;
 -webkit-appearance: none;
-/* color: #13bba4; */
 }
 input[type='range']::-webkit-slider-thumb {
-  /* overflow: visible; */
 -webkit-appearance: none;
 width: 5px;
 height: 15px;
@@ -145,13 +139,7 @@ box-shadow: -80px 0 0 80px #434343;
   border: 1px solid #434343;
   padding: 15px 15px;
   border-radius: 8px;
-  /* border: 2px solid saddlebrown; *
-  border-radius: 15px;
-background: #e0e0e0;
-box-shadow: 10px 10px 22px -2px rgba(0,0,0,0.25);
-  -webkit-box-shadow: 10px 10px 22px -2px rgba(0,0,0,0.25);
-  -moz-box-shadow: 10px 10px 22px -2px rgba(0,0,0,0.25);
-*/
+
 }
 .valueboxMargin{
 margin-bottom: 20px;
@@ -166,7 +154,6 @@ margin-top: 20px;
   align-items: center;
   margin-right: 20px;
   padding: 8px 15px;
-  /* border: 2px solid saddlebrown; */
   border-radius: 15px;
   background: #272727;
   color: rgb(233, 232, 232);
@@ -192,22 +179,22 @@ margin-top: 20px;
   border-bottom: 1px solid rgb(114, 114, 114);
 }
 .category li.active,.sortB li.active {
-  background-color: #ee5417; /* Change the color to your preferred color */
+  background-color: #ee5417; 
 }
 
 
 @media only screen and (max-width: 1050px) {
   .product-grid {
-    width: 91%; /* Adjust the width according to your filter box width */
+    width: 91%; 
   }
   .filterBox {
-    display: none; /* Hide the filterBox on small screens */
+    display: none; 
   }
 }
 
 @media only screen and (min-width: 1051px) {
   .filterBox {
-    display: flex; /* Display the filterBox on larger screens */
+    display: flex; 
   }
 }
 

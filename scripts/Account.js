@@ -163,9 +163,5 @@ function showPayment() {
 
 function deleteAccount() {
     confirmation("Are you sure?","This action will permanently delete your account.")
-    // confirm("Are you sure you want to delete your account?");
-    // if (confirm) {
-    //     window.location.href = '../pages/Login.html'
-    // }
 
 }
