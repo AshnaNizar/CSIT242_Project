@@ -15,6 +15,8 @@
     <script src="../scripts/Products.js" defer></script>
     <script src="../scripts/Product-view.js" defer></script>
     <script src="../scripts/Filterbox.js" defer></script>
+    <script src="../scripts/Footer.js" defer></script>
+
     <title>Products</title>
   </head>
 
@@ -32,7 +34,7 @@
           </ul>
         </div>
         <b class="b">Price Range</b> <br /><br />
-                <div class="valueboxMargin">
+        <div class="valueboxMargin">
           <span class="value-box">Dhs <span id="rangeValueLeft"></span></span>
           &#9135;&#9135;&#9135;
           <span class="value-box">Dhs <span id="rangeValueRight"></span></span>
@@ -53,17 +55,7 @@
             id="rangeSliderright"
           />
         </div>
-
-            <div class="sortBy">
-        <b class="b">Sort By</b>
-        <br /><br />
-        <ul>
-          <li onclick="sortProducts('HL')">Highest Price</li>
-          <li onclick="sortProducts('')" >Lowest Price</li>
-        </ul>
       </div>
-      </div>
-  
     </div>
 
     <!-- Products -->
@@ -78,5 +70,7 @@
       </div>
       Item successfully added to cart
     </div>
-  </body>
+    <footer style="margin-top :5000px;">
+  </footer>  
+</body>
 </html>

@@ -10,7 +10,8 @@ rangeValueRight.textContent = rangeSliderRight.value;
 
 // Add event listener to update value box when slider value changes
 rangeSliderLeft.addEventListener("input", function() {
-    rangeValueLeft.textContent = this.value;
+    var reverse= 500- this.value;
+    rangeValueLeft.textContent = reverse;
 });
 
 rangeSliderRight.addEventListener("input", function() {
