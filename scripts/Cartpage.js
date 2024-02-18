@@ -66,10 +66,17 @@ document.addEventListener("DOMContentLoaded", function () {
     cartProducts.forEach((product, index) => {
         const cartItemDiv = document.createElement('div');
         cartItemDiv.classList.add('cart-item');
+        if (typeof product.image === 'string') {
+            imageProduct = product.image;
+        }
+
+        else {
+            imageProduct = product.image[0];
+        }
 
         cartItemDiv.innerHTML = `
             <div class="cart-item-image-container">
-                <img src="${product.image}" alt="Product Image" class="cart-item-image">
+                <img src="${imageProduct}" alt="Product Image" class="cart-item-image">
             </div>
             <div class="cart-item-details">
                 <div class="cart-item-name">${product.name}</div>

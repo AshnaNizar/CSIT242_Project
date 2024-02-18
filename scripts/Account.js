@@ -4,13 +4,14 @@ function clickSection(clickedLink) {
     // Loop through each paragraph
     links.forEach(function (link) {
         // Remove any existing bottom border
-        if(link.id!=="deleteAcc"){
-        link.style.color = 'black';
-        link.style.fontWeight = '100';
+        if (link.id !== "deleteAcc") {
+            link.style.color = 'black';
+            link.style.fontWeight = '100';
         }
 
     });
-    document.getElementById("selectedForm").innerHTML = "Settings / " + clickedLink.textContent;
+    // change the text content of the breadcrumbs-active to the clicked link
+    document.getElementById('breadcrumbs-active').textContent = clickedLink.textContent;
     clickedLink.style.color = '#ee5417';
     clickedLink.style.fontWeight = 'bold';
     switch (clickedLink.id) {
@@ -94,16 +95,17 @@ function showOrderDetails() {
     orderDetails.innerHTML = content + content2 + content3;
 }
 
-function showPayment(){
+function showPayment() {
     var paymentDetails = document.getElementById('UserSelection');
-    var content="<div><p>COMING SOON whenever i finish</p>"+
-    "</div>";
-    paymentDetails.innerHTML=content;
+    var content = "<div><p>COMING SOON whenever i finish</p>" +
+        "</div>";
+    paymentDetails.innerHTML = content;
 }
 
-function deleteAccount(){
+function deleteAccount() {
     confirm("Are you sure you want to delete your account?");
-    if(confirm){
-        window.location.href = '../pages/Login.html'    }
+    if (confirm) {
+        window.location.href = '../pages/Login.html'
+    }
 
 }

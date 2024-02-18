@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-
 .wrapper {
     display: flex;
     flex-direction: row;
@@ -76,7 +75,7 @@
     margin-bottom: 4vh;
 }
 
-input {
+#UserSelection input {
     height: 3.5vh;
     width: 35vh;
     border-radius: 1vh;
