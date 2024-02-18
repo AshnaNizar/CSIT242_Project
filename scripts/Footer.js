@@ -1,82 +1,137 @@
 document.addEventListener('DOMContentLoaded', function () {
     const footer = document.querySelector('footer');
     footer.innerHTML = `
-        <div class="footer-nav">
-            <div class="footer-logo">
-                <a href="Home.html">
-                    <img src="../images/Logo.jpeg" alt="Logo">
-                </a>
-            </div>
-
-            <div class="footer-links">
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-            </div>
-
-        </div>
+    <div class="footer-body">
+    <div class="footer-logo">
+        <img src="../images/Logo.jpeg">
+    </div>
+    <div class="footer-section">
+        <span>Links</span>
+        <li><a href="Landing.html#home" onclick="smoothScroll('#home')">Home</a></li>
+        <li><a href="Landing.html#products" onclick="smoothScroll('#products')">Products</a></li>
+        <li><a href="Landing.html#partners" onclick="smoothScroll('#partners')">Partners</a></li>
+        <li><a href="Landing.html#keyfeatures" onclick="smoothScroll('#keyfeatures')">Key Features</a></li>
+        <li><a href="Landing.html#download" onclick="smoothScroll('#download')">Download</a></li>
+    </div>
+    <div class="footer-section">
+        <span>Get In Touch</span>
+        <li><a href="#"><i class="fab fa-facebook"></i>Facebook</a></li>
+        <li><a href="#"><i class="fab fa-instagram"></i>Instagram</a></li>
+        <li><a href="#"><i class="fab fa-twitter"></i>Twitter</a></li>
+        <li><a href="#"><i class="fab fa-linkedin"></i>Linkedin</a></li>
+    </div>
+</div>
+<div class="footer-bottom">
+    <div class="footer-bottom-text">
+        <span>&copy; 2024 Zenkey Store. All rights reserved.</span>
+    </div>
+</div>
     `;
 
     // Append CSS styles
     const style = document.createElement('style');
     style.textContent = `
-    .footer-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 0px;
-        background-color: #231f20;
-        width: 100%;
-        height: 300px;
-        color: #fff;
-    }
-    
-    .footer-logo {
-        margin-left: 120px;
-        padding: 5px;
-        border-bottom: 2px solid #231f20;
-        transition: 0.3s;
-    }
-    
-    .footer-logo img {
-        width: 150px;
-        object-fit: contain;
-    }
-    
-    .footer-logo:hover {
-        cursor: pointer;
-        border-bottom: 2px solid #ee5417;
-    }
-    
-    .footer-links {
-        padding-right:50px;
-        flex-grow: 1; /* Allow the footer links to grow and take up remaining space */
-        text-align: right; /* Center-align the footer links */
-    }
-    
-    .footer-links ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .footer-links ul li {
-        display: inline-block;
-        margin-right: 20px;
-    }
-    
-    .footer-links ul li:last-child {
-        margin-right: 0;
-    }
-    
-    .footer-links ul li a {
-        color: #fff;
-        text-decoration: none;
-    }
-    
+   
+footer {
+    width: 100%;
+    height: 700px;
+    background: #282828;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-body {
+    width: 100%;
+    height: 85%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 150px;
+    justify-content: space-evenly;
+    gap: 50px;
+}
+
+.footer-logo {
+    width: 25%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-logo img {
+    width: 100%;
+}
+
+.footer-section {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    color: #fff;
+    padding: 20px;
+    height: 20vh;
+}
+
+.footer-section span {
+    font-family: 'Poppins SemiBold';
+    font-size: 20px;
+}
+
+.footer-section li {
+    font-family: 'Poppins Regular';
+    font-size: 15px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.footer-section li:hover {
+    color: #ff660d;
+    transition: 0.3s ease-in-out;
+}
+
+.footer-section li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.footer-section li a:hover {
+    color: #ff660d;
+    transition: 0.3s ease-in-out;
+}
+
+.footer-section i {
+    margin-right: 10px;
+}
+
+.footer-bottom {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    color: #fff;
+    height: 15%;
+    background-color: #000;
+    font-family: 'Poppins Medium';
+    font-size: 15px;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--scroll-gradient-start), var(--scroll-gradient-end));
+    border-radius: 6px;
+}
     `;
     footer.appendChild(style);
 });

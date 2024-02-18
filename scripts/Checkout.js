@@ -84,9 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // If all input fields are valid, show success message
         if (isValid) {
-            alert("Payment has been made!");
+            alert("Payment has been made!","");
         } else {
-            alert("Please enter the details correctly.");
+            alert("Please enter the details correctly.","");
         }
     });
 

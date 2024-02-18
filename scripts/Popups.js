@@ -34,7 +34,7 @@ function alert(headerMessage, message) {
   popup.className = 'popup-container';
   var html = generateHTML(headerMessage, message);
   // Remove the second button by replacing its entire tag with an empty string
-  html = html.replace('<button class="button1" onClick="hidePopup()">No</button>', '').replace('<button class="button2" onClick="hidePopup()">Yes</button>', '<button class="button2" onClick="hidePopup()">Ok</button>');
+  html = html.replace('<button class="button1" onClick="hidePopup()">No</button>', '').replace('<button class="button2" onClick="Logout()">Yes</button>', '<button class="button2" onClick="hidePopup()">Ok</button>');
   popup.innerHTML = html;
   document.body.appendChild(popup);
 }
