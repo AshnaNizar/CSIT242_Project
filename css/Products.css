@@ -77,7 +77,7 @@
 .cart-icon {
   margin-right: 10px;
 }
-/* Filter Box Style */
+/* ----------------Filter Box Style------------------ */
 
 .filterBox{
   margin-top: 50px;
@@ -97,7 +97,6 @@
   margin-left: 10px;
   width: 300px;
   height: 14px;
- 
 }
 
 #rangeSliderleft, #rangeSliderright{
@@ -139,7 +138,6 @@ box-shadow: -80px 0 0 80px #434343;
   border: 1px solid #434343;
   padding: 15px 15px;
   border-radius: 8px;
-
 }
 .valueboxMargin{
 margin-bottom: 20px;
