@@ -144,7 +144,7 @@ self.addEventListener("install", function (event) {
       Promise.all([
         cacheResources(HOME_CACHE_NAME, homeCachedURLs),
         cacheResources(PRODUCTS_CACHE_NAME, productsCachedURLs),
-        cacheResources(CART_CACHE_NAME, cartCachedURLs),
+        // cacheResources(CART_CACHE_NAME, cartCachedURLs),
       ])
     );
   });
@@ -159,7 +159,7 @@ self.addEventListener("install", function (event) {
             if (
               cacheName !== HOME_CACHE_NAME &&
               cacheName !== PRODUCTS_CACHE_NAME &&
-              cacheName !== CART_CACHE_NAME &&
+              // cacheName !== CART_CACHE_NAME &&
               cacheName.startsWith("gih-cache")
             ) {
               return caches.delete(cacheName);
