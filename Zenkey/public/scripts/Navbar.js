@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
         width: 100%;
         z-index: 9999;
         background-color: #231f20;
-        position: fixed;
     }
 
     .nav-logo {
@@ -357,8 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         .nav-logo {
-            margin: 0 auto;
-            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
         }
 
         .mobile-nav-header {
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function () {
             width: 100%;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             z-index: 9999;
             padding: 20px 0px;
             height: auto;

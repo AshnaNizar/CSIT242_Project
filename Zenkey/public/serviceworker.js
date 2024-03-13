@@ -51,12 +51,39 @@ var HOME_CACHE_NAME = "home-cache-v1";
 var PRODUCTS_CACHE_NAME = "products-cache-v1";
 var CART_CACHE_NAME = "cart-cache-v1";
 
-var homeCachedURLs = [
-    // Add URLs for home page caching
-    "./images/Logo.jpeg",
-    // Add other home page resources
-    "./home.html"
+// URLs to be cached for the home page
+const homeCachedURLs = [
+  // Favicon
+  './favicon.svg',
+  
+  // Custom CSS
+  '../css/Home.css',
+  
+  // Google Fonts
+  'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@400;500;700&display=swap',
+  
+  // JS
+  '../scripts/Navbar.js',
+  '../scripts/Footer.js',
+  '../scripts/Popups.js',
+  'https://kit.fontawesome.com/8943e9eb68.js',
+  
+  // CSS f
+  '../css/Global.css',
+  '../css/Notification.css',
+
+  'Products.html', 
+  // Images
+  '../images/PhoneCaseOrange.jpg', 
+  '../images/key6.png', 
+  '../images/mouse1.png', 
+  '../images/PhoneCase2.png', 
+  '../images/DeskPad2.png', 
+  '../images/key1.png', 
+  '../images/mouse5.png', 
+  '../images/key4.png', 
 ];
+
 
 var productsCachedURLs = [
     // Products page caching

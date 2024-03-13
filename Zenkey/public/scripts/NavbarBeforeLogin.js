@@ -151,8 +151,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         .nav-logo {
-            margin: 0 auto;
-            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
         }
     
         .nav-links {
