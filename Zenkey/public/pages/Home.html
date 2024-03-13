@@ -5,23 +5,22 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/Notification.css" />
-
+  <link rel="stylesheet" href="../css/Notification.css" /> 
   <title>ZENKEY - Homepage</title>
 
   <!-- 
-    - favicon link
-  -->
+- favicon link
+-->
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
 
   <!-- 
-    - custom css link
-  -->
+- custom css link
+-->
   <link rel="stylesheet" href="../css/Home.css">
 
   <!-- 
-    - google font link
-  -->
+- google font link
+-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -29,6 +28,7 @@
     rel="stylesheet">
 
   <script src="../scripts/Navbar.js" defer></script>
+  <script src="../scripts/Footer.js" defer></script>
   <script src="../scripts/Popups.js"></script>
   <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../css/Global.css">
@@ -39,372 +39,271 @@
 <body id="top">
 
   <!-- 
-    - #HEADER
-  -->
+- #HEADER
+-->
   <header></header>
-  <main>
-    <article>
 
-      <!-- 
-        - #HERO
-      -->
+  <!-- 
+- #HERO
+-->
 
-      <section class="hero" id="hero">
-        <div class="container">
+  <section class="hero" id="hero">
+    <div class="container">
 
-          <p class="hero-subtitle">Welcome to</p>
+      <p class="hero-subtitle">Welcome to</p>
 
-          <h1 class="h1 hero-title">ZENKEY</h1>
+      <h1 class="h1 hero-title">ZENKEY</h1>
 
-          <div class="btn-group">
+      <div class="btn-group">
 
-            <button class="btn btn-primary" onclick="window.location.href='Products.html'" >
-              <span>Explore Products</span>
+        <button class="btn btn-primary" onclick="window.location.href='Products.html'">
+          <span>Explore Products</span>
 
-              <ion-icon name="play-circle"></ion-icon>
-            </button>
+          <ion-icon name="play-circle"></ion-icon>
+        </button>
 
 
-          </div>
+      </div>
 
-        </div>
-      </section>
+    </div>
+  </section>
 
+  <div class="section-wrapper" />
 
+  <!-- 
+- #ABOUT
+-->
 
+  <section class="about" id="about">
+    <div class="container">
 
+      <figure class="about-banner">
 
-      <div class="section-wrapper">
-
-        <!-- 
-          - #ABOUT
-        -->
-
-        <section class="about" id="about">
-          <div class="container">
-
-            <figure class="about-banner">
-
-              <img src="../images/PhoneCaseOrange.jpg" alt="M shape" class="about-img">
+        <img src="../images/PhoneCaseOrange.jpg" alt="M shape" class="about-img">
 
 
+      </figure>
+
+      <div class="about-content">
+
+        <p class="about-subtitle">Coming Soon....</p>
+
+        <h2 class="about-title">Build your own <strong>Phone Case</strong> </h2>
+
+        <p class="about-text">
+          Craft your unique phone case! Select your favorite colors and personalize it with your own pictures to make
+          it truly yours.
+        </p>
+
+        <p class="about-bottom-text">
+          <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+
+          <span>Stay Tuned!</span>
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 
+- #TEAM
+-->
+
+  <section class="team" id="team">
+    <div class="container">
+
+      <h2 class="h2 section-title">Product Categories</h2>
+
+      <ul class="team-list">
+
+        <li>
+          <a href="#" class="team-member">
+            <figure>
+              <img id="key" src="../images/key6.png" alt="Keychron Keyboard">
+            </figure>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="team-member">
+            <figure>
+              <img src="../images/mouse1.png" alt="Mouse">
             </figure>
 
-            <div class="about-content">
+          </a>
+        </li>
 
-              <p class="about-subtitle">Coming Soon....</p>
+        <li>
+          <a href="#" class="team-member">
+            <figure>
+              <img src="../images/PhoneCase2.png" alt="Phone Case">
+            </figure>
 
-              <h2 class="about-title">Build your own <strong>Phone Case</strong> </h2>
+          </a>
+        </li>
 
-              <p class="about-text">
-                Craft your unique phone case! Select your favorite colors and personalize it with your own pictures to make it truly yours.
-              </p>
+        <li>
+          <a href="#" class="team-member">
+            <figure>
+              <img src="../images/DeskPad2.png" alt="Desk Pad">
+            </figure>
 
-              <p class="about-bottom-text">
-                <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+          </a>
+        </li>
+      </ul>
 
-                <span>Stay Tuned!</span>
-              </p>
+      <button class="btn btn-primary" onclick="window.location.href='Products.html'">view all products</button>
+
+    </div>
+  </section>
+
+
+  <!-- 
+- #GEARS
+-->
+
+  <section class="gears" id="gears">
+    <div class="container">
+
+      <h2 class="h2 section-title">trending gears</h2>
+
+      <ul class="gears-list">
+
+        <li>
+          <div class="gears-card">
+
+            <div class="card-banner">
+
+              <a href="#">
+                <img src="../images/key1.png" alt="Headphone">
+              </a>
+
+
+              <div class="card-time-wrapper">
+                <ion-icon name="time-outline"></ion-icon>
+
+                <span>In 4 days</span>
+              </div>
+
+            </div>
+
+            <div class="card-content">
+
+              <div class="card-title-wrapper">
+
+                <h3 class="h3 card-title">Keychron Q3 QMK</h3>
+
+                <p class="card-subtitle">Custom Mechanical Keyboard</p>
+
+              </div>
+
+              <div class="card-prize">$154</div>
+
+            </div>
+
+            <div class="card-actions">
+
 
             </div>
 
           </div>
-        </section>
+        </li>
 
-        <!-- 
-          - #TEAM
-        -->
+        <li>
+          <div class="gears-card">
 
-        <section class="team" id="team">
-          <div class="container">
+            <div class="card-banner">
 
-            <h2 class="h2 section-title">Product Categories</h2>
+              <a href="#">
+                <img src="../images/mouse5.png" alt="Controller">
+              </a>
 
-            <ul class="team-list">
+              <div class="card-time-wrapper">
+                <ion-icon name="time-outline"></ion-icon>
 
-              <li>
-                <a href="#" class="team-member">
-                  <figure>
-                    <img id="key" src="../images/premiumkey .png" alt="Team member image">
-                  </figure>
-                </a>
-              </li>
+                <span>In 4 days</span>
+              </div>
 
-              <li>
-                <a href="#" class="team-member">
-                  <figure>
-                    <img src="../images/mouse (2).png" alt="Team member image">
-                  </figure>
+            </div>
 
-                </a>
-              </li>
+            <div class="card-content">
 
-              <li>
-                <a href="#" class="team-member">
-                  <figure>
-                    <img src="../images/deskpad.webp" alt="Team member image">
-                  </figure>
+              <div class="card-title-wrapper">
 
-                </a>
-              </li>
+                <h3 class="h3 card-title">ERGO M575 Wireless</h3>
 
-              <li>
-                <a href="#" class="team-member">
-                  <figure>
-                    <img src="../images/case.png" alt="Team member image">
-                  </figure>
+                <p class="card-subtitle">Trackball Mouse</p>
 
-                </a>
-              </li>
-            </ul>
+              </div>
 
-            <button class="btn btn-primary" onclick="window.location.href='Products.html'">view all products</button>
+              <div class="card-prize">$86</div>
+
+            </div>
+
+            <div class="card-actions">
+
+            </div>
 
           </div>
-        </section>
+        </li>
 
+        <li>
+          <div class="gears-card">
 
+            <div class="card-banner">
 
+              <a href="#">
+                <img src="../images/key4.png" alt="Gaming mask">
+              </a>
 
+              <div class="card-time-wrapper">
+                <ion-icon name="time-outline"></ion-icon>
 
-        <!-- 
-          - #GEARS
-        -->
+                <span>In 4 days</span>
+              </div>
 
-        <section class="gears" id="gears">
-          <div class="container">
+            </div>
 
-            <h2 class="h2 section-title">trending gears</h2>
+            <div class="card-content">
 
-            <ul class="gears-list">
+              <div class="card-title-wrapper">
 
-              <li>
-                <div class="gears-card">
+                <h3 class="h3 card-title">Keychron Q1P Wireless</h3>
 
-                  <div class="card-banner">
+                <p class="card-subtitle">Custom Mechanical Keyboard</p>
 
-                    <a href="#">
-                      <img src="../images/key1.png" alt="Headphone">
-                    </a>
+              </div>
 
+              <div class="card-prize">$179</div>
 
-                    <div class="card-time-wrapper">
-                      <ion-icon name="time-outline"></ion-icon>
+            </div>
 
-                      <span>In 4 days</span>
-                    </div>
+            <div class="card-actions">
 
-                  </div>
-
-                  <div class="card-content">
-
-                    <div class="card-title-wrapper">
-
-                      <h3 class="h3 card-title">Keychron Q3 QMK</h3>
-
-                      <p class="card-subtitle">Custom Mechanical Keyboard</p>
-
-                    </div>
-
-                    <div class="card-prize">$154</div>
-
-                  </div>
-
-                  <div class="card-actions">
-
-
-                  </div>
-
-                </div>
-              </li>
-
-              <li>
-                <div class="gears-card">
-
-                  <div class="card-banner">
-
-                    <a href="#">
-                      <img src="../images/mouse5.png" alt="Controller">
-                    </a>
-
-                    <div class="card-time-wrapper">
-                      <ion-icon name="time-outline"></ion-icon>
-
-                      <span>In 4 days</span>
-                    </div>
-
-                  </div>
-
-                  <div class="card-content">
-
-                    <div class="card-title-wrapper">
-
-                      <h3 class="h3 card-title">ERGO M575 Wireless</h3>
-
-                      <p class="card-subtitle">Trackball Mouse</p>
-
-                    </div>
-
-                    <div class="card-prize">$86</div>
-
-                  </div>
-
-                  <div class="card-actions">
-
-                  </div>
-
-                </div>
-              </li>
-
-              <li>
-                <div class="gears-card">
-
-                  <div class="card-banner">
-
-                    <a href="#">
-                      <img src="../images/key4.png" alt="Gaming mask">
-                    </a>
-
-                    <div class="card-time-wrapper">
-                      <ion-icon name="time-outline"></ion-icon>
-
-                      <span>In 4 days</span>
-                    </div>
-
-                  </div>
-
-                  <div class="card-content">
-
-                    <div class="card-title-wrapper">
-
-                      <h3 class="h3 card-title">Keychron Q1P Wireless</h3>
-
-                      <p class="card-subtitle">Custom Mechanical Keyboard</p>
-
-                    </div>
-
-                    <div class="card-prize">$179</div>
-
-                  </div>
-
-                  <div class="card-actions">
-
-
-
-
-
-                  </div>
-
-                </div>
-              </li>
-
-            </ul>
+            </div>
 
           </div>
-        </section>
+        </li>
 
+      </ul>
 
-
-        <!-- 
-    - #FOOTER
-  -->
-
-  <footer>
-
-    <div class="footer-top">
-      <div class="container">
-
-        <div class="footer-brand-wrapper">
-
-          <a href="#" class="logo">
-            <img src="../images/logo.jpeg" alt="GameX logo">
-          </a>
-
-          <div class="footer-menu-wrapper">
-
-            <ul class="footer-menu-list">
-
-              <li>
-                <a href="#hero" class="footer-menu-link">Home</a>
-              </li>
-
-              <li>
-                <a href="#about" class="footer-menu-link">About</a>
-              </li>
-            </ul>
-
-        </div>
-
-        <div class="footer-quicklinks">
-
-          <ul class="footer-social-list">
-
-            <li>
-              <a href="#" class="footer-social-link">
-                <ion-icon name="logo-discord"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="footer-social-link">
-                <ion-icon name="logo-twitch"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="footer-social-link">
-                <ion-icon name="logo-xbox"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="footer-social-link">
-                <ion-icon name="logo-youtube"></ion-icon>
-              </a>
-            </li>
-
-          </ul>
-
-        </div>
-
-      </div>
     </div>
-
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">
-          Copyright &copy; 2024 <a href="#">ZENKEY</a>. all rights reserved
-        </p>
-      </div>
-    </div>
-
-  </footer>
-
-
-
-
+  </section>
 
   <!-- 
-    - #GO TO TOP
-  -->
+- #FOOTER
+-->
+
+  <footer></footer>
+
+  <!-- 
+- #GO TO TOP
+-->
 
   <a href="#top" class="btn btn-primary go-top" data-go-top>
     <ion-icon name="chevron-up-outline"></ion-icon>
   </a>
-
-
-
-
-
-  <!-- 
-    - custom js link
-  -->
-
-  <!-- 
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 

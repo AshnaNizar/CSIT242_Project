@@ -12,22 +12,8 @@
     <link rel="stylesheet" href="../css/all.min.css">
     <link rel="stylesheet" href="../css/LandingPage.css">
     <link rel="stylesheet" href="../css/Global.css">
-
-    <!-- service worker -->
-    <script>
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
-            console.log('Service Worker registered with scope:', registration.scope);
-          }).catch(function(error) {
-            console.error('Service Worker registration failed:', error);
-          });
-        }
-      </script>
-
     <script src="../scripts/NavbarBeforeLogin.js" defer></script>
-    <script src="../scripts/Footer.js" defer></script>
-    <script src="../scripts/App.js"></script>
-
+    <script src="../scripts/FooterBefore.js" defer></script>
 
 </head>
 

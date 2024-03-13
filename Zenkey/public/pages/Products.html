@@ -1,61 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/8943e9eb68.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../scripts/Productspage.js" defer></script>
-    <script src="../scripts/Navbar.js" defer></script>
-    <link rel="stylesheet" href="../css/Products.css" />
-    <link rel="stylesheet" href="../css/Global.css" />
-    <link rel="stylesheet" href="../css/Notification.css" />
-    <script src="../scripts/Products.js" defer></script>
-    <script src="../scripts/Product-view.js" defer></script>
-    <script src="../scripts/Filterbox.js" defer></script>
-    <script src="../scripts/Footer.js" defer></script>
-    <script src="../scripts/Popups.js"></script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
+  <script src="../scripts/Productspage.js" defer></script>
+  <script src="../scripts/Navbar.js" defer></script>
+  <link rel="stylesheet" href="../css/Products.css" />
+  <link rel="stylesheet" href="../css/Global.css" />
+  <link rel="stylesheet" href="../css/Notification.css" />
+  <script src="../scripts/Products.js" defer></script>
+  <script src="../scripts/Product-view.js" defer></script>
+  <script src="../scripts/Filterbox.js" defer></script>
+  <script src="../scripts/Footer.js" defer></script>
+  <script src="../scripts/Popups.js"></script>
 
 
-    <title>Products</title>
-  </head>
+  <title>Products</title>
+</head>
 
-  <body>
-    <header></header>
-    <div class="main-content-wrapper">
-      <div class="filterBox">
-        <div class="category">
-          <b class="b">Category</b>
-          <br /><br />
-          <ul>
-            <li>Keyboards</li>
-            <li>Mice</li>
-            <li>Accessories</li>
-          </ul>
-        </div>
-        <b class="b">Price Range</b> <br /><br />
+<body>
+  <header></header>
+  <div class="grid-page flex-page">
+    <div class="filterBox">
+      <div class="category">
+        <b class="b">Category</b>
+        <ul>
+          <li>Keyboards</li>
+          <li>Mice</li>
+          <li>Accessories</li>
+        </ul>
+      </div>
+      <div class="category">
+        <b class="b">Price Range</b>
         <div class="valueboxMargin">
           <span class="value-box">Dhs <span id="rangeValueLeft"></span></span>
           &#9135;&#9135;&#9135;
           <span class="value-box">Dhs <span id="rangeValueRight"></span></span>
         </div>
         <div class="container">
-          <input
-            type="range"
-            min="0"
-            max="500"
-            value="250"
-            id="rangeSliderleft"
-          />
-          <input
-            type="range"
-            min="500"
-            max="1000"
-            value="750"
-            id="rangeSliderright"
-          />
+          <input type="range" min="0" max="500" value="250" id="rangeSliderleft" />
+          <input type="range" min="500" max="1000" value="750" id="rangeSliderright" />
         </div>
       </div>
     </div>
@@ -72,7 +58,9 @@
       </div>
       Item successfully added to cart
     </div>
-    <footer style="margin-top :5000px;">
-  </footer>  
+  </div>
+  <footer>
+  </footer>
 </body>
+
 </html>

@@ -1,92 +1,168 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-
-
-.wrapper {
-
-    justify-content: center;
-    align-items: flex-start;
-    width: 55vh;
-    height: 50vh;
+.page-wrapper {
     display: flex;
-    color: black;
-    padding: 3vh;
-    padding-top: 7vh;
-    margin: auto;
-    margin-top: 7em;
-    margin-bottom: 7em;
-    background-color: white;
-    border-radius: 5vh;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    width: 100%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 500px;
+    height: fit-content;
+    padding: 80px 80px 60px 80px;
+    background-color: #fff;
+    border-radius: 35px;
     text-align: center;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
 }
 
-.inputFieldDiv {
+.container-title {
+    font-family: 'Poppins Bold';
+    font-size: 30px;
+}
 
-    margin-bottom: 4vh;
+.container-subtitle {
+    font-family: 'Poppins Regular';
+    font-size: 15px;
+}
 
+.container-text {
+    font-family: 'Poppins Light';
+    font-size: 13px;
+}
+
+.input-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: fit-content;
+    gap: 40px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.input-field {
+    width: 100%;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 0.5px solid grey;
+    background-color: #fff;
+    transition: 0.3s ease-in-out;
+    font-family: 'Poppins Regular';
+    font-size: 13px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+}
+
+.input-field:hover {
+    cursor: pointer;
+}
+
+.input-field:focus {
+    outline: none;
+    cursor: text;
+    border-color: #ee5417; 
+    box-shadow: 0px 4px 12px rgba(238, 84, 23, 0.25);
 }
 
 .submitButton {
+    width: 80%;
+    border-radius: 10px;
+    padding: 16px 18px;
     background-color: black;
-    border: 1px;
-    border-radius: 1vh;
-    width: 37vh;
-    height: 5vh;
+    border: none;
+    transition: 0.3s ease-in-out;
     color: white;
-    font-family: Poppins;
-    font-size: 12px;
-    font-weight: 500;
+    font-family: 'Poppins SemiBold';
+    font-size: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .submitButton:hover{
     background-color: #ee5417;
-
+    cursor: pointer;
+    box-shadow: 0px 4px 12px rgba(238, 84, 23, 0.25);
 }
 
-.formButtonDiv {
-
-    display: flex;
-    align-items: center;
-}
-
-body {
-    font-family: Poppins;
+.login-image {
     background-image: url("../images/bgOrangeLogin.jpg");
-    background-size:contain;
+    background-size: cover;
     background-repeat: no-repeat;
-
-
 }
 
-h2{
-    font-size: 20px;
+.signup-image {
+    background-image: url("../images/signupimage.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-
-p{
-    font-size: 12px;
-    color: rgb(146, 144, 144);
-
-}
-input{
-    height: 3vh;
-    width: 35vh;
-    border-radius: 1vh;
-    border: 0.5px solid grey;
-    padding: 1vh;
-    font-family: Poppins;
-    font-size: 10px;
-}
-
-input:focus {
-    outline: none;
-    border-color: #ee5417; 
-}
-
 
 #passError{
-    color:red;
-    font-size: 9px;
-    margin-bottom: 4vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: red;
+    color: #FFF;
+    font-family: 'Poppins SemiBold';
+    font-size: 13px;
     text-align: center;
+    margin-top: 10px;
+    transition: 0.3s ease-in-out;
+}
+
+@media (max-width: 800px) {
+    .page-wrapper {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .container {
+        margin-top: 150px;
+        margin-bottom: 100px;
+        width: 60%;
+        padding: 50px 40px 40px 40px;
+        gap: 8px;
+    }
+
+    .container-title {
+        font-size: 28px;
+    }
+
+    .container-subtitle {
+        font-size: 13px;
+    }
+
+    .container-text {
+        font-size: 11px;
+    }
+
+    .input-fields {
+        width: 85%;
+        gap: 30px;
+    }
+
+    .input-field {
+        padding: 14px 16px;
+        font-size: 11px;
+    }
+
+    .submitButton {
+        padding: 14px 16px;
+        font-size: 13px;
+    }
+
+    #passError {
+        height: 30px;
+        font-size: 11px;
+    }
 }
