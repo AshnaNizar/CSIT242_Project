@@ -11,6 +11,7 @@ function clickSection(clickedLink) {
         }
 
     });
+    // var currentUrl = "http://localhost:8000/Account.html";
     // change the text content of the breadcrumbs-active to the clicked link
     document.getElementById('breadcrumbs-active').textContent = clickedLink.textContent;
     clickedLink.style.color = '#ee5417';
@@ -18,13 +19,16 @@ function clickSection(clickedLink) {
     switch (clickedLink.id) {
         case "profile":
             showProfile();
+            // window.location.href = currentUrl + '/Profile';
             break;
         case "orders":
             showOrderDetails();
+            // window.location.href = currentUrl + '/Orders';
             break;
         case "payment":
             showPayment();
-
+            // window.location.href = currentUrl + '/Payment';
+            break;
     }
 }
 
