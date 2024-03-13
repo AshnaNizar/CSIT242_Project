@@ -63,10 +63,6 @@
 
 }
 
-
-
-
-
 /*-----------------------------------*\
   #RESET
 \*-----------------------------------*/
@@ -75,7 +71,6 @@
 *::before,
 *::after {
   /* margin: 0; */
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -112,15 +107,13 @@ input {
 html {
   font-family: var(--ff-poppins);
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   overflow-x: hidden;
 }
 
-body.active {
-  overflow-y: hidden;
-}
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -134,9 +127,6 @@ body.active {
   background: var(--orange);
   border-radius: 10px;
 }
-
-
-
 
 
 /*-----------------------------------*\
@@ -162,13 +152,9 @@ body.active {
 }
 
 
-
-
-
 /*-----------------------------------*\
   #REUSED STYLE
 \*-----------------------------------*/
-
 .container {
   padding-inline: 15px;
 }
@@ -276,7 +262,6 @@ body.active {
   background-size: cover;
   background-position: top center;
   background-attachment: fixed;
-  margin-top: 0px;
   height: 100vh;
   max-height: 1000px;
   display: flex;
@@ -296,10 +281,6 @@ body.active {
   margin-bottom: 15px;
 }
 
-.hero-title {
-  margin-bottom: 10px;
-}
-
 .btn-group {
   display: flex;
   flex-wrap: wrap;
@@ -310,10 +291,6 @@ body.active {
 .hero .btn-primary ion-icon {
   font-size: 25px;
 }
-
-
-
-
 
 /*-----------------------------------*\
   #ABOUT
@@ -338,6 +315,7 @@ body.active {
 
 .about-img {
   width: 70vh;
+  overflow: hidden;
   height: 60vh;
   border-radius: 3vh;
 }
@@ -421,42 +399,38 @@ body.active {
 }
 
 .team-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-bottom: 50px;
   justify-content: center;
   align-items: center;
-  gap: 40px;
-  margin-bottom: 70px;
-}
-
-.team-list li {
-  max-width: 20%;
+  gap: 30px;
+  padding: 30px;
 }
 
 .team-member {
-  position: relative;
+  justify-self: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   transition: var(--transition-1);
-  display: inline-block;
+  background-color: #595959;
+  height: 350px;
+  width: 100%;
+  border-radius: 3vh;
+  overflow: hidden;
 }
 
 .team-member img {
-  width: 150%;
-  display: block;
+  width: 100%;
+  transition: var(--transition-1);
+  object-fit: cover;
 }
 
 .team-member:is(:hover, :focus) img {
-  opacity: 0.5;
-}
-
-.team-member ion-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--orange);
-  font-size: 50px;
-  transition: var(--transition-1);
-  opacity: 0;
+  opacity: 0.8;
 }
 
 .team-member:is(:hover, :focus) ion-icon {
@@ -466,10 +440,6 @@ body.active {
 .team .btn-primary {
   margin-inline: auto;
 }
-
-
-
-
 
 /*-----------------------------------*\
   #GEARS
@@ -482,9 +452,23 @@ body.active {
 .gears-list {
   display: grid;
   gap: 50px;
+  padding: 30px;
 }
 
-.gears-card .card-banner {
+.gears-card {
+  justify-self: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  height: 100%;
+  background: var(--raisin-black-3);
+  border-radius: 3vh;
+}
+
+.card-banner {
   position: relative;
   background: url("../images/gears-card-bg.png") no-repeat;
   background-size: contain;
@@ -495,10 +479,11 @@ body.active {
   place-items: center;
   margin-bottom: 30px;
   transition: box-shadow ease-in-out 0.2s, font-size ease-in-out 0.2s, transform ease-in-out 0.2s;
-
+  border-radius: 3vh;
+  padding: 20px;
 }
 
-.gears-card .card-banner:hover {
+.card-banner:hover {
   box-shadow: 0 0 10px rgba(223, 221, 221, 0.2);
   border-radius: 3vh;
   font-size: 102%;
@@ -570,6 +555,10 @@ body.active {
   font-weight: var(--fw-700);
 }
 
+.card-prize {
+  margin-left: 25px;
+}
+
 .gears-card .card-title {
   margin-bottom: 5px;
 }
@@ -615,8 +604,6 @@ body.active {
   background: var(--orange);
   color: var(--white);
 }
-
-
 
 /*-----------------------------------*\
   #FOOTER
@@ -1161,17 +1148,6 @@ body.active {
     max-width: 1200px;
   }
 
-
-  /**
-   * HERO
-   */
-
-  .hero {
-    margin-top: 0px;
-  }
-
-
-
   /**
    * ABOUT
    */
@@ -1214,8 +1190,6 @@ body.active {
   .team-list {
     gap: 50px;
   }
-
-
 
   /**
    * GEARS

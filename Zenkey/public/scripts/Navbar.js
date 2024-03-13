@@ -2,10 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('header');
     header.innerHTML = `
     <div class="primary-nav">
-        <div class="nav-logo">
-            <a href="Home.html">
-                <img src="../images/Logo.jpeg" alt="Logo">
-            </a>
+        <div class="mobile-nav-header">
+            <div class="nav-logo">
+                <a href="Home.html">
+                    <img src="../Images/Logo.jpeg" alt="Logo">
+                </a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="ham-rectangle"></div>
+                <div class="ham-rectangle"></div>
+                <div class="ham-rectangle"></div>
+            </div>
         </div>
 
         <div class="search" id="search">
@@ -13,11 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
             <i class="fas fa-search"></i>
         </div>
 
-        <nav>
-        <a href="#">
-        <i class="fas fa-bell"></i>
-        </a>
-    
+        <nav class="nav-links">
+            <a href="#"><i class="fas fa-bell"></i></a>
             <a href="Cart.html">
                 <i class="fas fa-shopping-cart"></i>
             </a>
@@ -25,14 +29,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 <i class="fas fa-user"></i>
             </a>
             <a onclick=confirmation('Are you sure?','You are about to logout.') href="Login.html">
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </a>
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </nav>
+
+        <nav class="mobile-nav-links">
+            <a href="#"><i class="fas fa-bell"></i>Notifications</a>
+            <a href="Cart.html">
+                <i class="fas fa-shopping-cart"></i>
+                Cart
+            </a>
+            <a href="Account.html">
+                <i class="fas fa-user"></i>
+                Account
+            </a>
+            <a onclick=confirmation('Are you sure?','You are about to logout.') href="Login.html">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+            <div class="mob-sec-nav">
+                <a href="Products.html">All Products</a>
+                <a href="Products.html" onclick"handleProduct()">Keyboards</a>
+                <a href="Products.html" onclick"handleProduct()">Mice</a>
+                <a href="Products.html" onclick"handleProduct()">Accessories</a>
+                <a href="Products.html" onclick"handleProduct()">Deskpads</a>
+                <a href="Products.html" onclick"handleProduct()">Phone Cases</a>
+            </div>
         </nav>
     </div>
+
     <div class="secondary-nav">
         <ul>
             <li><a href="Products.html">All Products</a></li>
-            <li><a href="Products.html">Keyboards</a></li>
+            <li><a href="Products.html" onclick"handleProduct()">Keyboards</a></li>
             <li><a href="Products.html" onclick"handleProduct()">Mice</a></li>
             <li>
                 <a href="Products.html" onclick"handleProduct()">Accessories</a>
@@ -51,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <p>Lorem ipsum dolor sit amet consectetur. Ornare massa nunc nibh tristique. Non ligula tristique ut ut libero</p>
         </div>
         <div class="notificationFooter">
-            <button><img src="../Images/Setting.png" width="20" height="20"/></button>&nbsp;&nbsp;
             <button onclick="markAllRead()"><img src="../Images/double-tick.png" width="20" height="20"/><span>&nbsp;Mark all read</span></button>
         </div>
     </div>
@@ -66,17 +94,15 @@ document.addEventListener('DOMContentLoaded', function () {
         justify-content: space-between;
         align-items: center;
         padding: 20px 0px;
-        background-color: #231f20;
         width: 100%;
-        flex-wrap: wrap; 
+        z-index: 9999;
+        background-color: #231f20;
     }
-    
-    
 
     .nav-logo {
         margin-left: 20px;
         padding: 5px;
-        border-bottom: 2px solid #231f20;
+        border-bottom: 2px solid transparent;
         transition: 0.3s;
     }
 
@@ -127,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         color: #fff;
     }
 
-    nav {
+    .nav-links {
         margin-right: 20px;
         display: flex;
         flex-direction: row;
@@ -136,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         gap: 30px;
     }
 
-    nav a {
+    .nav-links a {
         color: #f2f2f2;
         border-bottom: 2px solid transparent;
         text-decoration: none;
@@ -144,11 +170,11 @@ document.addEventListener('DOMContentLoaded', function () {
         transition: border ease-in-out 0.3s;
     }
 
-    nav a i {
+    .nav-links a i {
         font-size: 23px;
     }
 
-    nav a:hover {
+    .nav-links a:hover {
         border-bottom: 2px solid #ee5417;
     }
 
@@ -252,7 +278,155 @@ document.addEventListener('DOMContentLoaded', function () {
         margin-left: 20px;
         margin-top: -37px;
     }
-    
+
+    .hamburger-menu {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+        margin-top: -2px;
+        gap: 5px;
+        padding: 12px;
+        background-color: #ee5417;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    @keyframes stretchBackground {
+        0% { height: 40px; }
+        20% { height: 20vh; }
+        40% { height: 40vh; }
+        60% { height: 60vh; }
+        80% { height: 80vh; }
+        100% { height: 100vh; }
+    }
+
+    @keyframes stretchBackgroundReverse {
+        0% { height: 100vh; }
+        20% { height: 80vh; }
+        40% { height: 60vh; }
+        60% { height: 40vh; }
+        80% { height: 20vh; }
+        100% { height: 40px; }
+    }
+
+    .ham-rectangle {
+        width: 23px;
+        height: 2px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        transition: 0.3s;
+    }
+
+    .mobile-nav-links {
+        display: none;
+    }
+
+    .mobile-nav-links a i {
+        margin-right: 15px;
+    }
+
+    .mob-sec-nav {
+        display: none;
+    }
+
+    .mob-nav-down {
+        margin-left: 10px;
+    }
+
+    @media (max-width: 900px) {
+        .grid-page {
+            padding-top: 0;
+            margin-top: 100px;
+        }
+
+        .primary-nav {
+            position: fixed;
+            top: 0;
+            flex-direction: column;
+            align-items: center;
+            height: 40px;
+        }
+
+        .secondary-nav, .nav-links, .search {
+            display: none;
+        }
+
+        .nav-logo {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .mobile-nav-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 9999;
+            padding: 20px 0px;
+            height: auto;
+            background-color: #231f20;
+            transition: all ease-in-out 0.2s;
+        }
+
+        .mobile-nav-links {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .mobile-nav-links a {
+            font-family: 'Poppins Regular';
+            font-size: 18px;
+            color: #f2f2f2;
+            text-decoration: none;
+            padding: 14px 25px;
+            transition: all ease-in-out 0.3s;
+            user-select: none;
+        }
+
+        .mob-sec-nav {
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100vw;
+            height: 100%;
+            background-color: #ee5417;
+        }
+        
+        .hamburger-menu {
+            display: flex;
+        }
+
+        .hamburger-menu.active {
+            background-color: #fff;
+        }
+
+        .hamburger-menu.active .ham-rectangle {
+            background-color: #000;
+        }
+
+        .hamburger-menu.active .ham-rectangle:nth-child(1) {
+            transform: rotate(45deg) translate(5.2px, 5.2px);
+        }
+        
+        .hamburger-menu.active .ham-rectangle:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active .ham-rectangle:nth-child(3) {
+            transform: rotate(-45deg) translate(5.3px, -5.3px);
+        }       
     `;
     header.appendChild(style);
 
@@ -260,6 +434,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentPage = window.location.pathname.split('/').pop();
     const nav = document.querySelector('nav');
     const navLinks = nav.querySelectorAll('a');
+    // Toggle navigation links on hamburger icon click
+    const primaryNav = document.querySelector('.primary-nav');
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const mobileNavLinks = document.querySelector('.mobile-nav-links');
+    const mobileNavHeader = document.querySelector('.mobile-nav-header');
+    const secNav = document.querySelector('.mob-sec-nav');
+
+    // Set initial state of mobileNavLinks to 'none'
+    mobileNavLinks.style.display = 'none';
 
     if (currentPage === 'LandingPage.html') {
         const navLogo = document.querySelector('.nav-logo');
@@ -273,6 +456,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (currentPage === 'Checkout.html' && link.getAttribute('href') === 'Cart.html') {
             link.classList.add('nav-active');
+        }
+    });
+
+    hamburgerMenu.addEventListener('click', function () {
+        if (mobileNavLinks.style.display === 'none') {
+            secNav.style.display = 'flex';
+            mobileNavLinks.style.display = 'flex';
+            // Extend to full screen height
+            primaryNav.style.height = '100vh';
+            primaryNav.style.animation = 'stretchBackground 0.1s ease-in-out';
+            mobileNavHeader.style = 'border-bottom: 1px solid #f2f2f2';
+            // Toggle active class for hamburger icon animation
+            hamburgerMenu.classList.toggle('active');
+        }
+        else {
+            mobileNavLinks.style.display = 'none';
+            secNav.style.display = 'none';
+            primaryNav.style.height = '40px'; // Revert to default height
+            primaryNav.style.animation = 'stretchBackgroundReverse 0.1s ease-in-out';
+            mobileNavHeader.style = 'border-bottom: none';
+            // Remove active class for hamburger icon animation
+            hamburgerMenu.classList.remove('active');
+        }
+    });
+
+    // Reset navbar on window resize
+    window.addEventListener('resize', function () {
+        const screenWidth = window.innerWidth;
+        const navLinksDesktop = document.querySelector('.nav-links');
+        const mobileNavLinks = document.querySelector('.mobile-nav-links');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const primaryNav = document.querySelector('.primary-nav');
+        const mobileNavHeader = document.querySelector('.mobile-nav-header');
+
+        if (screenWidth > 900) {
+            navLinksDesktop.style.display = 'flex';
+            mobileNavLinks.style.display = 'none';
+            hamburgerMenu.style.display = 'none';
+            mobileNavHeader.style = 'border-bottom: none';
+            primaryNav.style.height = 'auto'; // Revert to default height
+            hamburgerMenu.classList.remove('active');
+        } else {
+            navLinksDesktop.style.display = 'none';
+            hamburgerMenu.style.display = 'flex';
         }
     });
 });
@@ -295,8 +522,15 @@ document.addEventListener('DOMContentLoaded', function () {
 // Setting filtered product in local storage
 document.addEventListener('DOMContentLoaded', function () {
     const secondaryNav = document.querySelector('.secondary-nav');
+    const secondaryMobNav = document.querySelector('.mob-sec-nav');
     const secondaryNavLinks = secondaryNav.querySelectorAll('a');
+    const secondaryMobNavLinks = secondaryMobNav.querySelectorAll('a');
     secondaryNavLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            localStorage.setItem('productFiltered', link.textContent);
+        });
+    });
+    secondaryMobNavLinks.forEach(link => {
         link.addEventListener('click', function () {
             localStorage.setItem('productFiltered', link.textContent);
         });

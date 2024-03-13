@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="footer-sections">
         <div class="footer-section">
             <span>Links</span>
-            <li><a href="Home.html">Home</a></li>
-            <li><a href="Products.html">Products</a></li>
-            <li><a href="Cart.html">Cart</a></li>
-            <li><a href="Checkout.html">Checkout</a></li>
-            <li><a href="Account.html">Account</a></li>
+            <li><a href="Landing.html#home" onclick="smoothScroll('#home')">Home</a></li>
+            <li><a href="Landing.html#products" onclick="smoothScroll('#products')">Products</a></li>
+            <li><a href="Landing.html#partners" onclick="smoothScroll('#partners')">Partners</a></li>
+            <li><a href="Landing.html#keyfeatures" onclick="smoothScroll('#keyfeatures')">Key Features</a></li>
+            <li><a href="Landing.html#download" onclick="smoothScroll('#download')">Download</a></li>
         </div>
         <div class="footer-section">
             <span>Get In Touch</span>
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .footer-section {
-        width: 25%;
+        width: 15%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -88,17 +88,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .footer-section span {
-        font-family: 'Poppins Bold';
+        font-family: 'Poppins SemiBold';
         font-size: 20px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
     }
 
     .footer-section li {
-        font-family: 'Poppins Medium';
+        font-family: 'Poppins Regular';
         font-size: 15px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
         list-style: none;
         cursor: pointer;
     }
@@ -128,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         align-items: center;
         justify-content: center;
         gap: 20px;
-        color: #ff660d;
+        color: #fff;
         height: 15%;
         background-color: #000;
         font-family: 'Poppins Medium';
@@ -184,12 +180,12 @@ document.addEventListener('DOMContentLoaded', function () {
             font-size: 18px;
         }
 
-        .footer-section li {
-            font-size: 13px;
+        .footer-section li a {
+            font-size: 14px;
         }
 
         .footer-bottom-text {
-            font-size: 12px;
+            font-size: 11px;
         }
     `;
     footer.appendChild(style);

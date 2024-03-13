@@ -7,7 +7,9 @@ function validatePassword() {
     var numCheck = /[0-9]/;
 
     if (!lowercaseCheck.test(pass.trim()) | !upperCaseCheck.test(pass.trim()) | !specialNumCheck.test(pass.trim()) | !numCheck.test(pass.trim()) | pass.trim().length < 6 | pass.trim().length > 15) {
-        document.getElementById("passError").innerHTML = "Incorrect Password";
+        var passError = document.getElementById("passError");
+        passError.innerHTML = "Incorrect Password";
+        passError.style.display = "flex";
         return false;
     }
 

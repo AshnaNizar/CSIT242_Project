@@ -3,48 +3,42 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Zenkey</title>
-    <link rel="stylesheet" href="../css/Login.css">
-    <script src="../scripts/Navbar.js" ></script>
-    <script src="../scripts/Footer.js" ></script>
-    <script type="text/javascript" src="../scripts/Login.js"></script>
+    <title>Zenkey Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
     <script src="../scripts/NavbarBeforeLogin.js" defer></script>
-    <script src="../scripts/Footer.js" defer></script>
+    <script src="../scripts/FooterBefore.js" defer></script>
+    <script type="text/javascript" src="../scripts/Login.js"></script>
     <link rel="stylesheet" href="../css/Global.css" />
-    <script src="../scripts/Footer.js" defer></script>
-
-    <title>Products</title>
+    <link rel="stylesheet" href="../css/Login.css">
 </head>
 
 <body>
     <header></header>
-    <div class="body">
-        <div class="wrapper">
-            <form onsubmit="return validatePassword()">
-                <h2>Login </h2>
-                <p>Login to continue shopping!</p>
 
-                <div class="inputFieldDiv">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                </div>
+    <div class="page-wrapper login-image">
+        <form class="container" onsubmit="return validatePassword()">
 
-                <div class="inputFieldDiv">
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </div>
-                <span id="passError"></span>
+            <div class="container-title">
+                Login
+            </div>
+            <div class="container-subtitle">
+                Login to continue shopping!
+            </div>
 
-                <div class="formButtonDiv">
-                    <input class="submitButton" type="submit" value="Login">
-                </div>
-
-                <div>
-                    <p>Don't have an account? <a href="Signup.html"> Signup here</a></p>
-                </div>
-
-            </form>
-        </div>
+            <div class="input-fields">
+                <input class="input-field" type="email" id="email" name="email" placeholder="Email" required>
+                <input class="input-field" type="password" id="password" name="password" placeholder="Password"
+                    required>
+                <input class="submitButton" type="submit" value="Login">
+            </div>
+            
+            <div class="container-text">
+                <p>Don't have an account? <a href="Signup.html"> Signup here</a></p>
+            </div>
+            
+            <span id="passError"></span>
+        </form>
     </div>
     <footer></footer>
 

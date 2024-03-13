@@ -1,46 +1,94 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+html {
+    overflow-x: hidden;
+}
+
+.accountTitle {
+    font-family: 'Poppins Medium';
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 .wrapper {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 100px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
-#selectedForm{
+.MenuItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
+}
+
+#UserSelection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.infoTitle {
+    color: #000;
+    font-family: 'Poppins Medium';
+    font-size: 18px;
+    margin-bottom: 20px;
+    width: 85%;
+    text-align: left;
+}
+
+#selectedForm {
     color: rgb(146, 144, 144);
 }
 
-#deleteAcc{
+#deleteAcc {
     color: grey;
 }
-#deleteAcc:hover{
-    color: red ;
+
+#deleteAcc:hover {
+    color: red;
 }
 
 .links {
     display: flex;
-    flex-direction: column; /* Arrange links vertically */
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
 }
 
-.links > li {
-    margin-bottom: 10px; 
+.links>li {
+    margin-bottom: 20px;
     list-style-type: none;
-    font-size: 12px;
-    position: relative; 
-    width:fit-content;
-
+    font-family: 'Poppins Medium';
+    font-size: 13px;
+    cursor: pointer;
 }
 
-.links > li> hr {
-    margin-top: 10px;
-    bottom: -2px;
+.links>hr {
     width: 14vh;
+    margin-bottom: 20px;
 }
 
 .menuLink {
     color: black;
     text-decoration: none;
     display: inline-block;
-   
 }
 
 .menuLink::after {
@@ -55,137 +103,217 @@
 
 .menuLink:hover::after {
     width: 100%;
+    cursor: pointer;
+    transition: width .3s;
 }
 
-#profile{
-    color:#ee5417;
-    font-weight: bold;
-}
-
-#UserSelection{
-    margin-left: 10vh;
-    margin-top: 2vh;
-}
-
-.UserForm {
-    display: block;
-    padding-top: 30vh;
-}
 .inputFieldDiv {
-    margin-bottom: 4vh;
-}
-
-#UserSelection input {
-    height: 3.8vh;
-    width: 40vh;
-    border-radius: 1vh;
+    width: 80%;
+    padding: 15px 20px;
+    border-radius: 15px;
     border: 0.5px solid grey;
-    padding: 1vh;
-    font-family: Poppins;
+    font-family: 'Poppins Regular';
     font-size: 12px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 }
 
-body{
-    margin-left: 50vh;
-    margin-top: 10vh;
-    font-family: Poppins;
+.inputFieldDiv:focus {
+    border: 1px solid #ee5417;
 }
 
-p{
-    color: black;
-    font-size: 14px;
-}
 
 .submitButton {
-    background-color: #ee5417;
-    border: 1px #ee5417 !important;
+    background-color: #000;
     border-radius: 3vh;
-    width: 42vh !important;
-    height: 5vh !important;
+    border: none;
+    width: 50%;
+    height: 100%;
+    padding: 15px 20px;
+    margin-top: 20px;
     color: white;
     font-family: 'Poppins Semibold';
     align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 }
 
 .submitButton:hover {
-    background-color: #c64614;
+    background-color: #ee5417;
 }
 
-
-.formButtonDiv {
+.order-item {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    padding-top: 3vh;
-}
-
-
-.orderItem {
-    display: flex;
-    width: 75vh;
-    height: 30vh;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    align-items: center;
+    justify-content: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 60px;
+    padding: 30px;
+    background-color: #FFF;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
     margin-bottom: 40px;
-    font-size:10px;
 }
 
-.orderItem img {
-    height: 70%; 
-    width: 30%;
+.order-item-image-container {
+    min-width: 50px;
+    max-width: 200px;
+    overflow: hidden;
     border-radius: 10px;
-    padding-left: 10px;
-
+    background-color: #eeeded;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
-.orderDetails {
-    flex: 1;
-    padding: 20px;
-    padding-top:0px;
+.order-item-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
-.orderDetails h2 {
-    margin-top: 30px;
-    font-size: 13px;
-}
-
-.orderDetails ul {
-    margin-top: 10px; 
-    list-style-type: none;
-    padding-left: 0;
-
-}
-
-.checkout-input{
-
-    margin-bottom: 20px;
-    flex: 0 0 65%; 
-
-}
-.checkout-group {
+.order-item-details {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px; /* Adjust spacing between each group */
+    width: 100%;
+}
+
+
+.order-item-name {
+    font-family: 'Poppins Semibold';
+    font-size: 16px;
+    color: #000;
+}
+
+.order-item-price {
+    font-family: 'Poppins Medium';
+    font-size: 15px;
+    color: #000;
+}
+
+.order-item-quantity {
+    font-family: 'Poppins Light';
+    font-size: 15px;
+    color: #000;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.view-product-link {
+    font-family: 'Poppins Medium';
+    font-size: 13px;
+    color: #ee5417;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.checkout-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 85%;
+    margin-bottom: 20px;
 }
 
 .checkout-label {
-    flex: 0 0 30%; /* Adjust label width */
-    margin-right: 10px;
-    text-align: left;
-    height:40px;
+    font-family: 'Poppins Medium';
+    font-size: 15px;
+    color: #000;
 }
 
-
-label{
-    font-family:'Poppins' ;
-    font-size: 12px;
-    margin-right: 30px;
+.checkout-group-inline {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
 }
 
+.expiry-input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 55%;
+}
 
-.specifics{
-    color:#ee5417;
-    font-weight: bold;
+.cvv-input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 28%;
+}
+
+.checkout-hr {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+    .accountTitle {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .infoTitle {
+        text-align: center;
+    }
+
+    .order-item {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+
+    .order-item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .checkout-group-inline {
+        gap: 50px;
+    }
+
+    .expiry-input {
+        width: 45%;
+    }
+
+    .cvv-input {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .MenuItems {
+        width: 100%;
+        max-width: 80%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
 }
