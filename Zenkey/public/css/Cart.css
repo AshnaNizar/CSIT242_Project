@@ -70,7 +70,7 @@
 }
 
 .cart-item-image-container {
-    min-width: 200px;
+    min-width: 50px;
     max-width: 200px;
     overflow: hidden;
     border-radius: 10px;
