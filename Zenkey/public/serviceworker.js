@@ -1,102 +1,133 @@
 var CACHE_NAME = "zenkey-cache-v2";
 const homeCachedURLs = [
   // html
-  './pages/Home.html', 
+  '/Home.html', 
 
   // CSS
-  './css/Home.css',
+  '/css/Home.css',
+  '../Fonts/Poppins-Regular.ttf',
+  '../Fonts/Poppins-Medium.ttf',
+  '../Fonts/Poppins-SemiBold.ttf',
     
   // JS
-  './scripts/Navbar.js',
-  './scripts/Footer.js',
-  './scripts/Popups.js',
+  '/scripts/Navbar.js',
+  '/scripts/Footer.js',
+  '/scripts/Popups.js',
   
   // CSS
-  './css/Global.css',
-  './css/Notification.css',
+  '/css/Global.css',
+  '/css/Notification.css',
 
   // Images
-  './images/PhoneCaseOrange.jpg', 
-  './images/key6.png', 
-  './images/mouse1.png', 
-  './images/PhoneCase2.png', 
-  './images/DeskPad2.png', 
-  './images/key1.png', 
-  './images/mouse5.png', 
-  './images/key4.png', 
+  '/images/PhoneCaseOrange.jpg', 
+  '/images/key6.png', 
+  '/images/mouse1.png', 
+  '/images/PhoneCase2.png', 
+  '/images/DeskPad2.png', 
+  '/images/key1.png', 
+  '/images/mouse5.png', 
+  '/images/key4.png', 
 ];
 
-// Install event: Cache resources during service worker installation
-self.addEventListener("install", function (event) {
-    event.waitUntil(
-      Promise.all([
-        cacheResources(CACHE_NAME, homeCachedURLs),
-      ])
-    );
-});
+const accountCachedURLs=[
+    // html
+    '/Account.html',
+    '/Offline-Account.html',
 
-self.addEventListener('fetch', function(event) {
-      // Handle requests for Account/Orders
-    var requestURL = new URL(event.request.url);
-    if(requestURL.pathname === "/Account/Orders"){
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function(cache) {
-        return cache.match(event.request).then(function(response) {
-          var fetchPromise = fetch(event.request).then(function(networkResponse) {
-            // If the network response is valid and differs from the cached version
-            // Update the cache with the new response
-            if (networkResponse && networkResponse.status === 200) {
-              cache.put(event.request, networkResponse.clone());
-            }
-            return networkResponse;
-          }).catch(function() {
-            // If the network request fails, serve the cached response
-            return response;
-          });
+    // CSS
+    '/css/Account.css',
+
+    // JS
+    '/scripts/Account.js',
+
+
+]
+
+const CACHED_URLS = [...homeCachedURLs, ...accountCachedURLs /* Add more arrays here if needed */];
+
+// Install event: Cache resources during service worker installation
+self.addEventListener("install", function(event) {
+  // Cache everything in CACHED_URLS. Installation fails if anything fails to cache
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.add(homeCachedURLs);
+    })
+  );
+});
   
-          // Return the network response if available, otherwise return the cached response
-          return response || fetchPromise;
-        });
+  
+  // Fetch event: Network falling back to Cache strategy
+self.addEventListener("fetch", function (event) {
+    var requestURL = new URL(event.request.url);
+    
+    if(requestURL.pathname === "/Home.html"){
+        console.log("pathname is: ", requestURL.pathname);
+
+    event.respondWith(
+      // Try to fetch the resource from the network
+      fetch(event.request).catch(function () {
+        // If network request fails, serve the resource from the cache
+        console.log("In the cache", event.request);
+        return caches.match(event.request);
       })
     );
     }
+    else if(requestURL.pathname === "/Account.html") {
+        const params = new URLSearchParams(requestURL.search);
+        const section = params.get('section');
+        
+        if (section === 'profile') {
+            // Add caching strategy for profile
+        } else if (section === 'orders') {
+            // Add caching strategy for orders
+        } else if (section === 'Payment') {
+            event.respondWith(
+                fetch(event.request)
+                .catch(function () {
+                    // If network request fails, serve a generic fallback page
+                    return caches.match('/Offline-Account.html'); // Example of a generic fallback page
+                })
+            );
+        } 
+
+    }
+    else {
+        event.respondWith(
+          caches.open(CACHE_NAME).then(function(cache) {
+            return cache.match(event.request).then(function(response) {
+              return response || fetch(event.request);
+            });
+          })
+        );
+      }
+    
   });
-  
-  
-//activating
+
+  //activating
 self.addEventListener("activate", function (event) {
     event.waitUntil(
       caches.keys().then(function (cacheNames) {
         return Promise.all(
           cacheNames.map(function (cacheName) {
             // Delete only caches with different version numbers
-            if (cacheName !== CACHE_NAME && cacheName.indexOf("zenkey-cache-") !== 0) {
-              return caches.delete(cacheName);
-            }
+            // if (cacheName !== CACHE_NAME) {
+            //   return caches.delete(cacheName);
+            // }
           })
         );
       })
     );
   });
   
-  // Fetch event: Network falling back to Cache strategy
-  self.addEventListener("fetch", function (event) {
-    event.respondWith(
-      // Try to fetch the resource from the network
-      fetch(event.request).catch(function () {
-        // If network request fails, serve the resource from the cache
-        return caches.match(event.request);
-      })
-    );
-  });
+
   
   // Function to cache resources in a specified cache
-  function cacheResources(cacheName, urls) {
-    return caches.open(cacheName).then(function (cache) {
-      // Add all specified URLs to the cache
-      return cache.addAll(urls);
-    });
-  }
+//   function cacheResources(cacheName, urls) {
+//     return caches.open(cacheName).then(function (cache) {
+//       // Add all specified URLs to the cache
+//       return cache.addAll(urls);
+//     });
+//   }
 
 // //installing
 // self.addEventListener("install", function (event) {

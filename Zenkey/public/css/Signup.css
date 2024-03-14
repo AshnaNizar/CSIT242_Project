@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 
 .wrapper {
@@ -34,7 +33,7 @@
     width: 37vh;
     height: 5vh;
     color: white;
-    font-family: Poppins;
+    font-family: 'Poppins SemiBold';
     font-size: 12px;
     font-weight: 500;
 }
@@ -50,7 +49,7 @@
 }
 
 body {
-    font-family: Poppins;
+    font-family: 'Poppins SemiBold';
     background-image: url("../images/bgOrange.jpg");
     background-size:contain;
     background-repeat: no-repeat;

@@ -20,7 +20,7 @@ function clickSection(clickedLink) {
             link.style.fontWeight = '100';
         }
     });
-    // var currentUrl = "http://localhost:8000/Account.html";
+
     // change the text content of the breadcrumbs-active to the clicked link
     document.getElementById('breadcrumbs-active').textContent = clickedLink.textContent;
     clickedLink.style.color = '#ee5417';
@@ -33,18 +33,28 @@ function clickSection(clickedLink) {
     switch (clickedLink.id) {
         case "profile":
             showProfile();
-            // window.location.href = currentUrl + '/Profile';
+            updateUrlParameter('section', 'Profile');
             break;
         case "orders":
             showOrderDetails();
-            // window.location.href = currentUrl + '/Orders';
+            updateUrlParameter('section', 'Orders');
             break;
         case "payment":
             showPayment();
-            // window.location.href = currentUrl + '/Payment';
+            updateUrlParameter('section', 'Payment');
             break;
     }
 }
+
+function updateUrlParameter(key, value) {
+    // Get the current URL
+    var url = new URL(window.location.href);
+    // Update or add the parameter
+    url.searchParams.set(key, value);
+    // Replace the current URL with the updated one
+    window.history.replaceState(null, null, url.toString());
+}
+
 
 // Function to display profile section
 function showProfile() {
