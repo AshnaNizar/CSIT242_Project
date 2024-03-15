@@ -40,7 +40,7 @@ function validatePassword() {
         return false;
     }
 
-    window.location.href = '../pages/Home.html';
+    window.location.href = '../Home.html';
     return false;
 
 }

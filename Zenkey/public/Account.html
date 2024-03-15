@@ -12,7 +12,7 @@
     <script src="../scripts/Footer.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/Account.css">
-    <link rel="stylesheet" href="../css/Global.css">
+    <link rel="stylesheet" href="/css/Global.css">
     <link rel="stylesheet" href="../css/Notification.css" />
 
 </head>
@@ -30,11 +30,11 @@
         <div class="wrapper">
             <div class="MenuItems">
                 <ul class="links">
-                    <li class="menuLink" id="profileOffline">Profile</li>
+                    <li onclick="clickSection(this)" class="menuLink" id="profile">Profile</li>
 
-                    <li class="menuLink" id="ordersOffline">My Orders</li>
+                    <li onclick="clickSection(this)" class="menuLink" id="orders">My Orders</li>
 
-                    <li class="menuLink" id="paymentOffline">Payment Info</li>
+                    <li onclick="clickSection(this)" class="menuLink" id="payment">Payment Info</li>
 
                     <hr>
 
@@ -43,9 +43,23 @@
                 </ul>
             </div>
 
-            <div id="UserSelectionOffline">
-                <h2>Oops!</h2>
-                <p>It seems you're currently offline. Please reconnect to the internet to access this information.</p>
+            <div id="UserSelection">
+                <div class="infoTitle">
+                    User Info
+                </div>
+                <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
+                    placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
+                <input class="inputFieldDiv" type="email" id="email" name="email" placeholder="Email" required>
+                <hr>
+                <div class="infoTitle">
+                    Change Password
+                </div>
+                <input class="inputFieldDiv" type="password" id="password" name="password" placeholder="Password"
+                    title="Password must be between 6-15 characters and must include atleast one lowercase, uppercase, number, and special character"
+                    required>
+                <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
+                    placeholder="Confirm password" required>
+                <input class="submitButton" type="submit" value="Save">
             </div>
         </div>
 

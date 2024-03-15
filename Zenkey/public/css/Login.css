@@ -93,13 +93,13 @@
 }
 
 .login-image {
-    background-image: url("../images/bgOrangeLogin.jpg");
+    background-image: url("../Images/bgOrangeLogin.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .signup-image {
-    background-image: url("../images/bgOrange.jpg");
+    background-image: url("../Images/bgOrange.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 }
