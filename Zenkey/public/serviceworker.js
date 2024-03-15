@@ -1,38 +1,28 @@
 var CACHE_NAME = "zenkey-cache-v3";
-const pngroductsAndCartCachedURLs = [
+const productsAndCartCachedURLs = [
   // html
   'Products.html',
 
   // CSS
   "./css/Products.css",
-  "./css/Global.css",
-  "./css/Notification.css",
-  "./css/Popups.css",
+  // "./css/Global.css",
+  // "./css/Notification.css",
+  // "./css/Popups.css",
+
   // JS
   "./scripts/Productspage.js",
   "./scripts/Navbar.js",
   "./scripts/Products.js",
-  "./scripts/Product-view.js",
-  "./scripts/Filterbox.js",
-  "./scripts/Footer.js",
-  "./scripts/Popups.js",
-
-  // Images
-  './images/PhoneCaseOrange.jpg',
-  './images/key6.png',
-  './images/mouse1.png',
-  './images/PhoneCase2.png',
-  './images/DeskPad2.png',
-  './images/key1.png',
-  './images/mouse5.png',
-  './images/key4.png',
+  // "./scripts/Filterbox.js",
+  // "./scripts/Footer.js",
+  // "./scripts/Popups.js",
 ];
 
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
   event.waitUntil(
     Promise.all([
-      cacheResources(CACHE_NAME, homeCachedURLs),
+      cacheResources(CACHE_NAME, productsAndCartCachedURLs),
     ])
   );
 });
