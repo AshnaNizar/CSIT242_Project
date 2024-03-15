@@ -470,7 +470,6 @@ body {
 
 .card-banner {
   position: relative;
-  background: url("../Images/gears-card-bg.png") no-repeat;
   background-size: contain;
   background-position: center;
   width: 100%;
