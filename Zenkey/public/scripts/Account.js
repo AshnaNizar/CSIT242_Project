@@ -3,32 +3,38 @@ const params = new URLSearchParams(window.location.search);
 const section = params.get('section');
 
 //Function called on loading the page to check if the user has selected an item on the menu
-function defaultSection(){
-    if (section===null) {
-        var defaultLink=document.getElementById('profile');
+function defaultSection() {
+    if (section === null) {
+        var defaultLink = document.getElementById('profile');
         defaultLink.style.color = '#ee5417';
         defaultLink.style.fontWeight = 'bold';
         showProfile();
-    
+
     }
-    else{
+    else {
         clickSection(document.getElementById(section));
     }
 
 }
 
-window.onload = function() {
+window.onload = function () {
     defaultSection();
 
 };
 
 //function to reload the page when the user selects an item on the menu
-function clicked(clickedLink){
-    updateUrlParameter('section', clickedLink.id);
+function clicked(clickedLink) {
+    const baseUrl=`/Account.html`;
+    const url = new URL(baseUrl, window.location.origin);
+    const params = new URLSearchParams();
+    params.append('section', clickedLink.id);
+    url.search = params.toString();
+    window.location.href = url.href;
+    clickSection(clickedLink);
 }
 // Function to handle click events on menu links
 function clickSection(clickedLink) {
-    
+
 
     // Reset styles for all links
     var links = document.querySelectorAll('.links > li:not(#deleteAcc)');
@@ -61,13 +67,6 @@ function clickSection(clickedLink) {
     }
 }
 
-// Function to update URL parameter
-function updateUrlParameter(key, value) {
-    var url = new URL(window.location.href);
-    url.searchParams.set(key, value);
-    window.history.replaceState(null, null, url.toString());
-}
-
 // Function to display profile section
 function showProfile() {
     var profileDetails = document.getElementById('UserSelection');
@@ -95,50 +94,55 @@ function showOrderDetails() {
     var orderDetails = document.getElementById('UserSelection');
     orderDetails.innerHTML = '';
 
-    // Retrieve ordered products from local storage
-    let orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
+    // Fetch the orders JSON file from the server
+    fetch('../json/orders.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data.length === 0) {
+                orderDetails.innerHTML = '<p>No orders found.</p>';
+                return;
+            }
 
-    if (orderedProducts.length === 0) {
-        orderDetails.innerHTML = '<p>No orders found.</p>';
-        return;
-    }
+            data.forEach(function (product) {
+                const orderItemDiv = document.createElement('div');
+                orderItemDiv.classList.add('order-item');
 
-    orderedProducts.forEach(function (product) {
-        const orderItemDiv = document.createElement('div');
-        orderItemDiv.classList.add('order-item');
+                orderItemDiv.innerHTML = `
+                    <div class="order-item-image-container">
+                        <img src="${product.image}" alt="Product Image" class="order-item-image">
+                    </div>
+                    <div class="order-item-details">
+                        <div class="order-item-name">${product.name}</div>
+                        <div class="order-item-quantity">
+                            Quantity: ${product.quantity}
+                        </div>
+                        <div class="order-item-price">
+                            Price: AED ${product.price.toFixed(2)}
+                        </div>
+                        <div class="order-item-view-product">
+                            <a href="#" class="view-product-link" data-product-id="${product.id}">View Product</a>
+                        </div>
+                    </div>
+                `;
 
-        orderItemDiv.innerHTML = `
-            <div class="order-item-image-container">
-                <img src="${product.image}" alt="Product Image" class="order-item-image">
-            </div>
-            <div class="order-item-details">
-                <div class="order-item-name">${product.name}</div>
-                <div class="order-item-quantity">
-                    Quantity: ${product.quantity}
-                </div>
-                <div class="order-item-price">
-                    Price: AED ${product.price.toFixed(2)}
-                </div>
-                <div class="order-item-view-product">
-                    <a href="#" class="view-product-link" data-product-id="${product.id}">View Product</a>
-                </div>
-            </div>
-        `;
+                orderDetails.appendChild(orderItemDiv);
+            });
 
-        orderDetails.appendChild(orderItemDiv);
-    });
-
-    // Add event listener to View Product links
-    orderDetails.querySelectorAll('.view-product-link').forEach(function (link) {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            const productId = this.getAttribute('data-product-id');
-            localStorage.setItem('selectedProductId', productId);
-            window.location.href = "Product-view.html";
+            // Add event listener to View Product links
+            orderDetails.querySelectorAll('.view-product-link').forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const productId = this.getAttribute('data-product-id');
+                    localStorage.setItem('selectedProductId', productId);
+                    window.location.href = "Product-view.html";
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching orders:', error);
+            orderDetails.innerHTML = '<p>Error fetching orders. Please try again later.</p>';
         });
-    });
 }
-
 // Function to display payment section
 function showPayment() {
     var paymentDetails = document.getElementById('UserSelection');
