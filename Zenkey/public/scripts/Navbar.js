@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <a href="Cart.html">
                 <i class="fas fa-shopping-cart"></i>
             </a>
-            <a href="AccountProfile.html">
+            <a href="Account.html">
                 <i class="fas fa-user"></i>
             </a>
             <a onclick=confirmation('Are you sure?','You are about to logout.') href="Login.html">

@@ -1,7 +1,7 @@
-var CACHE_NAME = "zenkey-cache-v3";
+var CACHE_NAME = "zenkey-cache-v01";
 
 const globalCaches=[
-  './css/Global.css'
+  '/css/Global.css'
 ]
 const productCachedURLs = [
   // html
@@ -23,17 +23,16 @@ const productCachedURLs = [
 ];
 // const testCacheURL=['/pages/Home.html', '/scripts/Navbar.js','./css/Home.css','./Account.html','/pages/OfflineAccount.html','./css/Account.css','../Fonts/Poppins-Regular.ttf','./Images/PhoneCaseOrange.jpg']
 const fontCaches=[
-  './Fonts/Poppins-Regular.ttf',
-  './Fonts/Poppins-Medium.ttf',
-  './Fonts/Poppins-SemiBold.ttf',
-  './Fonts/Poppins-Bold.ttf',
-  './Fonts/Poppins-ExtraLight.ttf',
-  './Fonts/Poppins-Light.ttf'
+  '/Fonts/Poppins-Regular.ttf',
+  '/Fonts/Poppins-Medium.ttf',
+  '/Fonts/Poppins-SemiBold.ttf',
+  '/Fonts/Poppins-Bold.ttf',
+  '/Fonts/Poppins-ExtraLight.ttf',
+  '/Fonts/Poppins-Light.ttf'
 
 ]
 const accountCachedURLs = [
   // html
-  '/Account.html',
   '/OfflineAccount.html',
 
   // CSS
@@ -45,7 +44,7 @@ const accountCachedURLs = [
 
 ]
 
-const CACHED_URLS = [...productCachedURLs, ...accountCachedURLs,...fontCaches /* Add more arrays here if needed */];
+const CACHED_URLS = [...productCachedURLs, ...fontCaches, ...globalCaches, ...accountCachedURLs /* Add more arrays here if needed */];
 
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
@@ -92,11 +91,11 @@ self.addEventListener("fetch", function (event) {
   else if (requestURL.pathname === "/Account.html") {
     const params = new URLSearchParams(requestURL.search);
     const section = params.get('section');
-    if (section === 'Profile') {
+    if (section === 'profile' || section === null) {
       // Add caching strategy for profile
-    } else if (section === 'Orders') {
+    } else if (section === 'orders') {
       // Add caching strategy for orders
-    } else if (section === 'Payment') {
+    } else if (section === 'payment') {
       event.respondWith(
         fetch(event.request)
           .catch(function () {

@@ -2,7 +2,7 @@ var htmlTemplate = `<!DOCTYPE html>
 <html>
   <head>
     <title>PopUp</title>
-    <link rel="stylesheet" href="../css/Popup.css">
+    <link rel="stylesheet" href="./css/Popup.css">
   </head>
   <body>
     <div class="main">
