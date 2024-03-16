@@ -1,3 +1,5 @@
+importScripts("/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js");
+
 document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.querySelector(".priced-checkout-button");
     const masterImage = document.querySelector(".master-image");
@@ -190,3 +192,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Call updateSummary to display the subtotal, shipping, and total on page load
     updateSummary();
 });
+
+function handleOfflineCheckout(){
+    ProgressiveKITT.addAlert(
+        "You are currently offline."+
+        "The content of this page may be out of date."
+        );
+        
+}

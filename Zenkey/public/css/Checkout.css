@@ -167,7 +167,7 @@
     color: #000;
 }
 
-.priced-checkout-button {
+.priced-checkout-button, .priced-checkout-span{
     font-family: 'Poppins Medium';
     font-size: 15px;
     width: 100%;
@@ -186,9 +186,22 @@
     justify-content: space-between;
 }
 
-.priced-checkout-button i {
+.priced-checkout-button i, .priced-checkout-span i  {
     margin-left: 5px;
     font-size: 15px;
+}
+
+.priced-checkout-span{
+    margin-left: 5px;
+    font-size: 15px;
+    background-color: #929090;
+
+}
+
+.priced-checkout-span:hover{
+
+    background-color: #929090;
+
 }
 
 .priced-checkout-button:hover {

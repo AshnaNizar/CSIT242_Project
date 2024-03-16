@@ -15,10 +15,11 @@ const landingCacheURLs = [
 ]
 
 const checkoutCacheURLs = [
-  '/Checkout.html',
+  '/OfflineCheckout.html',
   '/css/Checkout.css',
-  '/scripts/Checkout.js'
-
+  '/scripts/Checkout.js',
+  '/js/vendor/progressive-ui-kitt/themes/flat.css',
+  '/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js'
 ]
 
 const accountCachedURLs = [
@@ -151,7 +152,7 @@ self.addEventListener("fetch", function (event) {
   // console.log('Handling fetch event for', pathname);
 
   // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
-  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Checkout.html')) {
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') ) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(response => {
@@ -164,6 +165,14 @@ self.addEventListener("fetch", function (event) {
             });
           }
         });
+      })
+    );
+  } else if (pathname.endsWith('/Checkout.html')){
+    event.respondWith(
+      fetch(event.request).then(networkResponse => { 
+          return networkResponse;
+      }).catch(() => {
+        return caches.match('/OfflineCheckout.html');
       })
     );
   }
