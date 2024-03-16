@@ -1,16 +1,19 @@
-var CACHE_NAME = "zenkey-cache-v1";
+var CACHE_NAME = "zenkey-cache-v";
 
 const homeCacheURLs = [
   '/Home.html',
   '/css/Home.css',
-  '/scripts/Home.js'
+  '/scripts/Home.js',
 ]
 
 const landingCacheURLs = [
   '/',
   '/Landing.html',
   '/css/LandingPage.css',
-  '/scripts/Landing.js'
+  '/scripts/Landing.js',
+  '/js/vendor/progressive-ui-kitt/themes/flat.css',
+  '/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js',
+
 
 ]
 
@@ -18,8 +21,7 @@ const checkoutCacheURLs = [
   '/OfflineCheckout.html',
   '/css/Checkout.css',
   '/scripts/Checkout.js',
-  '/js/vendor/progressive-ui-kitt/themes/flat.css',
-  '/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js'
+
 ]
 
 const accountCachedURLs = [
@@ -91,7 +93,7 @@ const globalCachedURLs = [
 
   //Icons
   "/css/all.min.css",
-  "/css/fontawesome.min.css"
+  "/css/fontawesome.min.css",
 ];
 
 const productsAndCartCachedURLs = [
