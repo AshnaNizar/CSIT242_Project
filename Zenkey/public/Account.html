@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/Account.css">
     <link rel="stylesheet" href="../css/Global.css">
-    <link rel="stylesheet" href="../css/Global.css" />
     <link rel="stylesheet" href="../css/Notification.css" />
 
 </head>
@@ -22,9 +21,11 @@
     <header></header>
 
     <div class="grid-page">
-        <h2>Account Settings</h2>
         <div class="breadcrumbs">
             Account > <span class="breadcrumbs-active" id="breadcrumbs-active"> Profile </span>
+        </div>
+        <div class="accountTitle">
+            Account Settings
         </div>
         <div class="wrapper">
             <div class="MenuItems">
@@ -35,29 +36,32 @@
 
                     <li onclick="clickSection(this)" class="menuLink" id="payment">Payment Info</li>
 
-                    <li>
-                        <hr>
-                    </li>
+                    <hr>
 
                     <li onclick="confirmation('Are you sure?','This action will permanently delete your account.')"
                         id="deleteAcc"> Delete Account</li>
                 </ul>
             </div>
 
-            <di id="UserSelection">
+            <div id="UserSelection">
+                <div class="infoTitle">
+                    User Info
+                </div>
                 <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
-                    placeholder="First and last name" pattern="^[a-z|A-Z]{2,}$" required>
+                    placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
                 <input class="inputFieldDiv" type="email" id="email" name="email" placeholder="Email" required>
                 <hr>
-                <p id="passwordChange">Change Password</p>
+                <div class="infoTitle">
+                    Change Password
+                </div>
                 <input class="inputFieldDiv" type="password" id="password" name="password" placeholder="Password"
                     title="Password must be between 6-15 characters and must include atleast one lowercase, uppercase, number, and special character"
                     required>
                 <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
                     placeholder="Confirm password" required>
                 <input class="submitButton" type="submit" value="Save">
+            </div>
         </div>
-    </div>
 
     </div>
     </div>
