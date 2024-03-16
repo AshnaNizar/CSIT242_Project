@@ -1,6 +1,4 @@
-// var GLOBAL_CACHE_NAME = "global-cache-v1";
-var CACHE_NAME = "cache-v4";
-// var PRODUCTS_CACHE_NAME = "productsAndCart-cache-v1";
+var CACHE_NAME = "zenkey-cache-v0";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -16,25 +14,25 @@ const landingCacheURLs = [
 
 ]
 
-const cartCacheURLs = [
-  '/Cart.html',
-  '/css/Cart.css',
-  '/scripts/Landing.js'
+const checkoutCacheURLs = [
+  '/Checkout.html',
+  '/css/Checkout.css',
+  '/scripts/Checkout.js'
 
 ]
 
-// URLs to be cached for the home page
-const cachedURLs = [
+const accountCachedURLs = [
+  // html
+  '/OfflinePayment.html',
 
-  //Home files
-  '/css/Home.css',
-  '/Home.html',
+  // CSS
+  '/css/Account.css',
 
-  //Landing Files
-  '/css/LandingPage.css',
-  '/Landing.html'
+  // JS
+  '/scripts/Account.js',
 
-];
+
+]
 
 const globalCachedURLs = [
 
@@ -43,7 +41,7 @@ const globalCachedURLs = [
   './Fonts/Poppins-Medium.ttf',
   './Fonts/Poppins-Bold.ttf',
   './Fonts/Poppins-SemiBold.ttf',
-  '/Fonts/Poppins-Light.ttf',
+  './Fonts/Poppins-Light.ttf',
 
   // NavBar/Footer and Images
   './scripts/Footer.js',
@@ -90,13 +88,16 @@ const globalCachedURLs = [
   "./Images/DeskPad5.png",
   "./Images/DeskPad6.png",
 
+  //Icons
+  "/css/all.min.css",
+  "/css/fontawesome.min.css"
 ];
 
 const productsAndCartCachedURLs = [
   // html
-  'Products.html',
-  'Product-view.html',
-  "Cart.html",
+  '/Products.html',
+  '/Product-view.html',
+  "/Cart.html",
 
   // JS
   "./scripts/Productspage.js",
@@ -114,7 +115,7 @@ const productsAndCartCachedURLs = [
 
 ];
 
- const CACHED_URLS= [...globalCachedURLs,...productsAndCartCachedURLs,...cachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...cartCacheURLs];
+ const CACHED_URLS= [...globalCachedURLs,...productsAndCartCachedURLs,...accountCachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...checkoutCacheURLs];
 
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
@@ -155,11 +156,9 @@ self.addEventListener("fetch", function (event) {
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(response => {
           if (response) {
-            console.log(`Serving123 ${pathname} from cache`);
             return response;
           } else {
             return fetch(event.request).then(networkResponse => {
-              console.log(`Caching and serving ${pathname} from network`);
               cache.put(event.request, networkResponse.clone());
               return networkResponse;
             });
@@ -172,13 +171,11 @@ self.addEventListener("fetch", function (event) {
   else if (pathname.endsWith('/css/Cart.css')) {
     event.respondWith(
       fetch(event.request).then(networkResponse => {
-        console.log(`Caching and serving ${pathname} from network`);
         return caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, networkResponse.clone());
           return networkResponse;
         });
       }).catch(() => {
-        console.log(`Serving456 ${pathname} from cache due to network failure`);
         return caches.match(event.request);
       })
     );
@@ -200,6 +197,36 @@ self.addEventListener("fetch", function (event) {
       })
     );
   }
+  else if (url.pathname === "/Account.html") {
+    const params = new URLSearchParams(url.search);
+    const section = params.get('section');
+    if (section === 'profile' || section === null) {
+      // Add caching strategy for profile
+    } else if (section === 'orders') {
+      // Add caching strategy for orders
+    } else if (section === 'payment') {
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            console.log("Looking offline")
+
+            // If network request fails, serve a generic fallback page
+            return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
+          })
+      );
+    }
+    else {
+      //Change to profile caching strategy
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            // If network request fails, serve a generic fallback page
+            return caches.match('/Account.html'); // Example of a generic fallback page
+          })
+      );
+
+    }
+  }
   // Default behavior for all other requests - Dynamic Caching
   else {
     if (pathname.indexOf(".html") === -1) {
@@ -214,7 +241,6 @@ self.addEventListener("fetch", function (event) {
         })
       );
     } else {
-      console.log('HEHE');
       event.respondWith(
         fetch(event.request)
           .catch(function () {
@@ -228,20 +254,3 @@ self.addEventListener("fetch", function (event) {
 
 
 
-// function fetchAndCache(request, cacheName) {
-//   fetch(request).then(function (response) {
-//     if (response) {
-//       caches.open(cacheName).then(function (cache) {
-//         cache.put(request, response.clone());
-//       });
-//     }
-//   });
-// }
-
-// Function to cache resources in a specified cache
-// function cacheResources(cacheName, urls) {
-//   return caches.open(cacheName).then(function (cache) {
-//     // Add all specified URLs to the cache
-//     return cache.addAll(urls);
-//   });
-// }

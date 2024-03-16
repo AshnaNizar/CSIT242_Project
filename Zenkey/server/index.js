@@ -46,18 +46,6 @@ app.get("/Signup.html", function(req, res) {
     res.sendFile("Account.html", {root: "public"});
   });
 
-//   app.get("/Account.html/Profile", function(req, res) {
-//     res.sendFile("Account.html", {root: "public/"});
-//   });
-
-//   app.get("/Account.html/Orders", function(req, res) {
-//     res.sendFile("Account.html", {root: "public/"});
-//   });
-
-//   app.get("/Account.html/Payment", function(req, res) {
-//     res.sendFile("Account.html", {root: "public/"});
-//   });
-  
 
 // Start the server
 app.listen(port, function() {

@@ -1,28 +1,43 @@
-// Function to initialize the page
-function initializePage() {
-    // Highlight the "Profile" link
-    var profileLink = document.getElementById('profile');
-    clickSection(profileLink);
+
+const params = new URLSearchParams(window.location.search);
+const section = params.get('section');
+
+//Function called on loading the page to check if the user has selected an item on the menu
+function defaultSection(){
+    if (section===null) {
+        var defaultLink=document.getElementById('profile');
+        defaultLink.style.color = '#ee5417';
+        defaultLink.style.fontWeight = 'bold';
+        showProfile();
+    
+    }
+    else{
+        clickSection(document.getElementById(section));
+    }
+
 }
 
-// Call the initialization function when the page loads
-window.onload = initializePage;
+window.onload = function() {
+    defaultSection();
 
+};
+
+//function to reload the page when the user selects an item on the menu
+function clicked(clickedLink){
+    updateUrlParameter('section', clickedLink.id);
+}
 // Function to handle click events on menu links
 function clickSection(clickedLink) {
-    var links = document.querySelectorAll('.links > li');
+    
 
-    // Loop through each link
+    // Reset styles for all links
+    var links = document.querySelectorAll('.links > li:not(#deleteAcc)');
     links.forEach(function (link) {
-        // Reset styles for all links
-        if (link.id !== "deleteAcc") {
-            link.style.color = 'black';
-            link.style.fontWeight = '100';
-        }
+        link.style.color = 'black';
+        link.style.fontWeight = '100';
     });
 
-    // change the text content of the breadcrumbs-active to the clicked link
-    document.getElementById('breadcrumbs-active').textContent = clickedLink.textContent;
+    // Highlight the clicked link
     clickedLink.style.color = '#ee5417';
     clickedLink.style.fontWeight = 'bold';
 
@@ -33,28 +48,25 @@ function clickSection(clickedLink) {
     switch (clickedLink.id) {
         case "profile":
             showProfile();
-            updateUrlParameter('section', 'Profile');
+            // updateUrlParameter('section', 'Profile');
             break;
         case "orders":
             showOrderDetails();
-            updateUrlParameter('section', 'Orders');
+            // updateUrlParameter('section', 'Orders');
             break;
         case "payment":
             showPayment();
-            updateUrlParameter('section', 'Payment');
+            // updateUrlParameter('section', 'Payment');
             break;
     }
 }
 
+// Function to update URL parameter
 function updateUrlParameter(key, value) {
-    // Get the current URL
     var url = new URL(window.location.href);
-    // Update or add the parameter
     url.searchParams.set(key, value);
-    // Replace the current URL with the updated one
     window.history.replaceState(null, null, url.toString());
 }
-
 
 // Function to display profile section
 function showProfile() {
@@ -91,7 +103,7 @@ function showOrderDetails() {
         return;
     }
 
-    orderedProducts.forEach(function(product) {
+    orderedProducts.forEach(function (product) {
         const orderItemDiv = document.createElement('div');
         orderItemDiv.classList.add('order-item');
 
@@ -117,8 +129,8 @@ function showOrderDetails() {
     });
 
     // Add event listener to View Product links
-    orderDetails.querySelectorAll('.view-product-link').forEach(function(link) {
-        link.addEventListener('click', function(event) {
+    orderDetails.querySelectorAll('.view-product-link').forEach(function (link) {
+        link.addEventListener('click', function (event) {
             event.preventDefault();
             const productId = this.getAttribute('data-product-id');
             localStorage.setItem('selectedProductId', productId);
