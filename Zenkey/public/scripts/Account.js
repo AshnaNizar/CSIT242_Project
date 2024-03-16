@@ -25,7 +25,6 @@ window.onload = function() {
 //function to reload the page when the user selects an item on the menu
 function clicked(clickedLink){
     updateUrlParameter('section', clickedLink.id);
-    location.reload();
 }
 // Function to handle click events on menu links
 function clickSection(clickedLink) {

@@ -1,27 +1,27 @@
-var CACHE_NAME = "zenkey-cache-v01";
+var CACHE_NAME = "zenkey-cache-v0";
 
 const globalCaches=[
   '/css/Global.css'
 ]
 const productCachedURLs = [
   // html
-  'Products.html',
+  '/Products.html',
 
   // CSS
-  "./css/Products.css",
+  "/css/Products.css",
   // "./css/Global.css",
   // "./css/Notification.css",
   // "./css/Popups.css",
 
   // JS
-  "./scripts/Productspage.js",
-  "./scripts/Navbar.js",
-  "./scripts/Products.js",
+  "/scripts/Productspage.js",
+  "/scripts/Navbar.js",
+  "/scripts/Products.js",
   // "./scripts/Filterbox.js",
   // "./scripts/Footer.js",
   // "./scripts/Popups.js",
 ];
-// const testCacheURL=['/pages/Home.html', '/scripts/Navbar.js','./css/Home.css','./Account.html','/pages/OfflineAccount.html','./css/Account.css','../Fonts/Poppins-Regular.ttf','./Images/PhoneCaseOrange.jpg']
+// const testCacheURL=['/pages/Home.html', '/scripts/Navbar.js','./css/Home.css','./Account.html','/pages/OfflinePayment.html','./css/Account.css','../Fonts/Poppins-Regular.ttf','./Images/PhoneCaseOrange.jpg']
 const fontCaches=[
   '/Fonts/Poppins-Regular.ttf',
   '/Fonts/Poppins-Medium.ttf',
@@ -33,7 +33,7 @@ const fontCaches=[
 ]
 const accountCachedURLs = [
   // html
-  '/OfflineAccount.html',
+  '/OfflinePayment.html',
 
   // CSS
   '/css/Account.css',
@@ -102,7 +102,7 @@ self.addEventListener("fetch", function (event) {
             console.log("Looking offline")
 
             // If network request fails, serve a generic fallback page
-            return caches.match('/OfflineAccount.html'); // Example of a generic fallback page
+            return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
           })
       );
     }

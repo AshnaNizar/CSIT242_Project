@@ -129,11 +129,10 @@ html {
     transition: width .3s;
 }
 
-#paymentOffline {
+#paymentOffline, #profileOffline, #ordersOffline  {
     color: #ee5417 !important;
     font-weight: bold !important;
 }
-
 
 
 .inputFieldDiv {
