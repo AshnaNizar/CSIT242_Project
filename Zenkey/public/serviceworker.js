@@ -45,6 +45,7 @@ const globalCachedURLs = [
   './Fonts/Poppins-Bold.ttf',
   './Fonts/Poppins-SemiBold.ttf',
   './Fonts/Poppins-Light.ttf',
+  
 
   // NavBar/Footer and Images
   './scripts/Footer.js',
