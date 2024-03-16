@@ -1,9 +1,12 @@
-var CACHE_NAME = "zenkey-cache-v";
+var CACHE_NAME = "zenkey-cache-v21";
 
 const homeCacheURLs = [
   '/Home.html',
   '/css/Home.css',
   '/scripts/Home.js',
+  '/Images/keyboardWhite.jpg',
+  '/Images/PhoneCaseOrange.jpg',
+  '/Images/visa_logo.png',
 ]
 
 const landingCacheURLs = [
@@ -11,8 +14,8 @@ const landingCacheURLs = [
   '/Landing.html',
   '/css/LandingPage.css',
   '/scripts/Landing.js',
-  '/js/vendor/progressive-ui-kitt/themes/flat.css',
-  '/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js',
+  '/scripts/progressive-ui-kitt/themes/flat.css',
+  '/scripts/progressive-ui-kitt/progressive-ui-kitt.js',
 
 
 ]
@@ -21,6 +24,8 @@ const checkoutCacheURLs = [
   '/OfflineCheckout.html',
   '/css/Checkout.css',
   '/scripts/Checkout.js',
+  '/Images/ms_logo.jpg',
+
 
 ]
 
@@ -45,6 +50,12 @@ const globalCachedURLs = [
   './Fonts/Poppins-Bold.ttf',
   './Fonts/Poppins-SemiBold.ttf',
   './Fonts/Poppins-Light.ttf',
+  './Fonts/Poppins-ExtraLight.ttf',
+  './Fonts/REFAULT.ttf',
+  './Fonts/REFAULT.woff',
+  './Fonts/REFAULT.woff2',
+
+
 
   // NavBar/Footer and Images
   './scripts/Footer.js',
@@ -154,7 +165,7 @@ self.addEventListener("fetch", function (event) {
   // console.log('Handling fetch event for', pathname);
 
   // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
-  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') ) {
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html')) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(response => {
@@ -169,10 +180,10 @@ self.addEventListener("fetch", function (event) {
         });
       })
     );
-  } else if (pathname.endsWith('/Checkout.html')){
+  } else if (pathname.endsWith('/Checkout.html')) {
     event.respondWith(
-      fetch(event.request).then(networkResponse => { 
-          return networkResponse;
+      fetch(event.request).then(networkResponse => {
+        return networkResponse;
       }).catch(() => {
         return caches.match('/OfflineCheckout.html');
       })
@@ -214,7 +225,35 @@ self.addEventListener("fetch", function (event) {
     const params = new URLSearchParams(url.search);
     const section = params.get('section');
     if (section === 'profile' || section === null) {
-      // Add caching strategy for profile
+      // Add caching strategy for 
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            console.log("Looking offline")
+              self.registration.sync.register('sync-profile').then(() => {
+                console.log('Background sync registered after fetch');
+              }).catch(err => {
+                console.log('Failed to register background sync', err);
+              })
+            
+            // If network request fails, serve a generic fallback page
+            return caches.match(event.request); // Example of a generic fallback page
+        
+        // caches.open(CACHE_NAME).then(cache => {
+        //   return cache.match(event.request).then(response => {
+        //     if (response) {
+        //       return response;
+        //     } else {
+        //       return fetch(event.request).then(networkResponse => {
+        //         cache.put(event.request, networkResponse.clone());
+        //         return networkResponse;
+        //       });
+        //     }
+        //   });
+        })
+      );
+  
+
     } else if (section === 'orders') {
       // Add caching strategy for orders
       event.respondWith(
@@ -287,3 +326,21 @@ self.addEventListener("fetch", function (event) {
 
 
 
+// In service-worker.js
+self.addEventListener("sync", event => {
+  if (event.tag == "add-reservation") {
+    event.waitUntil(
+      addReservation()
+        .then(function () {
+          return Promise.resolve();
+        })
+        .catch(function (error) {
+          if (event.lastChance) {
+            return removeReservation();
+          } else {
+            return Promise.reject();
+          }
+        })
+    );
+  }
+});

@@ -194,9 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleOfflineCheckout(){
-    ProgressiveKITT.addAlert(
-        "You are currently offline."+
-        "The content of this page may be out of date."
-        );
+    ProgressiveKITT.addMessage("You are currently offline. To proceed with checkout please go back online ", {hideAfter:2000});
+
         
 }
