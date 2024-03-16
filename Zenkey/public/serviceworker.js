@@ -1,6 +1,4 @@
-// var GLOBAL_CACHE_NAME = "global-cache-v1";
-var CACHE_NAME = "cache-v4";
-// var PRODUCTS_CACHE_NAME = "productsAndCart-cache-v1";
+var CACHE_NAME = "zenkey-cache-v0";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -16,25 +14,25 @@ const landingCacheURLs = [
 
 ]
 
-const cartCacheURLs = [
-  '/Cart.html',
-  '/css/Cart.css',
-  '/scripts/Landing.js'
+const checkoutCacheURLs = [
+  '/Checkout.html',
+  '/css/Checkout.css',
+  '/scripts/Checkout.js'
 
 ]
 
-// URLs to be cached for the home page
-const cachedURLs = [
+const accountCachedURLs = [
+  // html
+  '/OfflinePayment.html',
 
-  //Home files
-  '/css/Home.css',
-  '/Home.html',
+  // CSS
+  '/css/Account.css',
 
-  //Landing Files
-  '/css/LandingPage.css',
-  '/Landing.html'
+  // JS
+  '/scripts/Account.js',
 
-];
+
+]
 
 const globalCachedURLs = [
 
@@ -43,7 +41,7 @@ const globalCachedURLs = [
   './Fonts/Poppins-Medium.ttf',
   './Fonts/Poppins-Bold.ttf',
   './Fonts/Poppins-SemiBold.ttf',
-  '/Fonts/Poppins-Light.ttf',
+  './Fonts/Poppins-Light.ttf',
 
   // NavBar/Footer and Images
   './scripts/Footer.js',
@@ -90,62 +88,44 @@ const globalCachedURLs = [
   "./Images/DeskPad5.png",
   "./Images/DeskPad6.png",
 
+  //Icons
+  "/css/all.min.css",
+  "/css/fontawesome.min.css"
 ];
 
 const productsAndCartCachedURLs = [
   // html
-  'Products.html',
-
-  // CSS
-  "./css/Products.css",
-  // "./css/Global.css",
-  // "./css/Notification.css",
-  // "./css/Popups.css",
+  '/Products.html',
+  '/Product-view.html',
+  "/Cart.html",
 
   // JS
   "./scripts/Productspage.js",
-  "./scripts/Navbar.js",
   "./scripts/Products.js",
-  // "./scripts/Filterbox.js",
-  // "./scripts/Footer.js",
-  // "./scripts/Popups.js",
-];
-// const testCacheURL=['/pages/Home.html', '/scripts/Navbar.js','./css/Home.css','./Account.html','/pages/OfflinePayment.html','./css/Account.css','../Fonts/Poppins-Regular.ttf','./Images/PhoneCaseOrange.jpg']
-const fontCaches=[
-  '/Fonts/Poppins-Regular.ttf',
-  '/Fonts/Poppins-Medium.ttf',
-  '/Fonts/Poppins-SemiBold.ttf',
-  '/Fonts/Poppins-Bold.ttf',
-  '/Fonts/Poppins-ExtraLight.ttf',
-  '/Fonts/Poppins-Light.ttf'
-
-]
-const accountCachedURLs = [
-  // html
-  '/OfflinePayment.html',
+  "./scripts/Product-view.js",
+  "./scripts/Filterbox.js",
+  "./scripts/Popups.js",
+  "./scripts/Cartpage.js",
 
   // CSS
-  '/css/Account.css',
+  "./css/Products.css",
+  "./css/Popup.css",
+  "./css/Product-view.css",
+  "./css/Cart.css",
 
-  // JS
-  '/scripts/Account.js',
+];
 
-
-]
-
-const CACHED_URLS = [...productCachedURLs, ...fontCaches, ...globalCaches, ...accountCachedURLs /* Add more arrays here if needed */];
-
- const CACHED_URLS= [...globalCachedURLs,...productsAndCartCachedURLs,...cachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...cartCacheURLs];
+ const CACHED_URLS= [...globalCachedURLs,...productsAndCartCachedURLs,...accountCachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...checkoutCacheURLs];
 
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
-  // Cache everything in CACHED_URLS. Installation fails if anything fails to cache
-  // console.log("ACTIVATING");
-
   event.waitUntil(
-    Promise.all([
-      cacheResources(CACHE_NAME, productsAndCartCachedURLs),
-    ])
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache.addAll(CACHED_URLS).catch(function (error) {
+        console.error('Failed to cache some resources:', error);
+      });
+    })
+    
   );
 });
 
@@ -166,20 +146,111 @@ self.addEventListener("activate", function (event) {
 });
 
 self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    // Try to fetch the resource from the network
-    fetch(event.request).catch(function () {
-      // If network request fails, serve the resource from the cache
-      return caches.match(event.request);
-    })
-  );
+  const url = new URL(event.request.url);
+  const pathname = url.pathname;
+  // console.log('Handling fetch event for', pathname);
+
+  // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Checkout.html')) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(event.request).then(response => {
+          if (response) {
+            return response;
+          } else {
+            return fetch(event.request).then(networkResponse => {
+              cache.put(event.request, networkResponse.clone());
+              return networkResponse;
+            });
+          }
+        });
+      })
+    );
+  }
+  // Define specific behavior for 'cart.html' - Network Fallback to Cache
+  else if (pathname.endsWith('/css/Cart.css')) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(() => {
+        return caches.match(event.request);
+      })
+    );
+  } else if (pathname.includes('/Products.html') ||
+    pathname.includes('/Product-view.html') ||
+    pathname.includes('/Cart.html')) {
+    // For URLs that should use products cache strategy
+    event.respondWith(
+      caches.open(CACHE_NAME).then(function (productsCache) {
+        return fetch(event.request).then(function (response) {
+          // Update products cache from network
+          productsCache.put(event.request, response.clone());
+          return response;
+        }).catch(function () {
+          return productsCache.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+          });
+        });
+      })
+    );
+  }
+  else if (url.pathname === "/Account.html") {
+    const params = new URLSearchParams(url.search);
+    const section = params.get('section');
+    if (section === 'profile' || section === null) {
+      // Add caching strategy for profile
+    } else if (section === 'orders') {
+      // Add caching strategy for orders
+    } else if (section === 'payment') {
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            console.log("Looking offline")
+
+            // If network request fails, serve a generic fallback page
+            return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
+          })
+      );
+    }
+    else {
+      //Change to profile caching strategy
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            // If network request fails, serve a generic fallback page
+            return caches.match('/Account.html'); // Example of a generic fallback page
+          })
+      );
+
+    }
+  }
+  // Default behavior for all other requests - Dynamic Caching
+  else {
+    if (pathname.indexOf(".html") === -1) {
+      event.respondWith(
+        fetch(event.request).then(networkResponse => {
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        }).catch(() => {
+          return caches.match(event.request);
+        })
+      );
+    } else {
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            // If network request fails, serve a generic fallback page
+            return caches.match('/'); // Example of a generic fallback page
+          })
+      );
+    }
+  }
 });
 
-// Function to cache resources in a specified cache
-function cacheResources(cacheName, urls) {
-  return caches.open(cacheName).then(function (cache) {
-    // Add all specified URLs to the cache
-    return cache.addAll(urls);
-  });
-}
+
 
