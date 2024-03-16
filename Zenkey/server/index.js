@@ -8,6 +8,7 @@ app.use(express.static("public"));
 
 app.get("/", function(req, res) {
     res.sendFile("Landing.html", { root: "public" });
+    res.sendFile("Landing.html", { root: "public" });
   });
 
 app.get("/Landing.html", function(req, res) {
