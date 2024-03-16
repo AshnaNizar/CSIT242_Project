@@ -2,9 +2,9 @@
     "short_name": "Zenkey",
     "name": "Zenkey",
     "description": "Browse our collection of keyboards, mice and computer accesories",
-    "start_url": "/Landing",
+    "start_url": "/Landing.html?utm_source=pwa",
     "scope": "/",
-    "display": "standalone",
+    "display": "fullscreen",
     "icons": [
       {
         "src": "/Images/ZenkeyLogoSmall.png",
