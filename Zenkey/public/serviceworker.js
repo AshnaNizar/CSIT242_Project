@@ -1,4 +1,4 @@
-var CACHE_NAME = "zenkey-cache-v0";
+var CACHE_NAME = "zenkey-cache-v1";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -115,7 +115,7 @@ const productsAndCartCachedURLs = [
 
 ];
 
- const CACHED_URLS= [...globalCachedURLs,...productsAndCartCachedURLs,...accountCachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...checkoutCacheURLs];
+const CACHED_URLS = [...globalCachedURLs, ...productsAndCartCachedURLs, ...accountCachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...checkoutCacheURLs];
 
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
@@ -125,7 +125,7 @@ self.addEventListener("install", function (event) {
         console.error('Failed to cache some resources:', error);
       });
     })
-    
+
   );
 });
 
@@ -197,13 +197,35 @@ self.addEventListener("fetch", function (event) {
       })
     );
   }
+
   else if (url.pathname === "/Account.html") {
+    console.log(url.pathname);
     const params = new URLSearchParams(url.search);
     const section = params.get('section');
     if (section === 'profile' || section === null) {
       // Add caching strategy for profile
     } else if (section === 'orders') {
       // Add caching strategy for orders
+      event.respondWith(
+        caches.open(CACHE_NAME).then(function (cache) {
+          return Promise.all([
+            cache.match(event.request), // Attempt to find the response in the cache
+            fetch(event.request) // Fetch the resource from the network
+              .then(function (networkResponse) {
+                // Update the cache with the latest version
+                cache.put(event.request, networkResponse.clone());
+                return networkResponse;
+              })
+              .catch(function () {
+                // Handle fetch errors
+              })
+          ]).then(function (responses) {
+            // Return the cached response if available, otherwise return the network response
+            return responses[0] || responses[1];
+          });
+        })
+      );
+
     } else if (section === 'payment') {
       event.respondWith(
         fetch(event.request)
