@@ -42,7 +42,7 @@ function alert(headerMessage, message) {
 function Logout() {
   var popup = document.querySelector('.popup-container');
   if (popup) {
-    window.location.href = '../pages/Login.html'
+    window.location.href = '../Login.html'
     popup.parentNode.removeChild(popup);
   }
  
