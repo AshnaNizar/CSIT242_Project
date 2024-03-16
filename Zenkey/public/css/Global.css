@@ -30,6 +30,10 @@
   src: url('../Fonts/Poppins-Bold.ttf');
 }
 
+@font-face {
+  font-family: 'Oswald';
+  src: url('../Fonts/Oswald-SemiBold.ttf');
+}
 /* Global styles  */
 
 a {
