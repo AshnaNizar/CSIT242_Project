@@ -1,4 +1,4 @@
-var CACHE_NAME = "zenkey-cache-v";
+var CACHE_NAME = "zenkey-cache-v1";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -11,8 +11,8 @@ const landingCacheURLs = [
   '/Landing.html',
   '/css/LandingPage.css',
   '/scripts/Landing.js',
-  '/js/vendor/progressive-ui-kitt/themes/flat.css',
-  '/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js',
+  '/scripts/progressive-ui-kitt/themes/flat.css',
+  '/scripts/progressive-ui-kitt/progressive-ui-kitt.js',
 
 
 ]
