@@ -1,6 +1,27 @@
-var GLOBAL_CACHE_NAME = "global-cache-v1";
-var CACHE_NAME = "cache-v3";
-var PRODUCTS_CACHE_NAME = "productsAndCart-cache-v1";
+// var GLOBAL_CACHE_NAME = "global-cache-v1";
+var CACHE_NAME = "cache-v4";
+// var PRODUCTS_CACHE_NAME = "productsAndCart-cache-v1";
+
+const homeCacheURLs = [
+  '/Home.html',
+  '/css/Home.css',
+  '/scripts/Home.js'
+]
+
+const landingCacheURLs = [
+  '/',
+  '/Landing.html',
+  '/css/LandingPage.css',
+  '/scripts/Landing.js'
+
+]
+
+const cartCacheURLs = [
+  '/Cart.html',
+  '/css/Cart.css',
+  '/scripts/Landing.js'
+
+]
 
 // URLs to be cached for the home page
 const cachedURLs = [
@@ -12,7 +33,7 @@ const cachedURLs = [
   //Landing Files
   '/css/LandingPage.css',
   '/Landing.html'
-  
+
 ];
 
 const globalCachedURLs = [
@@ -93,31 +114,134 @@ const productsAndCartCachedURLs = [
 
 ];
 
-
+ const CACHED_URLS= [...globalCachedURLs,...productsAndCartCachedURLs,...cachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...cartCacheURLs];
 
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
   event.waitUntil(
-    Promise.all([
-      cacheResources(GLOBAL_CACHE_NAME, globalCachedURLs),
-      cacheResources(PRODUCTS_CACHE_NAME, productsAndCartCachedURLs),
-      cacheResources(CACHE_NAME, cachedURLs),
-    ])
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache.addAll(CACHED_URLS).catch(function (error) {
+        console.error('Failed to cache some resources:', error);
+      });
+    })
+    
   );
 });
-  
-  // Activate event: Clean up old caches during activation
-  self.addEventListener("activate", function (event) {
-    console.log("ACTIVATING");
-    event.waitUntil(
-      caches.keys().then(function (cacheNames) {
-        return Promise.all(
-          cacheNames.map(function (cacheName) {
-            if (CACHE_NAME !== cacheName) {
-              return caches.delete(cacheName);
-            }
-          })
-        );
+
+// Activate event: Clean up old caches during activation
+self.addEventListener("activate", function (event) {
+  console.log("ACTIVATING");
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (CACHE_NAME !== cacheName) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
+self.addEventListener("fetch", function (event) {
+  const url = new URL(event.request.url);
+  const pathname = url.pathname;
+  // console.log('Handling fetch event for', pathname);
+
+  // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Checkout.html')) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(event.request).then(response => {
+          if (response) {
+            console.log(`Serving123 ${pathname} from cache`);
+            return response;
+          } else {
+            return fetch(event.request).then(networkResponse => {
+              console.log(`Caching and serving ${pathname} from network`);
+              cache.put(event.request, networkResponse.clone());
+              return networkResponse;
+            });
+          }
+        });
       })
     );
-  });
+  }
+  // Define specific behavior for 'cart.html' - Network Fallback to Cache
+  else if (pathname.endsWith('/css/Cart.css')) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        console.log(`Caching and serving ${pathname} from network`);
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(() => {
+        console.log(`Serving456 ${pathname} from cache due to network failure`);
+        return caches.match(event.request);
+      })
+    );
+  } else if (pathname.includes('/Products.html') ||
+    pathname.includes('/Product-view.html') ||
+    pathname.includes('/Cart.html')) {
+    // For URLs that should use products cache strategy
+    event.respondWith(
+      caches.open(CACHE_NAME).then(function (productsCache) {
+        return fetch(event.request).then(function (response) {
+          // Update products cache from network
+          productsCache.put(event.request, response.clone());
+          return response;
+        }).catch(function () {
+          return productsCache.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+          });
+        });
+      })
+    );
+  }
+  // Default behavior for all other requests - Dynamic Caching
+  else {
+    if (pathname.indexOf(".html") === -1) {
+      event.respondWith(
+        fetch(event.request).then(networkResponse => {
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        }).catch(() => {
+          return caches.match(event.request);
+        })
+      );
+    } else {
+      console.log('HEHE');
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            // If network request fails, serve a generic fallback page
+            return caches.match('/'); // Example of a generic fallback page
+          })
+      );
+    }
+  }
+});
+
+
+
+// function fetchAndCache(request, cacheName) {
+//   fetch(request).then(function (response) {
+//     if (response) {
+//       caches.open(cacheName).then(function (cache) {
+//         cache.put(request, response.clone());
+//       });
+//     }
+//   });
+// }
+
+// Function to cache resources in a specified cache
+// function cacheResources(cacheName, urls) {
+//   return caches.open(cacheName).then(function (cache) {
+//     // Add all specified URLs to the cache
+//     return cache.addAll(urls);
+//   });
+// }
