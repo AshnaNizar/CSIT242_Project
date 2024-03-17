@@ -204,10 +204,10 @@ function notificationPermission() {
       if (permission === "granted") {
         navigator.serviceWorker.ready.then(function (registration) {
           registration.showNotification(
-            "Notification Access",
+            "Order Confirmation",
             {
               body:
-              "Would you like to get follow up updates on your order?",
+              "Your order has been registered. Please check your inbox for more details",
               icon: "/Images/ZenkeyLogoSmall.png",
             }
           );
