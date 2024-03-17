@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     footer.innerHTML = `
     <div class="footer-body">
     <div class="footer-logo">
-        <img src="../images/Logo.jpeg">
+        <img src="../Images/Logo.jpeg">
     </div>
     <div class="footer-sections">
         <div class="footer-section">

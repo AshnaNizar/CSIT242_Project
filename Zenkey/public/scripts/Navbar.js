@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <p>Lorem ipsum dolor sit amet consectetur. Ornare massa nunc nibh tristique. Non ligula tristique ut ut libero</p>
         </div>
         <div class="notificationFooter">
-            <button><img src="../Images/Setting.png" width="20" height="20"/></button>&nbsp;&nbsp;
             <button onclick="markAllRead()"><img src="../Images/double-tick.png" width="20" height="20"/><span>&nbsp;Mark all read</span></button>
         </div>
     </div>

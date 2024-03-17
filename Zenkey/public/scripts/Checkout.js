@@ -1,4 +1,5 @@
-// Handles the billing details and checkout summary
+importScripts("/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js");
+
 document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.querySelector(".priced-checkout-button");
     const masterImage = document.querySelector(".master-image");
@@ -13,11 +14,18 @@ document.addEventListener("DOMContentLoaded", function () {
         // Validate input fields
         let isValid = true;
         inputs.forEach(function (input) {
+            const label = input.previousElementSibling; // Get the label element
+            const errorIndicator = label.querySelector(".error-indicator");
+
             if (input.hasAttribute("required") && input.value.trim() === "") {
-                input.classList.add("invalid");
+                if (!errorIndicator) {
+                    label.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+                }
                 isValid = false;
             } else {
-                input.classList.remove("invalid");
+                if (errorIndicator) {
+                    label.removeChild(errorIndicator); // Remove asterisk from label if present
+                }
             }
         });
 
@@ -25,68 +33,106 @@ document.addEventListener("DOMContentLoaded", function () {
         const phoneInput = document.getElementById("phone");
         const phoneRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/; // Regex for international phone number format
         if (!phoneRegex.test(phoneInput.value)) {
-            phoneInput.classList.add("invalid");
+            const label = phoneInput.previousElementSibling; // Get the label element
+            const errorIndicator = label.querySelector(".error-indicator");
+            if (!errorIndicator) {
+                label.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
             isValid = false;
-        } else {
-            phoneInput.classList.remove("invalid");
         }
 
         // Validate email
         const emailInput = document.getElementById("email");
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for email validation
         if (!emailRegex.test(emailInput.value)) {
-            emailInput.classList.add("invalid");
+            const label = emailInput.previousElementSibling; // Get the label element
+            const errorIndicator = label.querySelector(".error-indicator");
+            if (!errorIndicator) {
+                label.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
             isValid = false;
-        } else {
-            emailInput.classList.remove("invalid");
         }
 
         // Validate card number
         const cardNumberInput = document.getElementById("card-number");
         const cardNumberRegex = /^\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}$/; // Regex for card number format
         if (!cardNumberRegex.test(cardNumberInput.value)) {
-            cardNumberInput.classList.add("invalid");
+            const label = cardNumberInput.previousElementSibling; // Get the label element
+            const errorIndicator = label.querySelector(".error-indicator");
+            if (!errorIndicator) {
+                label.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
             isValid = false;
-        } else {
-            cardNumberInput.classList.remove("invalid");
         }
 
         // Validate expiry date
         const expiryDateInput = document.getElementById("expiry-date");
         const expiryDateRegex = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/; // Regex for expiry date format (MM/YY)
         if (!expiryDateRegex.test(expiryDateInput.value)) {
-            expiryDateInput.classList.add("invalid");
+            const label = expiryDateInput.previousElementSibling; // Get the label element
+            const errorIndicator = label.querySelector(".error-indicator");
+            if (!errorIndicator) {
+                label.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
             isValid = false;
-        } else {
-            expiryDateInput.classList.remove("invalid");
         }
 
         // Validate CVV
         const cvvInput = document.getElementById("cvv");
         const cvvRegex = /^\d{3,4}$/; // Regex for CVV format (3 or 4 digits?)
         if (!cvvRegex.test(cvvInput.value)) {
-            cvvInput.classList.add("invalid");
+            const label = cvvInput.previousElementSibling; // Get the label element
+            const errorIndicator = label.querySelector(".error-indicator");
+            if (!errorIndicator) {
+                label.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
             isValid = false;
-        } else {
-            cvvInput.classList.remove("invalid");
         }
 
         // Check if card type is selected
-        const cardTypeSelected = masterImage.classList.contains("selected") || visaImage.classList.contains("selected");
-        if (!cardTypeSelected) {
-            masterImage.classList.add("invalid");
-            visaImage.classList.add("invalid");
+        if (!masterImage.classList.contains("selected") && !visaImage.classList.contains("selected")) {
+            const masterLabel = masterImage.previousElementSibling; // Get the label element
+            const visaLabel = visaImage.previousElementSibling; // Get the label element
+            const masterErrorIndicator = masterLabel.querySelector(".error-indicator");
+            const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
+            if (!masterErrorIndicator) {
+                masterLabel.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
+            if (!visaErrorIndicator) {
+                visaLabel.innerHTML += "<span class='error-indicator'> *</span>"; // Add red asterisk to label
+            }
             isValid = false;
-        } else {
-            masterImage.classList.remove("invalid");
-            visaImage.classList.remove("invalid");
         }
 
         // If all input fields are valid, show success message
         if (isValid) {
-            alert("Payment has been made!","");
+            alert("Payment has been made!", "");
+        
+            // Retrieve cart products from local storage
+            let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+        
+            // Retrieve ordered products from local storage
+            let orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
+        
+            // Append ordered products to existing array if it exists
+            if (orderedProducts.length > 0) {
+                orderedProducts = orderedProducts.concat(cartProducts);
+            } else {
+                orderedProducts = [...cartProducts];
+            }
+        
+            // Save ordered products to local storage
+            localStorage.setItem('orderedProducts', JSON.stringify(orderedProducts));
+        
+            // Delete cart products from local storage
+            localStorage.removeItem('cartProducts');
+        
+            // Redirect to home page after 3 seconds
+            setTimeout(function() {
+                window.location.href = "Home.html"; 
+            }, 3000);
         } else {
-            alert("Please enter the details correctly.","");
+            alert("Please enter the details correctly.", "");
         }
     });
 
@@ -94,19 +140,34 @@ document.addEventListener("DOMContentLoaded", function () {
     masterImage.addEventListener("click", function () {
         masterImage.classList.add("selected");
         visaImage.classList.remove("selected");
-        masterImage.classList.remove("invalid");
-        visaImage.classList.remove("invalid");
+        const masterLabel = masterImage.previousElementSibling; // Get the label element
+        const visaLabel = visaImage.previousElementSibling; // Get the label element
+        const masterErrorIndicator = masterLabel.querySelector(".error-indicator");
+        const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
+        if (masterErrorIndicator) {
+            masterLabel.removeChild(masterErrorIndicator); // Remove asterisk from label
+        }
+        if (visaErrorIndicator) {
+            visaLabel.removeChild(visaErrorIndicator); // Remove asterisk from label
+        }
     });
 
     visaImage.addEventListener("click", function () {
         visaImage.classList.add("selected");
         masterImage.classList.remove("selected");
-        visaImage.classList.remove("invalid");
-        masterImage.classList.remove("invalid");
+        const masterLabel = masterImage.previousElementSibling; // Get the label element
+        const visaLabel = visaImage.previousElementSibling; // Get the label element
+        const masterErrorIndicator = masterLabel.querySelector(".error-indicator");
+        const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
+        if (masterErrorIndicator) {
+            masterLabel.removeChild(masterErrorIndicator); // Remove asterisk from label
+        }
+        if (visaErrorIndicator) {
+            visaLabel.removeChild(visaErrorIndicator); // Remove asterisk from label
+        }
     });
-});
 
-document.addEventListener("DOMContentLoaded", function () {
+    // Update summary based on cart products
     const subtotalElement = document.getElementById('subtotal');
     const shippingElement = document.getElementById('shipping');
     const totalElement = document.getElementById('total');
@@ -131,3 +192,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // Call updateSummary to display the subtotal, shipping, and total on page load
     updateSummary();
 });
+
+
+function handleOfflineCheckout(){
+    ProgressiveKITT.addMessage("You are currently offline. To proceed with checkout please go back online ", {hideAfter:2000});
+
+}
+
+function notificationPermission() {
+    Notification.requestPermission().then(function (permission) {
+      if (permission === "granted") {
+        navigator.serviceWorker.ready.then(function (registration) {
+          registration.showNotification(
+            "Order Confirmation",
+            {
+              body:
+              "Your order has been registered. Please check your inbox for more details",
+              icon: "/Images/ZenkeyLogoSmall.png",
+            }
+          );
+        });
+      }
+    });
+  }
+
+
