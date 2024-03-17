@@ -1,4 +1,5 @@
 importScripts("/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js");
+importScripts("/scripts/Popup.js");
 
 document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.querySelector(".priced-checkout-button");
@@ -207,13 +208,17 @@ function notificationPermission() {
             "Order Confirmation",
             {
               body:
-              "Your order has been registered. Please check your inbox for more details",
+              "Would you like to continue with your checkout?",
               icon: "/Images/ZenkeyLogoSmall.png",
+              actions: [
+                {action: "confirm1", title: "Yes", icon: "/img/icon-confirm.png"},
+                {action: "confirm2", title: "No", icon: "/img/icon-cal.png"}
+                ],
+                
             }
           );
         });
       }
     });
   }
-
 

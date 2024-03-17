@@ -461,5 +461,51 @@ function deleteUsers() {
   });
 }
 
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-signups') {
+    event.waitUntil(syncSignups());
+  }
+});
 
+function syncSignups() {
+  // Open a connection to the database.
+  var openRequest = indexedDB.open("UsersDB", 1);
 
+  // Called when the database has been successfully opened.
+  openRequest.onsuccess = function(e) {
+      var db = e.target.result;
+
+      // Start a new transaction and get the object store.
+      var transaction = db.transaction("Users", "readwrite");
+      var store = transaction.objectStore("Users");
+
+      // Make a request to get data from the object store
+      var getRequest = store.getAll();
+
+      getRequest.onsuccess = function() {
+          // Handle the retrieved data here
+          var userData = getRequest.result;
+          console.log("Retrieved user data:", userData);
+
+          // Proceed with further actions if needed
+          // For example, you can process the retrieved data or update the UI
+      };
+
+      getRequest.onerror = function(event) {
+          // Handle errors that occurred during the get operation.
+          console.error("Error getting user data: ", event.target.error);
+      };
+  };
+
+  // Called when the database version needs to be upgraded.
+  openRequest.onupgradeneeded = function(e) {
+      var db = e.target.result;
+      if (!db.objectStoreNames.contains('Users')) {
+          db.createObjectStore("Users", { keyPath: "email" });
+      }
+  };
+
+  openRequest.onerror = function(event) {
+      console.error("Error opening database: ", event.target.error);
+  };
+}
