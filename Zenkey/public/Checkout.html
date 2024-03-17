@@ -7,6 +7,7 @@
     <script src="./scripts/Navbar.js" defer></script>
     <script src="./scripts/Popups.js"></script>
     <script src="./scripts/Footer.js" defer></script>
+    <script src="/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js"></script>
     <link
       rel="icon"
       type="image/png"
@@ -231,7 +232,7 @@
           <!--  On click of button go to checkoutpage -->
           <button
             class="priced-checkout-button"
-            onclick="notificationPermission()"
+            onclick="handleOnlineCheckout()"
           >
             <span class="button-price" id="button-price">
               AED 0.00

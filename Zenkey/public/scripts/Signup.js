@@ -8,40 +8,39 @@ function validatePassword() {
     var upperCaseCheck = /[A-Z]/;
     var specialCheck = /[^a-zA-Z\d\s:]/;
     var numCheck = /[0-9]/;
-    var passError=document.getElementById("passError");
     if (!lowercaseCheck.test(pass.trim())) {
         document.getElementById("passError").innerHTML = "Password should include atleast one lowercase letter";
-        console.log("There is an error", passError);
+        passError.style.display = "flex";
         return false;
 
     }
     if (!upperCaseCheck.test(pass.trim())) {
         document.getElementById("passError").innerHTML = "Password should include atleast one uppercase letter";
+        passError.style.display = "flex";
         return false;
-
     }
     if (!specialCheck.test(pass.trim())) {
         document.getElementById("passError").innerHTML = "Password should include atleast one special character";
+        passError.style.display = "flex";
         return false;
-
     }
 
     if (!numCheck.test(pass.trim())) {
         document.getElementById("passError").innerHTML = "Password should include atleast one digit";
+        passError.style.display = "flex";
         return false;
-
     }
 
     if (pass.trim().length < 8 | pass.trim().length > 15) {
         document.getElementById("passError").innerHTML = "Password length should be between 8-15 characters";
+        passError.style.display = "flex";
         return false;
-
     }
 
     if (pass.trim() != pass2.trim()) {
         document.getElementById("passError").innerHTML = "Passwords do not match";
-        return false;
-    }
+        passError.style.display = "flex";
+        return false;    }
 
     window.location.href = './Home.html';
     signUpUser(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value)

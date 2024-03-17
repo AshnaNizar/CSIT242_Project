@@ -1,6 +1,6 @@
 // importScripts("/scripts/Account.js");
 
-var CACHE_NAME = "zenkey-cache-v11";
+var CACHE_NAME = "zenkey-cache-v1";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -35,6 +35,7 @@ const checkoutCacheURLs = [
 
 const accountCachedURLs = [
   // html
+  '/Account.html',
   '/OfflinePayment.html',
 
   // CSS
@@ -42,6 +43,9 @@ const accountCachedURLs = [
 
   // JS
   '/scripts/Account.js',
+  '/scripts/Orders.js'
+
+
 
 
 ]
@@ -183,7 +187,7 @@ self.addEventListener("fetch", function (event) {
   // console.log('Handling fetch event for', pathname);
 
   // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
-  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Signup.html')  ) {
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Signup.html')) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(response => {
@@ -255,91 +259,73 @@ self.addEventListener("fetch", function (event) {
             })
 
             // If network request fails, serve a generic fallback page
-            return caches.match(event.request); // Example of a generic fallback page
+            return caches.match('/Account.html'); // Example of a generic fallback page
 
-            // caches.open(CACHE_NAME).then(cache => {
-            //   return cache.match(event.request).then(response => {
-            //     if (response) {
-            //       return response;
-            //     } else {
-            //       return fetch(event.request).then(networkResponse => {
-            //         cache.put(event.request, networkResponse.clone());
-            //         return networkResponse;
-            //       });
-            //     }
-            //   });
+
           })
       );
 
 
     } else if (section === 'orders') {
+      console.log("Here comes the orders event request:", event.request);
       // Add caching strategy for orders
-      event.respondWith(
-        caches.open(CACHE_NAME).then(function (cache) {
-          return Promise.all([
-            cache.match(event.request), // Attempt to find the response in the cache
-            fetch(event.request) // Fetch the resource from the network
-              .then(function (networkResponse) {
-                // Update the cache with the latest version
-                cache.put(event.request, networkResponse.clone());
-                return networkResponse;
-              })
-              .catch(function () {
-                return caches.match(event.request);
-              })
-          ]).then(function (responses) {
-            // Return the cached response if available, otherwise return the network response
-            return responses[0] || responses[1];
-          });
-        })
-      );
-
-    } else if (section === 'payment') {
       event.respondWith(
         fetch(event.request)
           .catch(function () {
             console.log("Looking offline")
+            return caches.match('/Account.html'); 
 
-            // If network request fails, serve a generic fallback page
-            return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
-          })
-      );
-    }
-    else {
-      //Change to profile caching strategy
-      event.respondWith(
-        fetch(event.request)
-          .catch(function () {
-            // If network request fails, serve a generic fallback page
-            return caches.match('/Account.html'); // Example of a generic fallback page
+
           })
       );
 
-    }
+
+    } else if (section === 'payment') {
+  event.respondWith(
+    fetch(event.request)
+      .catch(function () {
+        console.log("Looking offline")
+
+        // If network request fails, serve a generic fallback page
+        return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
+      })
+  );
+}
+else {
+  //Change to profile caching strategy
+  event.respondWith(
+    fetch(event.request)
+      .catch(function () {
+        // If network request fails, serve a generic fallback page
+        return caches.match('/Account.html'); // Example of a generic fallback page
+      })
+  );
+
+}
   }
   // Default behavior for all other requests - Dynamic Caching
   else {
-    if (pathname.indexOf(".html") === -1) {
-      event.respondWith(
-        fetch(event.request).then(networkResponse => {
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        }).catch(() => {
-          return caches.match(event.request);
+  if (pathname.indexOf(".html") === -1) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(() => {
+        return caches.match(event.request);
+      })
+    );
+  } else {
+    event.respondWith(
+      fetch(event.request)
+        .catch(function () {
+          // If network request fails, serve a generic fallback page
+          return caches.match('/OfflineFallback.html'); // Example of a generic fallback page
         })
-      );
-    } else {
-      event.respondWith(
-        fetch(event.request)
-          .catch(function () {
-            // If network request fails, serve a generic fallback page
-            return caches.match('/OfflineFallback.html'); // Example of a generic fallback page
-          })
-      );
-    }
+    );
   }
+}
 });
 
 
@@ -360,28 +346,86 @@ self.addEventListener("fetch", function (event) {
 
 self.addEventListener("sync", function (event) {
   if (event.tag === "sync-profile") {
-      event.waitUntil(syncUserProfile());
+    event.waitUntil(syncUserProfile());
   }
 });
 
 function syncUserProfile() {
-  // Perform sync operations here
-  // For example, sync user profile updates to the server
-  // Once the sync is successful, update the IndexedDB accordingly
-  // You can call the updateUserProfile function from here
-  // Make sure to handle errors and provide appropriate feedback to the user
+  return new Promise((resolve, reject) => {
+    // Open a connection to the database
+    var openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function (event) {
+      reject("Error opening IndexedDB:", event.target.error);
+    };
+
+    openRequest.onsuccess = function (event) {
+      var db = event.target.result;
+
+      // Start a new transaction and get the object store
+      var transaction = db.transaction("Users", "readwrite");
+      var store = transaction.objectStore("Users");
+
+      // Get all users with status "updating"
+      var index = store.index("status");
+      var getRequest = index.getAll("updating");
+
+      getRequest.onsuccess = function () {
+        var users = getRequest.result;
+
+        // Process each user with status "updating"
+        users.forEach(user => {
+          // Perform sync operations for user profile updates to the server
+          // Once the sync is successful, update the IndexedDB accordingly
+          // You can call the updateUserProfile function from here
+          updateUserProfile(user.name, user.email, user.password)
+            .then(() => {
+              // Update the status to "saved" if sync is successful
+              user.status = "saved";
+              var updateRequest = store.put(user);
+
+              updateRequest.onerror = function (event) {
+                console.error("Error updating user status:", event.target.error);
+              };
+            })
+            .catch(error => {
+              console.error("Error syncing user profile:", error);
+              // Handle errors and provide appropriate feedback to the user
+            });
+        });
+
+        resolve();
+      };
+
+      getRequest.onerror = function (event) {
+        reject("Error fetching users with status 'updating' from IndexedDB:", event.target.error);
+      };
+    };
+  });
 }
+
+function updateUserProfile(name, email, password) {
+  return new Promise((resolve, reject) => {
+    // Simulate updating user profile on the server
+    // Replace this with your actual code to update user profile on the server
+    setTimeout(() => {
+      console.log("User profile updated on the server");
+      resolve();
+    }, 2000); // Simulating 2 seconds delay for the server request
+  });
+}
+
 
 
 function deleteUsers() {
   return new Promise((resolve, reject) => {
     const openRequest = indexedDB.open("UsersDB", 1);
 
-    openRequest.onerror = function(event) {
+    openRequest.onerror = function (event) {
       reject("Error opening IndexedDB:", event.target.error);
     };
 
-    openRequest.onsuccess = function(event) {
+    openRequest.onsuccess = function (event) {
       const db = event.target.result;
 
       // Assuming the object store for users is named "Users"
@@ -391,18 +435,18 @@ function deleteUsers() {
       // Get all users
       const getAllRequest = store.getAll();
 
-      getAllRequest.onsuccess = function() {
+      getAllRequest.onsuccess = function () {
         const users = getAllRequest.result;
 
         // Delete each user
         users.forEach(user => {
           const deleteRequest = store.delete(user.email); // Assuming 'email' is the key path
 
-          deleteRequest.onsuccess = function() {
+          deleteRequest.onsuccess = function () {
             console.log(`User with email ${user.email} deleted successfully.`);
           };
 
-          deleteRequest.onerror = function(event) {
+          deleteRequest.onerror = function (event) {
             console.error("Error deleting user from IndexedDB:", event.target.error);
           };
         });
@@ -410,7 +454,7 @@ function deleteUsers() {
         resolve();
       };
 
-      getAllRequest.onerror = function(event) {
+      getAllRequest.onerror = function (event) {
         reject("Error fetching users from IndexedDB:", event.target.error);
       };
     };

@@ -54,22 +54,18 @@ function clickSection(clickedLink) {
     switch (clickedLink.id) {
         case "profile":
             showProfile();
-            // updateUrlParameter('section', 'Profile');
             break;
         case "orders":
             showOrderDetails();
-            // updateUrlParameter('section', 'Orders');
             break;
         case "payment":
             showPayment();
-            // updateUrlParameter('section', 'Payment');
             break;
     }
 }
 
 // Function to display profile section
 function showProfile() {
-    // Open a connection to the database
     var openRequest = indexedDB.open("UsersDB", 1);
 
     openRequest.onerror = function (event) {
@@ -121,9 +117,7 @@ function showProfile() {
     };
 }
 
-
 function updateUserProfile(name, email, password) {
-    // Open a connection to the database
     var openRequest = indexedDB.open("UsersDB", 1);
 
     openRequest.onerror = function (event) {
@@ -147,6 +141,7 @@ function updateUserProfile(name, email, password) {
                 // Update the profile information in the user object
                 user.name = name;
                 user.password = password;
+                user.status = "updating"; // Set status to "updating"
 
                 // Put the updated object back into the database
                 var updateRequest = store.put(user);
@@ -188,59 +183,53 @@ function registerBackgroundSync() {
 }
 
 // Function to display order details section
+
 function showOrderDetails() {
     var orderDetails = document.getElementById('UserSelection');
     orderDetails.innerHTML = '';
+    console.log("ORders are", Orders);
+    // Use the imported orders array directly
+    if (Orders.length === 0) {
+        orderDetails.innerHTML = '<p>No orders found.</p>';
+        return;
+    }
 
-    // Fetch the orders JSON file from the server
-    fetch('../json/orders.json')
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 0) {
-                orderDetails.innerHTML = '<p>No orders found.</p>';
-                return;
-            }
+    Orders.forEach(function(product) {
+        const orderItemDiv = document.createElement('div');
+        orderItemDiv.classList.add('order-item');
 
-            data.forEach(function (product) {
-                const orderItemDiv = document.createElement('div');
-                orderItemDiv.classList.add('order-item');
+        orderItemDiv.innerHTML = `
+            <div class="order-item-image-container">
+                <img src="${product.image}" alt="Product Image" class="order-item-image">
+            </div>
+            <div class="order-item-details">
+                <div class="order-item-name">${product.name}</div>
+                <div class="order-item-quantity">
+                    Quantity: ${product.quantity}
+                </div>
+                <div class="order-item-price">
+                    Price: AED ${product.price.toFixed(2)}
+                </div>
+                <div class="order-item-view-product">
+                    <a href="#" class="view-product-link" data-product-id="${product.id}">View Product</a>
+                </div>
+            </div>
+        `;
 
-                orderItemDiv.innerHTML = `
-                    <div class="order-item-image-container">
-                        <img src="${product.image}" alt="Product Image" class="order-item-image">
-                    </div>
-                    <div class="order-item-details">
-                        <div class="order-item-name">${product.name}</div>
-                        <div class="order-item-quantity">
-                            Quantity: ${product.quantity}
-                        </div>
-                        <div class="order-item-price">
-                            Price: AED ${product.price.toFixed(2)}
-                        </div>
-                        <div class="order-item-view-product">
-                            <a href="#" class="view-product-link" data-product-id="${product.id}">View Product</a>
-                        </div>
-                    </div>
-                `;
+        orderDetails.appendChild(orderItemDiv);
+    });
 
-                orderDetails.appendChild(orderItemDiv);
-            });
-
-            // Add event listener to View Product links
-            orderDetails.querySelectorAll('.view-product-link').forEach(function (link) {
-                link.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const productId = this.getAttribute('data-product-id');
-                    localStorage.setItem('selectedProductId', productId);
-                    window.location.href = "Product-view.html";
-                });
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching orders:', error);
-            orderDetails.innerHTML = '<p>Error fetching orders. Please try again later.</p>';
+    // Add event listener to View Product links
+    orderDetails.querySelectorAll('.view-product-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+            localStorage.setItem('selectedProductId', productId);
+            window.location.href = "Product-view.html";
         });
+    });
 }
+
 // Function to display payment section
 function showPayment() {
     var paymentDetails = document.getElementById('UserSelection');
