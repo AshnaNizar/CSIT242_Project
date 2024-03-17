@@ -69,27 +69,57 @@ function clickSection(clickedLink) {
 
 // Function to display profile section
 function showProfile() {
-    var profileDetails = document.getElementById('UserSelection');
-    profileDetails.innerHTML = `
-        <div class="infoTitle">
-            User Info
-        </div>
-        <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
-            placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
-        <input class="inputFieldDiv" type="email" id="email" name="email" placeholder="Email" required>
-        <hr>
-        <div class="infoTitle">
-            Change Password
-        </div>
-        <input class="inputFieldDiv" type="password" id="password" name="password" placeholder="Password"
-            title="Password must be between 6-15 characters and must include atleast one lowercase, uppercase, number, and special character"
-            required>
-        <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
-            placeholder="Confirm password" required>
-        <input class="submitButton" type="submit" value="Save" onclick="updateUserPassword(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value,document.getElementById('confirm_password').value)">>
-       
-        `;
+    // Open a connection to the database
+    var openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function (event) {
+      console.error("Error opening database: ", event.target.error);
+    };
+
+    openRequest.onsuccess = function (event) {
+      var db = event.target.result;
+  
+      // Start a new transaction and get the object store
+      var transaction = db.transaction("Users", "readonly");
+      var store = transaction.objectStore("Users");
+
+      // Get the last record in the store; assuming the users are added sequentially
+      // and auto-increment is used for the key
+      var cursorRequest = store.openCursor(null, 'prev');
+
+      cursorRequest.onsuccess = function (event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          // Assuming 'name' and 'email' are the fields in your user object store
+          var user = cursor.value;
+          var profileDetails = document.getElementById('UserSelection');
+          profileDetails.innerHTML = `
+              <div class="infoTitle">User Info</div>
+              <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
+                  value="${user.name}" placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
+              <input class="inputFieldDiv" type="email" id="email" name="email" value="${user.email}" placeholder="Email" required>
+              <hr>
+              <div class="infoTitle">Change Password</div>
+              <input class="inputFieldDiv" type="password" id="password" name="password" placeholder="Password"
+                  title="Password must be between 6-15 characters and must include at least one lowercase, uppercase, number, and special character"
+                  required>
+              <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
+                  placeholder="Confirm password" required>
+              <input class="submitButton" type="submit" value="Save" onclick="updateUserPassword(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value,document.getElementById('confirm_password').value)">
+              `;
+        } else {
+          console.error("No users found in database.");
+          // Provide feedback to the user that no users were found
+        }
+      };
+
+      cursorRequest.onerror = function (event) {
+        console.error("Error fetching the last user: ", event.target.error);
+        // Provide feedback to the user that there was an error fetching the last user
+      };
+    };
 }
+
 
 function updateUserPassword(firstName, email, newPassword, confirmNewPassword) {
     if (newPassword !== confirmNewPassword) {
