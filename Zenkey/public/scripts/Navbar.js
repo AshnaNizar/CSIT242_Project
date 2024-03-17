@@ -53,8 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <a href="Products.html" onclick"handleProduct()">Keyboards</a>
                 <a href="Products.html" onclick"handleProduct()">Mice</a>
                 <a href="Products.html" onclick"handleProduct()">Accessories</a>
-                <a href="Products.html" onclick"handleProduct()">Deskpads</a>
-                <a href="Products.html" onclick"handleProduct()">Phone Cases</a>
             </div>
         </nav>
     </div>
