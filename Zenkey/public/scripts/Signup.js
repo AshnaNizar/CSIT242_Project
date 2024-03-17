@@ -1,48 +1,50 @@
 
 
 function validatePassword() {
-    //check if passwords are equal
-    // var pass = document.getElementById("password").value;
-    // var pass2 = document.getElementById("confirm_password").value;
-    // var lowercaseCheck = /[a-z]/;
-    // var upperCaseCheck = /[A-Z]/;
-    // var specialCheck = /[^a-zA-Z\d\s:]/;
-    // var numCheck = /[0-9]/;
+    // check if passwords are equal
+    var pass = document.getElementById("password").value;
+    var pass2 = document.getElementById("confirm_password").value;
+    var lowercaseCheck = /[a-z]/;
+    var upperCaseCheck = /[A-Z]/;
+    var specialCheck = /[^a-zA-Z\d\s:]/;
+    var numCheck = /[0-9]/;
+    var passError=document.getElementById("passError");
+    if (!lowercaseCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one lowercase letter";
+        console.log("There is an error", passError);
+        return false;
 
-    // if (!lowercaseCheck.test(pass.trim())) {
-    //     document.getElementById("passError").innerHTML = "Password should include atleast one lowercase letter";
-    //     return false;
+    }
+    if (!upperCaseCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one uppercase letter";
+        return false;
 
-    // }
-    // if (!upperCaseCheck.test(pass.trim())) {
-    //     document.getElementById("passError").innerHTML = "Password should include atleast one uppercase letter";
-    //     return false;
+    }
+    if (!specialCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one special character";
+        return false;
 
-    // }
-    // if (!specialCheck.test(pass.trim())) {
-    //     document.getElementById("passError").innerHTML = "Password should include atleast one special character";
-    //     return false;
+    }
 
-    // }
+    if (!numCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one digit";
+        return false;
 
-    // if (!numCheck.test(pass.trim())) {
-    //     document.getElementById("passError").innerHTML = "Password should include atleast one digit";
-    //     return false;
+    }
 
-    // }
+    if (pass.trim().length < 8 | pass.trim().length > 15) {
+        document.getElementById("passError").innerHTML = "Password length should be between 8-15 characters";
+        return false;
 
-    // if (pass.trim().length < 8 | pass.trim().length > 15) {
-    //     document.getElementById("passError").innerHTML = "Password length should be between 8-15 characters";
-    //     return false;
+    }
 
-    // }
-
-    // if (pass.trim() != pass2.trim()) {
-    //     document.getElementById("passError").innerHTML = "Passwords do not match";
-    //     return false;
-    // }
+    if (pass.trim() != pass2.trim()) {
+        document.getElementById("passError").innerHTML = "Passwords do not match";
+        return false;
+    }
 
     window.location.href = './Home.html';
+    signUpUser(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value)
     return false;
 
 }
@@ -72,7 +74,7 @@ function signUpUser(name, email, password) {
         var store = transaction.objectStore("Users");
 
         // Make a request to add our newUser object to the object store
-        var addRequest = store.add({ name: name, email: email, password: password });
+        var addRequest = store.add({ name: name, email: email, password: password, status: 'saved' });
 
         addRequest.onsuccess = function() {
             // The user has been added to the database, handle the success case here

@@ -92,6 +92,7 @@ function showProfile() {
         if (cursor) {
           // Assuming 'name' and 'email' are the fields in your user object store
           var user = cursor.value;
+          console.log("User from db is: ", user);
           var profileDetails = document.getElementById('UserSelection');
           profileDetails.innerHTML = `
               <div class="infoTitle">User Info</div>
@@ -121,61 +122,70 @@ function showProfile() {
 }
 
 
-function updateUserPassword(firstName, email, newPassword, confirmNewPassword) {
-    if (newPassword !== confirmNewPassword) {
-      console.error("Passwords do not match");
-      // You should provide feedback to the user here instead of just logging to the console
-      return;
-    }
-  
+function updateUserProfile(name, email, password) {
     // Open a connection to the database
     var openRequest = indexedDB.open("UsersDB", 1);
-  
+
     openRequest.onerror = function (event) {
-      console.error("Error opening database: ", event.target.error);
+        console.error("Error opening database: ", event.target.error);
     };
-  
+
     openRequest.onsuccess = function (event) {
-      var db = event.target.result;
-  
-      // Start a new transaction and get the object store
-      var transaction = db.transaction("Users", "readwrite");
-      var store = transaction.objectStore("Users");
-  
-      // Make a request to get the user data by their email
-      var getRequest = store.get(email);
-  
-      getRequest.onsuccess = function () {
-        var user = getRequest.result;
-        // Check if the user exists and the first name matches
-        if (user && user.name === firstName) {
-          // Update the password in the user object
-          user.password = newPassword; // Consider hashing the password
-  
-          // Put the updated object back into the database
-          var updateRequest = store.put(user);
-  
-          updateRequest.onsuccess = function () {
-            console.log("Password updated successfully");
-            // Provide feedback to the user that the password was updated
-          };
-  
-          updateRequest.onerror = function (event) {
-            console.error("Error updating the password: ", event.target.error);
-            // Provide feedback to the user that there was an error
-          };
-        } else {
-          console.error("User not found or first name does not match");
-          // Provide feedback to the user that the credentials are incorrect
-        }
-      };
-  
-      getRequest.onerror = function (event) {
-        console.error("Error fetching the user: ", event.target.error);
-        // Provide feedback to the user that there was an error fetching the user
-      };
+        var db = event.target.result;
+
+        // Start a new transaction and get the object store
+        var transaction = db.transaction("Users", "readwrite");
+        var store = transaction.objectStore("Users");
+
+        // Make a request to get the user data by their email
+        var getRequest = store.get(email);
+
+        getRequest.onsuccess = function () {
+            var user = getRequest.result;
+            // Check if the user exists
+            if (user) {
+                // Update the profile information in the user object
+                user.name = name;
+                user.password = password;
+
+                // Put the updated object back into the database
+                var updateRequest = store.put(user);
+
+                updateRequest.onsuccess = function () {
+                    console.log("Profile updated successfully");
+                    // Provide feedback to the user that the profile was updated
+                };
+
+                updateRequest.onerror = function (event) {
+                    console.error("Error updating the profile: ", event.target.error);
+                    // Provide feedback to the user that there was an error
+                };
+            } else {
+                console.error("User not found");
+                // Provide feedback to the user that the user was not found
+            }
+        };
+
+        getRequest.onerror = function (event) {
+            console.error("Error fetching the user: ", event.target.error);
+            // Provide feedback to the user that there was an error fetching the user
+        };
     };
-  }
+}
+
+function registerBackgroundSync() {
+    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+        navigator.serviceWorker.ready.then(function (registration) {
+            return registration.sync.register('sync-profile');
+        }).then(function () {
+            console.log('Background sync registered successfully');
+        }).catch(function (err) {
+            console.error('Failed to register background sync', err);
+        });
+    } else {
+        console.error('Background sync is not supported');
+    }
+}
 
 // Function to display order details section
 function showOrderDetails() {
