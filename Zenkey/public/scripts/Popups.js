@@ -1,3 +1,5 @@
+importScripts("/scripts/Checkout.js");
+
 var htmlTemplate = `<!DOCTYPE html>
 <html>
   <head>
@@ -40,6 +42,12 @@ function alert(headerMessage, message) {
 }
 
 function Logout() {
+
+    // Check the user's response
+        // User clicked "OK"
+        notificationPermission();
+
+
   var popup = document.querySelector('.popup-container');
   if (popup) {
     window.location.href = '../Login.html'

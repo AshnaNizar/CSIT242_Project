@@ -204,10 +204,10 @@ function notificationPermission() {
       if (permission === "granted") {
         navigator.serviceWorker.ready.then(function (registration) {
           registration.showNotification(
-            "Notification Access",
+            "Order Confirmation",
             {
               body:
-              "Would you like to get follow up updates on your order?",
+              "Your order has been registered. Please check your inbox for more details",
               icon: "/Images/ZenkeyLogoSmall.png",
             }
           );
@@ -217,13 +217,3 @@ function notificationPermission() {
   }
 
 
-function handleOnlineCheckout(){
-        // Use ProgressiveKITT to display a message and add a confirmation
-        ProgressiveKITT.addConfirmation("Do you want to get notifications when back online?", function(yes) {
-            if (yes) {
-                // If the user selects "Yes", request notification permissions
-                notificationPermission();
-            }
-        });
-
-}
