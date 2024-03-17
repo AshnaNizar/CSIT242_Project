@@ -3,29 +3,28 @@ function redirectToProductView(productId) {
   // Store the product ID in local storage
   localStorage.setItem('selectedProductId', productId);
   // Redirect to product-view.html
-  window.location.href = 'Product-view.html';
+  window.location.href = 'product-view.html';
 }
 
 // Function to add a product to the cart (unchanged)
 function addToCart(productId) {
   // Load cartProducts from local storage or set it to an empty array if it doesn't exist
-  let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
-
-  // Check if the product is already in the cart
-  const index = cartProducts.findIndex(item => item.id === productId);
-  if (index !== -1) {
-    // If the product is already in the cart, increase its quantity
-    cartProducts[index].quantity++;
-  } else {
-    // If the product is not in the cart, add it with quantity 1
-    const product = products.find(item => item.id === productId);
-    if (product) {
-      cartProducts.push({ ...product, quantity: 1 });
+  getCartProductsDB(function (cartProducts) {
+    const index = cartProducts.findIndex(item => item.id === productId);
+    if (index !== -1) {
+      // Reset the quantity to 1 if the product is already in the cart
+      cartProducts[index].quantity += 1;
+      updateCartProductDB(cartProducts[index]);
+    } else {
+      // Add the product with quantity 1 if it's not in the cart
+      const product = products.find(item => item.id === productId);
+      if (product) {
+        cartProducts.push({ ...product, quantity: 1 });
+        addToCartDB({ ...product, quantity: 1 });
+      }
     }
-  }
-
-  // Update the cartProducts in local storage
-  localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    document.dispatchEvent(new Event('cartUpdated'));
+  });
 
   // Show the pop-up
   const popup = document.getElementById('popup');

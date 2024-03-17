@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./scripts/indexedDB.js" defer></script>
     <script src="./scripts/Checkout.js" defer></script>
     <script src="./scripts/Navbar.js" defer></script>
     <script src="./scripts/Popups.js"></script>
@@ -232,7 +233,7 @@
           <!--  On click of button go to checkoutpage -->
           <button
             class="priced-checkout-button"
-            onclick="handleOnlineCheckout()"
+            onclick="notificationPermission()"
           >
             <span class="button-price" id="button-price">
               AED 0.00

@@ -1,6 +1,4 @@
-// importScripts("/scripts/Account.js");
-
-var CACHE_NAME = "zenkey-cache-v1";
+var CACHE_NAME = "zenkey-cache-v2";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -9,7 +7,7 @@ const homeCacheURLs = [
   '/Images/keyboardWhite.jpg',
   '/Images/PhoneCaseOrange.jpg',
   '/Images/visa_logo.png',
-  '/Signup.html',
+  '/OfflineSignup.html',
   '/scripts/Signup.js',
 ]
 
@@ -153,6 +151,7 @@ const productsAndCartCachedURLs = [
 
 const CACHED_URLS = [...globalCachedURLs, ...productsAndCartCachedURLs, ...accountCachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...checkoutCacheURLs];
 
+
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
   event.waitUntil(
@@ -187,7 +186,7 @@ self.addEventListener("fetch", function (event) {
   // console.log('Handling fetch event for', pathname);
 
   // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
-  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Signup.html')) {
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html')) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(response => {
@@ -208,6 +207,14 @@ self.addEventListener("fetch", function (event) {
         return networkResponse;
       }).catch(() => {
         return caches.match('/OfflineCheckout.html');
+      })
+    );
+  }else if (pathname.endsWith('/Signup.html')) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        return networkResponse;
+      }).catch(() => {
+        return caches.match('/OfflineSignup.html');
       })
     );
   }
@@ -330,136 +337,53 @@ else {
 
 
 
-// In service-worker.js
-// self.addEventListener("sync", function (event) {
-//   if (event.tag === "send-messages") {
-//     event.waitUntil(function () {
-//       var sent = deleteUsers();
-//       if (sent) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject();
-//       }
-//     });
-//   }
-// });
-
-self.addEventListener("sync", function (event) {
-  if (event.tag === "sync-profile") {
-    event.waitUntil(syncUserProfile());
+self.addEventListener('sync', event => {
+  if (event.tag === 'sync-signups') {
+    event.waitUntil(syncSignups());
   }
 });
 
-function syncUserProfile() {
-  return new Promise((resolve, reject) => {
-    // Open a connection to the database
-    var openRequest = indexedDB.open("UsersDB", 1);
+function syncSignups() {
+  // Open a connection to the database.
+  var openRequest = indexedDB.open("UsersDB", 1);
 
-    openRequest.onerror = function (event) {
-      reject("Error opening IndexedDB:", event.target.error);
-    };
+  // Create the schema if needed.
+  openRequest.onupgradeneeded = function(e) {
+      var db = e.target.result;
+      if (!db.objectStoreNames.contains('Users')) {
+          db.createObjectStore("Users", { keyPath: "email" });
+      }
+  };
 
-    openRequest.onsuccess = function (event) {
-      var db = event.target.result;
+  openRequest.onerror = function(event) {
+      console.error("Error opening database: ", event.target.error);
+  };
 
-      // Start a new transaction and get the object store
+  // Called when the database has been successfully opened.
+  openRequest.onsuccess = function(e) {
+      var db = e.target.result;
+
+      // Start a new transaction and get the object store.
       var transaction = db.transaction("Users", "readwrite");
       var store = transaction.objectStore("Users");
 
-      // Get all users with status "updating"
-      var index = store.index("status");
-      var getRequest = index.getAll("updating");
+      // Make a request to add our newUser object to the object store
+      var addRequest = store.add({ name: "Hana", email: "hana.2601@outlook.com", password: "Hana@123", status: 'saved' });
 
-      getRequest.onsuccess = function () {
-        var users = getRequest.result;
-
-        // Process each user with status "updating"
-        users.forEach(user => {
-          // Perform sync operations for user profile updates to the server
-          // Once the sync is successful, update the IndexedDB accordingly
-          // You can call the updateUserProfile function from here
-          updateUserProfile(user.name, user.email, user.password)
-            .then(() => {
-              // Update the status to "saved" if sync is successful
-              user.status = "saved";
-              var updateRequest = store.put(user);
-
-              updateRequest.onerror = function (event) {
-                console.error("Error updating user status:", event.target.error);
-              };
-            })
-            .catch(error => {
-              console.error("Error syncing user profile:", error);
-              // Handle errors and provide appropriate feedback to the user
-            });
-        });
-
-        resolve();
+      addRequest.onsuccess = function() {
+          // The user has been added to the database, handle the success case here
+          console.log("User added to the database");
+          window.location.href = '../Home.html';
       };
 
-      getRequest.onerror = function (event) {
-        reject("Error fetching users with status 'updating' from IndexedDB:", event.target.error);
+      addRequest.onerror = function(event) {
+          // Handle errors that occurred during the add operation.
+          console.error("Error adding user: ", event.target.error);
       };
-    };
-  });
-}
-
-function updateUserProfile(name, email, password) {
-  return new Promise((resolve, reject) => {
-    // Simulate updating user profile on the server
-    // Replace this with your actual code to update user profile on the server
-    setTimeout(() => {
-      console.log("User profile updated on the server");
-      resolve();
-    }, 2000); // Simulating 2 seconds delay for the server request
-  });
+  };
 }
 
 
-
-function deleteUsers() {
-  return new Promise((resolve, reject) => {
-    const openRequest = indexedDB.open("UsersDB", 1);
-
-    openRequest.onerror = function (event) {
-      reject("Error opening IndexedDB:", event.target.error);
-    };
-
-    openRequest.onsuccess = function (event) {
-      const db = event.target.result;
-
-      // Assuming the object store for users is named "Users"
-      const transaction = db.transaction(["Users"], "readwrite");
-      const store = transaction.objectStore("Users");
-
-      // Get all users
-      const getAllRequest = store.getAll();
-
-      getAllRequest.onsuccess = function () {
-        const users = getAllRequest.result;
-
-        // Delete each user
-        users.forEach(user => {
-          const deleteRequest = store.delete(user.email); // Assuming 'email' is the key path
-
-          deleteRequest.onsuccess = function () {
-            console.log(`User with email ${user.email} deleted successfully.`);
-          };
-
-          deleteRequest.onerror = function (event) {
-            console.error("Error deleting user from IndexedDB:", event.target.error);
-          };
-        });
-
-        resolve();
-      };
-
-      getAllRequest.onerror = function (event) {
-        reject("Error fetching users from IndexedDB:", event.target.error);
-      };
-    };
-  });
-}
 
 
 

@@ -1,4 +1,5 @@
 importScripts("/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js");
+importScripts("/scripts/Popup.js");
 
 document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.querySelector(".priced-checkout-button");
@@ -183,10 +184,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (subtotal > 0 && subtotal < 1000) {
             shipping = 30;
         }
-        subtotalElement.textContent = `AED ${subtotal.toFixed(2)}`;
-        shippingElement.textContent = shipping === 0 ? 'Free' : `AED ${shipping.toFixed(2)}`;
-        totalElement.textContent = `AED ${(subtotal + shipping).toFixed(2)}`;
-        buttonPriceElement.textContent = `AED ${(subtotal + shipping).toFixed(2)}`;
+        subtotalElement.textContent = 'AED ${subtotal.toFixed(2)}';
+        shippingElement.textContent = shipping === 0 ? 'Free' : 'AED ${shipping.toFixed(2)}';
+        totalElement.textContent = 'AED ${(subtotal + shipping).toFixed(2)}';
+        buttonPriceElement.textContent = 'AED ${(subtotal + shipping).toFixed(2)}';
     };
 
     // Call updateSummary to display the subtotal, shipping, and total on page load
@@ -207,13 +208,17 @@ function notificationPermission() {
             "Order Confirmation",
             {
               body:
-              "Your order has been registered. Please check your inbox for more details",
+              "Would you like to continue with your checkout?",
               icon: "/Images/ZenkeyLogoSmall.png",
+              actions: [
+                {action: "confirm1", title: "Yes", icon: "/img/icon-confirm.png"},
+                {action: "confirm2", title: "No", icon: "/img/icon-cal.png"}
+                ],
+                
             }
           );
         });
       }
     });
   }
-
 

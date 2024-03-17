@@ -45,7 +45,6 @@ function Logout() {
 
     // Check the user's response
         // User clicked "OK"
-        notificationPermission();
 
 
   var popup = document.querySelector('.popup-container');
