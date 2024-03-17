@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('header');
     header.innerHTML = `
-    <script src="../scripts/indexedDB.js"></script>
+    <script src="/scripts/indexedDB.js"></script>
     <div class="primary-nav">
         <div class="mobile-nav-header">
             <div class="nav-logo">

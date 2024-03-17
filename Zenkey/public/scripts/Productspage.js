@@ -3,7 +3,7 @@ function redirectToProductView(productId) {
   // Store the product ID in local storage
   localStorage.setItem('selectedProductId', productId);
   // Redirect to product-view.html
-  window.location.href = 'Product-view.html';
+  window.location.href = 'product-view.html';
 }
 
 // Function to add a product to the cart (unchanged)

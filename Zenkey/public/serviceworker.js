@@ -1,6 +1,6 @@
 // importScripts("/scripts/Account.js");
 
-var CACHE_NAME = "zenkey-cache-v1";
+var CACHE_NAME = "zenkey-cache-v2";
 
 const homeCacheURLs = [
   '/Home.html',
