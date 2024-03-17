@@ -193,8 +193,37 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSummary();
 });
 
+
 function handleOfflineCheckout(){
     ProgressiveKITT.addMessage("You are currently offline. To proceed with checkout please go back online ", {hideAfter:2000});
 
-        
+}
+
+function notificationPermission() {
+    Notification.requestPermission().then(function (permission) {
+      if (permission === "granted") {
+        navigator.serviceWorker.ready.then(function (registration) {
+          registration.showNotification(
+            "Notification Access",
+            {
+              body:
+              "Would you like to get follow up updates on your order?",
+              icon: "/Images/ZenkeyLogoSmall.png",
+            }
+          );
+        });
+      }
+    });
+  }
+
+
+function handleOnlineCheckout(){
+        // Use ProgressiveKITT to display a message and add a confirmation
+        ProgressiveKITT.addConfirmation("Do you want to get notifications when back online?", function(yes) {
+            if (yes) {
+                // If the user selects "Yes", request notification permissions
+                notificationPermission();
+            }
+        });
+
 }

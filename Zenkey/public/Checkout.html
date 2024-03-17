@@ -244,24 +244,13 @@
         </div>
       </div>
     </div>
-    <script>
-      function notificationPermission() {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted") {
-            navigator.serviceWorker.ready.then(function (registration) {
-              registration.showNotification(
-                "Notification Access",
-                {
-                  body:
-                  "Would you like to get follow up updates on your order?",
-                  icon: "/Images/ZenkeyLogoSmall.png",
-                }
-              );
-            });
-          }
-        });
-      }
-    </script>
+
+       <script src="/js/vendor/progressive-ui-kitt/progressive-ui-kitt.js"></script>
+       <script>
+       ProgressiveKITT.setStylesheet("/js/vendor/progressive-ui-kitt/themes/flat.css");
+       ProgressiveKITT.render();
+       </script>
+       
 
     <footer></footer>
   </body>
