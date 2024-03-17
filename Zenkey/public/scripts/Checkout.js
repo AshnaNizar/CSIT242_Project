@@ -217,13 +217,3 @@ function notificationPermission() {
   }
 
 
-function handleOnlineCheckout(){
-        // Use ProgressiveKITT to display a message and add a confirmation
-        ProgressiveKITT.addConfirmation("Do you want to get notifications when back online?", function(yes) {
-            if (yes) {
-                // If the user selects "Yes", request notification permissions
-                notificationPermission();
-            }
-        });
-
-}
