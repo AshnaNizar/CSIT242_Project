@@ -1,46 +1,88 @@
+
+
 function validatePassword() {
     //check if passwords are equal
-    var pass = document.getElementById("password").value;
-    var pass2 = document.getElementById("confirm_password").value;
-    var lowercaseCheck= /[a-z]/;
-    var upperCaseCheck = /[A-Z]/;
-    var specialCheck=/[^a-zA-Z\d\s:]/;
-    var numCheck=/[0-9]/;
+    // var pass = document.getElementById("password").value;
+    // var pass2 = document.getElementById("confirm_password").value;
+    // var lowercaseCheck = /[a-z]/;
+    // var upperCaseCheck = /[A-Z]/;
+    // var specialCheck = /[^a-zA-Z\d\s:]/;
+    // var numCheck = /[0-9]/;
 
-    if(!lowercaseCheck.test(pass.trim())){
-        document.getElementById("passError").innerHTML = "Password should include atleast one lowercase letter";
-        return false;
+    // if (!lowercaseCheck.test(pass.trim())) {
+    //     document.getElementById("passError").innerHTML = "Password should include atleast one lowercase letter";
+    //     return false;
 
-    }
-    if(!upperCaseCheck.test(pass.trim())){
-        document.getElementById("passError").innerHTML = "Password should include atleast one uppercase letter";
-        return false;
+    // }
+    // if (!upperCaseCheck.test(pass.trim())) {
+    //     document.getElementById("passError").innerHTML = "Password should include atleast one uppercase letter";
+    //     return false;
 
-    }
-    if(!specialCheck.test(pass.trim())){
-        document.getElementById("passError").innerHTML = "Password should include atleast one special character";
-        return false;
+    // }
+    // if (!specialCheck.test(pass.trim())) {
+    //     document.getElementById("passError").innerHTML = "Password should include atleast one special character";
+    //     return false;
 
-    }
+    // }
 
-    if(!numCheck.test(pass.trim())){
-        document.getElementById("passError").innerHTML = "Password should include atleast one digit";
-        return false;
+    // if (!numCheck.test(pass.trim())) {
+    //     document.getElementById("passError").innerHTML = "Password should include atleast one digit";
+    //     return false;
 
-    }
+    // }
 
-    if(pass.trim().length<8 | pass.trim().length>15){
-        document.getElementById("passError").innerHTML = "Password length should be between 8-15 characters";
-        return false;
+    // if (pass.trim().length < 8 | pass.trim().length > 15) {
+    //     document.getElementById("passError").innerHTML = "Password length should be between 8-15 characters";
+    //     return false;
 
-    }
+    // }
 
-    if (pass.trim() != pass2.trim()) {
-        document.getElementById("passError").innerHTML = "Passwords do not match";
-        return false;
-    }
+    // if (pass.trim() != pass2.trim()) {
+    //     document.getElementById("passError").innerHTML = "Passwords do not match";
+    //     return false;
+    // }
 
     window.location.href = './Home.html';
     return false;
 
+}
+// Wait for the DOM to be loaded before running the script
+function signUpUser(name, email, password) {
+    // Open a connection to the database.
+    var openRequest = indexedDB.open("UsersDB", 1);
+
+    // Create the schema if needed.
+    openRequest.onupgradeneeded = function(e) {
+        var db = e.target.result;
+        if (!db.objectStoreNames.contains('Users')) {
+            db.createObjectStore("Users", { keyPath: "email" });
+        }
+    };
+
+    openRequest.onerror = function(event) {
+        console.error("Error opening database: ", event.target.error);
+    };
+
+    // Called when the database has been successfully opened.
+    openRequest.onsuccess = function(e) {
+        var db = e.target.result;
+
+        // Start a new transaction and get the object store.
+        var transaction = db.transaction("Users", "readwrite");
+        var store = transaction.objectStore("Users");
+
+        // Make a request to add our newUser object to the object store
+        var addRequest = store.add({ name: name, email: email, password: password });
+
+        addRequest.onsuccess = function() {
+            // The user has been added to the database, handle the success case here
+            console.log("User added to the database");
+            window.location.href = '../Home.html';
+        };
+
+        addRequest.onerror = function(event) {
+            // Handle errors that occurred during the add operation.
+            console.error("Error adding user: ", event.target.error);
+        };
+    };
 }

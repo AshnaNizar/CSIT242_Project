@@ -1,4 +1,6 @@
-var CACHE_NAME = "zenkey-cache-v1";
+// importScripts("/scripts/Account.js");
+
+var CACHE_NAME = "zenkey-cache-v11";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -7,6 +9,8 @@ const homeCacheURLs = [
   '/Images/keyboardWhite.jpg',
   '/Images/PhoneCaseOrange.jpg',
   '/Images/visa_logo.png',
+  '/Signup.html',
+  '/scripts/Signup.js',
 ]
 
 const landingCacheURLs = [
@@ -179,7 +183,7 @@ self.addEventListener("fetch", function (event) {
   // console.log('Handling fetch event for', pathname);
 
   // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
-  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html')) {
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Signup.html')  ) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(response => {
@@ -244,29 +248,29 @@ self.addEventListener("fetch", function (event) {
         fetch(event.request)
           .catch(function () {
             console.log("Looking offline")
-              self.registration.sync.register('sync-profile').then(() => {
-                console.log('Background sync registered after fetch');
-              }).catch(err => {
-                console.log('Failed to register background sync', err);
-              })
-            
+            self.registration.sync.register('sync-profile').then(() => {
+              console.log('Background sync registered after fetch');
+            }).catch(err => {
+              console.log('Failed to register background sync', err);
+            })
+
             // If network request fails, serve a generic fallback page
             return caches.match(event.request); // Example of a generic fallback page
-        
-        // caches.open(CACHE_NAME).then(cache => {
-        //   return cache.match(event.request).then(response => {
-        //     if (response) {
-        //       return response;
-        //     } else {
-        //       return fetch(event.request).then(networkResponse => {
-        //         cache.put(event.request, networkResponse.clone());
-        //         return networkResponse;
-        //       });
-        //     }
-        //   });
-        })
+
+            // caches.open(CACHE_NAME).then(cache => {
+            //   return cache.match(event.request).then(response => {
+            //     if (response) {
+            //       return response;
+            //     } else {
+            //       return fetch(event.request).then(networkResponse => {
+            //         cache.put(event.request, networkResponse.clone());
+            //         return networkResponse;
+            //       });
+            //     }
+            //   });
+          })
       );
-  
+
 
     } else if (section === 'orders') {
       // Add caching strategy for orders
@@ -341,20 +345,62 @@ self.addEventListener("fetch", function (event) {
 
 
 // In service-worker.js
-self.addEventListener("sync", event => {
-  if (event.tag == "add-reservation") {
-    event.waitUntil(
-      addReservation()
-        .then(function () {
-          return Promise.resolve();
-        })
-        .catch(function (error) {
-          if (event.lastChance) {
-            return removeReservation();
-          } else {
-            return Promise.reject();
-          }
-        })
-    );
+self.addEventListener("sync", function (event) {
+  if (event.tag === "send-messages") {
+    event.waitUntil(function () {
+      var sent = deleteUsers();
+      if (sent) {
+        return Promise.resolve();
+      } else {
+        return Promise.reject();
+      }
+    });
   }
 });
+
+function deleteUsers() {
+  return new Promise((resolve, reject) => {
+    const openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function(event) {
+      reject("Error opening IndexedDB:", event.target.error);
+    };
+
+    openRequest.onsuccess = function(event) {
+      const db = event.target.result;
+
+      // Assuming the object store for users is named "Users"
+      const transaction = db.transaction(["Users"], "readwrite");
+      const store = transaction.objectStore("Users");
+
+      // Get all users
+      const getAllRequest = store.getAll();
+
+      getAllRequest.onsuccess = function() {
+        const users = getAllRequest.result;
+
+        // Delete each user
+        users.forEach(user => {
+          const deleteRequest = store.delete(user.email); // Assuming 'email' is the key path
+
+          deleteRequest.onsuccess = function() {
+            console.log(`User with email ${user.email} deleted successfully.`);
+          };
+
+          deleteRequest.onerror = function(event) {
+            console.error("Error deleting user from IndexedDB:", event.target.error);
+          };
+        });
+
+        resolve();
+      };
+
+      getAllRequest.onerror = function(event) {
+        reject("Error fetching users from IndexedDB:", event.target.error);
+      };
+    };
+  });
+}
+
+
+

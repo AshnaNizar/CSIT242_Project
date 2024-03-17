@@ -86,8 +86,66 @@ function showProfile() {
             required>
         <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
             placeholder="Confirm password" required>
-        <input class="submitButton" type="submit" value="Save">`;
+        <input class="submitButton" type="submit" value="Save" onclick="updateUserPassword(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value,document.getElementById('confirm_password').value)">>
+       
+        `;
 }
+
+function updateUserPassword(firstName, email, newPassword, confirmNewPassword) {
+    if (newPassword !== confirmNewPassword) {
+      console.error("Passwords do not match");
+      // You should provide feedback to the user here instead of just logging to the console
+      return;
+    }
+  
+    // Open a connection to the database
+    var openRequest = indexedDB.open("UsersDB", 1);
+  
+    openRequest.onerror = function (event) {
+      console.error("Error opening database: ", event.target.error);
+    };
+  
+    openRequest.onsuccess = function (event) {
+      var db = event.target.result;
+  
+      // Start a new transaction and get the object store
+      var transaction = db.transaction("Users", "readwrite");
+      var store = transaction.objectStore("Users");
+  
+      // Make a request to get the user data by their email
+      var getRequest = store.get(email);
+  
+      getRequest.onsuccess = function () {
+        var user = getRequest.result;
+        // Check if the user exists and the first name matches
+        if (user && user.name === firstName) {
+          // Update the password in the user object
+          user.password = newPassword; // Consider hashing the password
+  
+          // Put the updated object back into the database
+          var updateRequest = store.put(user);
+  
+          updateRequest.onsuccess = function () {
+            console.log("Password updated successfully");
+            // Provide feedback to the user that the password was updated
+          };
+  
+          updateRequest.onerror = function (event) {
+            console.error("Error updating the password: ", event.target.error);
+            // Provide feedback to the user that there was an error
+          };
+        } else {
+          console.error("User not found or first name does not match");
+          // Provide feedback to the user that the credentials are incorrect
+        }
+      };
+  
+      getRequest.onerror = function (event) {
+        console.error("Error fetching the user: ", event.target.error);
+        // Provide feedback to the user that there was an error fetching the user
+      };
+    };
+  }
 
 // Function to display order details section
 function showOrderDetails() {
