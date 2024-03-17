@@ -345,18 +345,33 @@ self.addEventListener("fetch", function (event) {
 
 
 // In service-worker.js
+// self.addEventListener("sync", function (event) {
+//   if (event.tag === "send-messages") {
+//     event.waitUntil(function () {
+//       var sent = deleteUsers();
+//       if (sent) {
+//         return Promise.resolve();
+//       } else {
+//         return Promise.reject();
+//       }
+//     });
+//   }
+// });
+
 self.addEventListener("sync", function (event) {
-  if (event.tag === "send-messages") {
-    event.waitUntil(function () {
-      var sent = deleteUsers();
-      if (sent) {
-        return Promise.resolve();
-      } else {
-        return Promise.reject();
-      }
-    });
+  if (event.tag === "sync-profile") {
+      event.waitUntil(syncUserProfile());
   }
 });
+
+function syncUserProfile() {
+  // Perform sync operations here
+  // For example, sync user profile updates to the server
+  // Once the sync is successful, update the IndexedDB accordingly
+  // You can call the updateUserProfile function from here
+  // Make sure to handle errors and provide appropriate feedback to the user
+}
+
 
 function deleteUsers() {
   return new Promise((resolve, reject) => {
