@@ -1,6 +1,6 @@
 // importScripts("/scripts/Account.js");
 
-var CACHE_NAME = "zenkey-cache-v1";
+var CACHE_NAME = "zenkey-cache-v2";
 
 const homeCacheURLs = [
   '/Home.html',
@@ -30,7 +30,6 @@ const checkoutCacheURLs = [
   '/scripts/Checkout.js',
   '/Images/ms_logo.jpg',
 
-
 ]
 
 const accountCachedURLs = [
@@ -44,9 +43,6 @@ const accountCachedURLs = [
   // JS
   '/scripts/Account.js',
   '/scripts/Orders.js'
-
-
-
 
 ]
 
@@ -68,8 +64,6 @@ const globalCachedURLs = [
   './Fonts/Oswald-Medium.ttf',
   './Fonts/Oswald-Regular.ttf',
   './Fonts/Oswald-SemiBold.ttf',
-
-
 
 
   // NavBar/Footer and Images
