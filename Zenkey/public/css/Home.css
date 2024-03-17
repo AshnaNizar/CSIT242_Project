@@ -105,7 +105,7 @@ input {
 }
 
 html {
-  font-family: var(--ff-poppins);
+  font-family: "Poppins Semibold";
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
@@ -258,7 +258,7 @@ body {
 \*-----------------------------------*/
 
 .hero {
-  background:  url(../images/keyboardWhite.jpg) no-repeat;
+  background:  url(../Images/keyboardWhite.jpg) no-repeat;
   background-size: cover;
   background-position: top center;
   background-attachment: fixed;
@@ -387,7 +387,7 @@ body {
 .team {
   padding: var(--section-padding) 0;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 1));
-  /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/micebg.webp) no-repeat; */
+  /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Images/micebg.webp) no-repeat; */
   background-color: #fefefe;
   background-size: cover;
   background-position: top center;
@@ -464,7 +464,7 @@ body {
   align-items: center;
   padding: 30px;
   height: 100%;
-  background: var(--raisin-black-3);
+  background: #2a2627;
   border-radius: 3vh;
 }
 
@@ -609,7 +609,7 @@ body {
 \*-----------------------------------*/
 
 .footer-top {
-  /* background: url("../images/footer-bg.jpg") no-repeat; */
+  /* background: url("../Images/footer-bg.jpg") no-repeat; */
   background: #191717;
   background-size: cover;
   background-position: center;

@@ -1,3 +1,5 @@
+importScripts("/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js");
+
 document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.querySelector(".priced-checkout-button");
     const masterImage = document.querySelector(".master-image");
@@ -190,3 +192,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // Call updateSummary to display the subtotal, shipping, and total on page load
     updateSummary();
 });
+
+
+function handleOfflineCheckout(){
+    ProgressiveKITT.addMessage("You are currently offline. To proceed with checkout please go back online ", {hideAfter:2000});
+
+}
+
+function notificationPermission() {
+    Notification.requestPermission().then(function (permission) {
+      if (permission === "granted") {
+        navigator.serviceWorker.ready.then(function (registration) {
+          registration.showNotification(
+            "Order Confirmation",
+            {
+              body:
+              "Your order has been registered. Please check your inbox for more details",
+              icon: "/Images/ZenkeyLogoSmall.png",
+            }
+          );
+        });
+      }
+    });
+  }
+
+

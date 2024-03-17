@@ -167,7 +167,7 @@
     color: #000;
 }
 
-.priced-checkout-button {
+.priced-checkout-button{
     font-family: 'Poppins Medium';
     font-size: 15px;
     width: 100%;
@@ -186,9 +186,40 @@
     justify-content: space-between;
 }
 
-.priced-checkout-button i {
+.priced-checkout-span{
+    font-family: 'Poppins Medium';
+    font-size: 15px;
+    width: 100%;
+    align-self: center;
+    color: #FFF;
+    background-color: #000000;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+    transition: background-color ease-in-out 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.priced-checkout-button i, .priced-checkout-span i  {
     margin-left: 5px;
     font-size: 15px;
+}
+
+.priced-checkout-span{
+    margin-left: 5px;
+    font-size: 15px;
+    background-color: #929090;
+
+}
+
+.priced-checkout-span:hover{
+
+    background-color: #929090;
+
 }
 
 .priced-checkout-button:hover {

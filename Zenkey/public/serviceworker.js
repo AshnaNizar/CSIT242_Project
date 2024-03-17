@@ -1,5 +1,54 @@
-var GLOBAL_CACHE_NAME = "global-cache-v1";
-var PRODUCTS_CACHE_NAME = "productsAndCart-cache-v1";
+// importScripts("/scripts/Account.js");
+
+var CACHE_NAME = "zenkey-cache-v1";
+
+const homeCacheURLs = [
+  '/Home.html',
+  '/css/Home.css',
+  '/scripts/Home.js',
+  '/Images/keyboardWhite.jpg',
+  '/Images/PhoneCaseOrange.jpg',
+  '/Images/visa_logo.png',
+  '/Signup.html',
+  '/scripts/Signup.js',
+]
+
+const landingCacheURLs = [
+  '/',
+  '/Landing.html',
+  '/css/LandingPage.css',
+  '/scripts/Landing.js',
+  '/scripts/progressive-ui-kitt/themes/flat.css',
+  '/scripts/progressive-ui-kitt/progressive-ui-kitt.js',
+
+
+]
+
+const checkoutCacheURLs = [
+  '/OfflineCheckout.html',
+  '/css/Checkout.css',
+  '/scripts/Checkout.js',
+  '/Images/ms_logo.jpg',
+
+
+]
+
+const accountCachedURLs = [
+  // html
+  '/Account.html',
+  '/OfflinePayment.html',
+
+  // CSS
+  '/css/Account.css',
+
+  // JS
+  '/scripts/Account.js',
+  '/scripts/Orders.js'
+
+
+
+
+]
 
 const globalCachedURLs = [
 
@@ -8,7 +57,20 @@ const globalCachedURLs = [
   './Fonts/Poppins-Medium.ttf',
   './Fonts/Poppins-Bold.ttf',
   './Fonts/Poppins-SemiBold.ttf',
-  '/Fonts/Poppins-Light.ttf',
+  './Fonts/Poppins-Light.ttf',
+  './Fonts/Poppins-ExtraLight.ttf',
+  './Fonts/REFAULT.ttf',
+  './Fonts/REFAULT.woff',
+  './Fonts/REFAULT.woff2',
+  './Fonts/Oswald-Bold.ttf',
+  './Fonts/Oswald-ExtraLight.ttf',
+  './Fonts/Oswald-Light.ttf',
+  './Fonts/Oswald-Medium.ttf',
+  './Fonts/Oswald-Regular.ttf',
+  './Fonts/Oswald-SemiBold.ttf',
+
+
+
 
   // NavBar/Footer and Images
   './scripts/Footer.js',
@@ -20,6 +82,7 @@ const globalCachedURLs = [
   // CSS 
   "./css/Global.css",
   "./css/Notification.css",
+  "./css/Offline.css",
 
   // Products Images
   "./Images/key1.png",
@@ -55,13 +118,22 @@ const globalCachedURLs = [
   "./Images/DeskPad5.png",
   "./Images/DeskPad6.png",
 
+  //Offline Image
+  "./Images/Offline.jpg",
+
+  //Icons
+  "/css/all.min.css",
+  "/css/fontawesome.min.css",
+
+  //HTML
+  "/OfflineFallback.html"
 ];
 
 const productsAndCartCachedURLs = [
   // html
-  'Products.html',
-  'Product-view.html',
-  "Cart.html",
+  '/Products.html',
+  '/Product-view.html',
+  "/Cart.html",
 
   // JS
   "./scripts/Productspage.js",
@@ -79,27 +151,84 @@ const productsAndCartCachedURLs = [
 
 ];
 
+const CACHED_URLS = [...globalCachedURLs, ...productsAndCartCachedURLs, ...accountCachedURLs, ...landingCacheURLs, ...homeCacheURLs, ...checkoutCacheURLs];
+
 // Install event: Cache resources during service worker installation
 self.addEventListener("install", function (event) {
   event.waitUntil(
-    Promise.all([
-      cacheResources(GLOBAL_CACHE_NAME, globalCachedURLs),
-      cacheResources(PRODUCTS_CACHE_NAME, productsAndCartCachedURLs),
-    ])
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache.addAll(CACHED_URLS).catch(function (error) {
+        console.error('Failed to cache some resources:', error);
+      });
+    })
+
   );
 });
 
-// Fetch event: Network first falling back to Cache strategy for PRODUCTS_CACHE_NAME
-// Cache first falling back to Network strategy for GLOBAL_CACHE_NAME
-self.addEventListener("fetch", function (event) {
-  const requestUrl = new URL(event.request.url);
+// Activate event: Clean up old caches during activation
+self.addEventListener("activate", function (event) {
+  console.log("ACTIVATING");
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (CACHE_NAME !== cacheName) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
 
-  if (requestUrl.pathname.includes('/Products.html') ||
-      requestUrl.pathname.includes('/Product-view.html') ||
-      requestUrl.pathname.includes('/Cart.html')) {
+self.addEventListener("fetch", function (event) {
+  const url = new URL(event.request.url);
+  const pathname = url.pathname;
+  // console.log('Handling fetch event for', pathname);
+
+  // Define specific behavior for 'home.html' and 'home.css' - Cache Fallback to Network
+  if (pathname.endsWith('/Home.html') || pathname.endsWith('/Landing.html') || pathname.endsWith('/Signup.html')) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(event.request).then(response => {
+          if (response) {
+            return response;
+          } else {
+            return fetch(event.request).then(networkResponse => {
+              cache.put(event.request, networkResponse.clone());
+              return networkResponse;
+            });
+          }
+        });
+      })
+    );
+  } else if (pathname.endsWith('/Checkout.html')) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        return networkResponse;
+      }).catch(() => {
+        return caches.match('/OfflineCheckout.html');
+      })
+    );
+  }
+  // Define specific behavior for 'cart.html' - Network Fallback to Cache
+  else if (pathname.endsWith('/css/Cart.css')) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(() => {
+        return caches.match(event.request);
+      })
+    );
+  } else if (pathname.includes('/Products.html') ||
+    pathname.includes('/Product-view.html') ||
+    pathname.includes('/Cart.html')) {
     // For URLs that should use products cache strategy
     event.respondWith(
-      caches.open(PRODUCTS_CACHE_NAME).then(function (productsCache) {
+      caches.open(CACHE_NAME).then(function (productsCache) {
         return fetch(event.request).then(function (response) {
           // Update products cache from network
           productsCache.put(event.request, response.clone());
@@ -111,51 +240,226 @@ self.addEventListener("fetch", function (event) {
         });
       })
     );
-  } else {
-    // For other URLs that should use global cache strategy
+  }
+
+  else if (url.pathname === "/Account.html") {
+    console.log(url.pathname);
+    const params = new URLSearchParams(url.search);
+    const section = params.get('section');
+    if (section === 'profile' || section === null) {
+      // Add caching strategy for 
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            console.log("Looking offline")
+            self.registration.sync.register('sync-profile').then(() => {
+              console.log('Background sync registered after fetch');
+            }).catch(err => {
+              console.log('Failed to register background sync', err);
+            })
+
+            // If network request fails, serve a generic fallback page
+            return caches.match('/Account.html'); // Example of a generic fallback page
+
+
+          })
+      );
+
+
+    } else if (section === 'orders') {
+      console.log("Here comes the orders event request:", event.request);
+      // Add caching strategy for orders
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            console.log("Looking offline")
+            return caches.match('/Account.html'); 
+
+
+          })
+      );
+
+
+    } else if (section === 'payment') {
+  event.respondWith(
+    fetch(event.request)
+      .catch(function () {
+        console.log("Looking offline")
+
+        // If network request fails, serve a generic fallback page
+        return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
+      })
+  );
+}
+else {
+  //Change to profile caching strategy
+  event.respondWith(
+    fetch(event.request)
+      .catch(function () {
+        // If network request fails, serve a generic fallback page
+        return caches.match('/Account.html'); // Example of a generic fallback page
+      })
+  );
+
+}
+  }
+  // Default behavior for all other requests - Dynamic Caching
+  else {
+  if (pathname.indexOf(".html") === -1) {
     event.respondWith(
-      caches.open(GLOBAL_CACHE_NAME).then(function (globalCache) {
-        return globalCache.match(event.request).then(function (response) {
-          // If resource is found in global cache, return it
-          if (response) {
-            // Fetch and update the resource from the network in the background
-            fetchAndCache(event.request, GLOBAL_CACHE_NAME);
-            return response;
-          }
-          // If resource is not found in global cache, try fetching it from products cache
-          return caches.open(PRODUCTS_CACHE_NAME).then(function (productsCache) {
-            return productsCache.match(event.request).then(function (response) {
-              // If resource is found in products cache, return it
-              if (response) {
-                // Fetch and update the resource from the network in the background
-                fetchAndCache(event.request, PRODUCTS_CACHE_NAME);
-                return response;
-              }
-              // If resource is not found in any cache, fetch from network
-              return fetch(event.request);
-            });
-          });
+      fetch(event.request).then(networkResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
         });
+      }).catch(() => {
+        return caches.match(event.request);
       })
     );
+  } else {
+    event.respondWith(
+      fetch(event.request)
+        .catch(function () {
+          // If network request fails, serve a generic fallback page
+          return caches.match('/OfflineFallback.html'); // Example of a generic fallback page
+        })
+    );
+  }
+}
+});
+
+
+
+// In service-worker.js
+// self.addEventListener("sync", function (event) {
+//   if (event.tag === "send-messages") {
+//     event.waitUntil(function () {
+//       var sent = deleteUsers();
+//       if (sent) {
+//         return Promise.resolve();
+//       } else {
+//         return Promise.reject();
+//       }
+//     });
+//   }
+// });
+
+self.addEventListener("sync", function (event) {
+  if (event.tag === "sync-profile") {
+    event.waitUntil(syncUserProfile());
   }
 });
 
-// Function to fetch and cache a resource in a specified cache
-function fetchAndCache(request, cacheName) {
-  fetch(request).then(function (response) {
-    if (response) {
-      caches.open(cacheName).then(function (cache) {
-        cache.put(request, response.clone());
-      });
-    }
+function syncUserProfile() {
+  return new Promise((resolve, reject) => {
+    // Open a connection to the database
+    var openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function (event) {
+      reject("Error opening IndexedDB:", event.target.error);
+    };
+
+    openRequest.onsuccess = function (event) {
+      var db = event.target.result;
+
+      // Start a new transaction and get the object store
+      var transaction = db.transaction("Users", "readwrite");
+      var store = transaction.objectStore("Users");
+
+      // Get all users with status "updating"
+      var index = store.index("status");
+      var getRequest = index.getAll("updating");
+
+      getRequest.onsuccess = function () {
+        var users = getRequest.result;
+
+        // Process each user with status "updating"
+        users.forEach(user => {
+          // Perform sync operations for user profile updates to the server
+          // Once the sync is successful, update the IndexedDB accordingly
+          // You can call the updateUserProfile function from here
+          updateUserProfile(user.name, user.email, user.password)
+            .then(() => {
+              // Update the status to "saved" if sync is successful
+              user.status = "saved";
+              var updateRequest = store.put(user);
+
+              updateRequest.onerror = function (event) {
+                console.error("Error updating user status:", event.target.error);
+              };
+            })
+            .catch(error => {
+              console.error("Error syncing user profile:", error);
+              // Handle errors and provide appropriate feedback to the user
+            });
+        });
+
+        resolve();
+      };
+
+      getRequest.onerror = function (event) {
+        reject("Error fetching users with status 'updating' from IndexedDB:", event.target.error);
+      };
+    };
   });
 }
 
-// Function to cache resources in a specified cache
-function cacheResources(cacheName, urls) {
-  return caches.open(cacheName).then(function (cache) {
-    // Add all specified URLs to the cache
-    return cache.addAll(urls);
+function updateUserProfile(name, email, password) {
+  return new Promise((resolve, reject) => {
+    // Simulate updating user profile on the server
+    // Replace this with your actual code to update user profile on the server
+    setTimeout(() => {
+      console.log("User profile updated on the server");
+      resolve();
+    }, 2000); // Simulating 2 seconds delay for the server request
   });
 }
+
+
+
+function deleteUsers() {
+  return new Promise((resolve, reject) => {
+    const openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function (event) {
+      reject("Error opening IndexedDB:", event.target.error);
+    };
+
+    openRequest.onsuccess = function (event) {
+      const db = event.target.result;
+
+      // Assuming the object store for users is named "Users"
+      const transaction = db.transaction(["Users"], "readwrite");
+      const store = transaction.objectStore("Users");
+
+      // Get all users
+      const getAllRequest = store.getAll();
+
+      getAllRequest.onsuccess = function () {
+        const users = getAllRequest.result;
+
+        // Delete each user
+        users.forEach(user => {
+          const deleteRequest = store.delete(user.email); // Assuming 'email' is the key path
+
+          deleteRequest.onsuccess = function () {
+            console.log(`User with email ${user.email} deleted successfully.`);
+          };
+
+          deleteRequest.onerror = function (event) {
+            console.error("Error deleting user from IndexedDB:", event.target.error);
+          };
+        });
+
+        resolve();
+      };
+
+      getAllRequest.onerror = function (event) {
+        reject("Error fetching users from IndexedDB:", event.target.error);
+      };
+    };
+  });
+}
+
+
+

@@ -44,6 +44,28 @@ html {
     padding: 20px;
 }
 
+#UserSelectionOffline {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #ee5417 ;
+    background-color: rgba(238, 84, 23, 0.1); /* 10% opaque */
+    font-family: "Poppins Semibold";
+    margin-top: 20px;
+    text-align: center;
+}
+
+#UserSelectionOffline >p{
+    font-family: "Poppins Regular";
+    font-size: small;
+
+}
+
 .infoTitle {
     color: #000;
     font-family: 'Poppins Medium';
@@ -106,6 +128,12 @@ html {
     cursor: pointer;
     transition: width .3s;
 }
+
+#paymentOffline, #profileOffline, #ordersOffline  {
+    color: #ee5417 !important;
+    font-weight: bold !important;
+}
+
 
 .inputFieldDiv {
     width: 80%;

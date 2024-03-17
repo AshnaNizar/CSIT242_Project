@@ -1,28 +1,49 @@
-// Function to initialize the page
-function initializePage() {
-    // Highlight the "Profile" link
-    var profileLink = document.getElementById('profile');
-    clickSection(profileLink);
+
+const params = new URLSearchParams(window.location.search);
+const section = params.get('section');
+
+//Function called on loading the page to check if the user has selected an item on the menu
+function defaultSection() {
+    if (section === null) {
+        var defaultLink = document.getElementById('profile');
+        defaultLink.style.color = '#ee5417';
+        defaultLink.style.fontWeight = 'bold';
+        showProfile();
+
+    }
+    else {
+        clickSection(document.getElementById(section));
+    }
+
 }
 
-// Call the initialization function when the page loads
-window.onload = initializePage;
+window.onload = function () {
+    defaultSection();
 
+};
+
+//function to reload the page when the user selects an item on the menu
+function clicked(clickedLink) {
+    const baseUrl=`/Account.html`;
+    const url = new URL(baseUrl, window.location.origin);
+    const params = new URLSearchParams();
+    params.append('section', clickedLink.id);
+    url.search = params.toString();
+    window.location.href = url.href;
+    clickSection(clickedLink);
+}
 // Function to handle click events on menu links
 function clickSection(clickedLink) {
-    var links = document.querySelectorAll('.links > li');
 
-    // Loop through each link
+
+    // Reset styles for all links
+    var links = document.querySelectorAll('.links > li:not(#deleteAcc)');
     links.forEach(function (link) {
-        // Reset styles for all links
-        if (link.id !== "deleteAcc") {
-            link.style.color = 'black';
-            link.style.fontWeight = '100';
-        }
+        link.style.color = 'black';
+        link.style.fontWeight = '100';
     });
-    // var currentUrl = "http://localhost:8000/Account.html";
-    // change the text content of the breadcrumbs-active to the clicked link
-    document.getElementById('breadcrumbs-active').textContent = clickedLink.textContent;
+
+    // Highlight the clicked link
     clickedLink.style.color = '#ee5417';
     clickedLink.style.fontWeight = 'bold';
 
@@ -33,55 +54,147 @@ function clickSection(clickedLink) {
     switch (clickedLink.id) {
         case "profile":
             showProfile();
-            // window.location.href = currentUrl + '/Profile';
             break;
         case "orders":
             showOrderDetails();
-            // window.location.href = currentUrl + '/Orders';
             break;
         case "payment":
             showPayment();
-            // window.location.href = currentUrl + '/Payment';
             break;
     }
 }
 
 // Function to display profile section
 function showProfile() {
-    var profileDetails = document.getElementById('UserSelection');
-    profileDetails.innerHTML = `
-        <div class="infoTitle">
-            User Info
-        </div>
-        <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
-            placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
-        <input class="inputFieldDiv" type="email" id="email" name="email" placeholder="Email" required>
-        <hr>
-        <div class="infoTitle">
-            Change Password
-        </div>
-        <input class="inputFieldDiv" type="password" id="password" name="password" placeholder="Password"
-            title="Password must be between 6-15 characters and must include atleast one lowercase, uppercase, number, and special character"
-            required>
-        <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
-            placeholder="Confirm password" required>
-        <input class="submitButton" type="submit" value="Save">`;
+    var openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function (event) {
+      console.error("Error opening database: ", event.target.error);
+    };
+
+    openRequest.onsuccess = function (event) {
+      var db = event.target.result;
+  
+      // Start a new transaction and get the object store
+      var transaction = db.transaction("Users", "readonly");
+      var store = transaction.objectStore("Users");
+
+      // Get the last record in the store; assuming the users are added sequentially
+      // and auto-increment is used for the key
+      var cursorRequest = store.openCursor(null, 'prev');
+
+      cursorRequest.onsuccess = function (event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          // Assuming 'name' and 'email' are the fields in your user object store
+          var user = cursor.value;
+          console.log("User from db is: ", user);
+          var profileDetails = document.getElementById('UserSelection');
+          profileDetails.innerHTML = `
+              <div class="infoTitle">User Info</div>
+              <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
+                  value="${user.name}" placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
+              <input class="inputFieldDiv" type="email" id="email" name="email" value="${user.email}" placeholder="Email" required>
+              <hr>
+              <div class="infoTitle">Change Password</div>
+              <input class="inputFieldDiv" type="password" id="password" name="password" placeholder="Password"
+                  title="Password must be between 6-15 characters and must include at least one lowercase, uppercase, number, and special character"
+                  required>
+              <input class="inputFieldDiv" type="password" id="confirm_password" name="confirm_password"
+                  placeholder="Confirm password" required>
+              <input class="submitButton" type="submit" value="Save" onclick="updateUserPassword(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value,document.getElementById('confirm_password').value)">
+              `;
+        } else {
+          console.error("No users found in database.");
+          // Provide feedback to the user that no users were found
+        }
+      };
+
+      cursorRequest.onerror = function (event) {
+        console.error("Error fetching the last user: ", event.target.error);
+        // Provide feedback to the user that there was an error fetching the last user
+      };
+    };
+}
+
+function updateUserProfile(name, email, password) {
+    var openRequest = indexedDB.open("UsersDB", 1);
+
+    openRequest.onerror = function (event) {
+        console.error("Error opening database: ", event.target.error);
+    };
+
+    openRequest.onsuccess = function (event) {
+        var db = event.target.result;
+
+        // Start a new transaction and get the object store
+        var transaction = db.transaction("Users", "readwrite");
+        var store = transaction.objectStore("Users");
+
+        // Make a request to get the user data by their email
+        var getRequest = store.get(email);
+
+        getRequest.onsuccess = function () {
+            var user = getRequest.result;
+            // Check if the user exists
+            if (user) {
+                // Update the profile information in the user object
+                user.name = name;
+                user.password = password;
+                user.status = "updating"; // Set status to "updating"
+
+                // Put the updated object back into the database
+                var updateRequest = store.put(user);
+
+                updateRequest.onsuccess = function () {
+                    console.log("Profile updated successfully");
+                    // Provide feedback to the user that the profile was updated
+                };
+
+                updateRequest.onerror = function (event) {
+                    console.error("Error updating the profile: ", event.target.error);
+                    // Provide feedback to the user that there was an error
+                };
+            } else {
+                console.error("User not found");
+                // Provide feedback to the user that the user was not found
+            }
+        };
+
+        getRequest.onerror = function (event) {
+            console.error("Error fetching the user: ", event.target.error);
+            // Provide feedback to the user that there was an error fetching the user
+        };
+    };
+}
+
+function registerBackgroundSync() {
+    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+        navigator.serviceWorker.ready.then(function (registration) {
+            return registration.sync.register('sync-profile');
+        }).then(function () {
+            console.log('Background sync registered successfully');
+        }).catch(function (err) {
+            console.error('Failed to register background sync', err);
+        });
+    } else {
+        console.error('Background sync is not supported');
+    }
 }
 
 // Function to display order details section
+
 function showOrderDetails() {
     var orderDetails = document.getElementById('UserSelection');
     orderDetails.innerHTML = '';
-
-    // Retrieve ordered products from local storage
-    let orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
-
-    if (orderedProducts.length === 0) {
+    console.log("ORders are", Orders);
+    // Use the imported orders array directly
+    if (Orders.length === 0) {
         orderDetails.innerHTML = '<p>No orders found.</p>';
         return;
     }
 
-    orderedProducts.forEach(function(product) {
+    Orders.forEach(function(product) {
         const orderItemDiv = document.createElement('div');
         orderItemDiv.classList.add('order-item');
 

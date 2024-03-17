@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Zenkey Signup</title>
-    <link rel="stylesheet" href="../css/Login.css">
-    <script type="text/javascript" src="../scripts/Signup.js"></script>
+    <link rel="stylesheet" href="./css/Login.css">
+    <script type="text/javascript" src="./scripts/Signup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://kit.fontawesome.com/8943e9eb68.js" crossorigin="anonymous"></script>
-    <script src="../scripts/NavbarBeforeLogin.js" defer></script>
-    <script src="../scripts/FooterBefore.js" defer></script>
-    <link rel="stylesheet" href="../css/Global.css" />
+    <script src="./scripts/NavbarBeforeLogin.js" defer></script>
+    <script src="./scripts/FooterBefore.js" defer></script>
+    <link rel="icon" type="image/png" href="\Images\ZenkeyLogoIcon.png" sizes="32x32">
+    <link rel="stylesheet" href="./css/Global.css" />
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="stylesheet" href="./css/fontawesome.min.css">
+    <link rel="manifest" href="/manifest.json">
+
 </head>
 
 <body>
@@ -34,7 +38,7 @@
                     required>
                 <input class="input-field" type="password" id="confirm_password" name="confirm_password"
                     placeholder="Confirm password" required>
-                <input class="submitButton" type="submit" value="Register">
+                <input class="submitButton" type="submit" value="Register" onclick="validatePassword()">
             </div>
 
             <div class="container-text">

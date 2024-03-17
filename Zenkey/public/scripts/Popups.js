@@ -1,8 +1,10 @@
+importScripts("/scripts/Checkout.js");
+
 var htmlTemplate = `<!DOCTYPE html>
 <html>
   <head>
     <title>PopUp</title>
-    <link rel="stylesheet" href="../css/Popup.css">
+    <link rel="stylesheet" href="./css/Popup.css">
   </head>
   <body>
     <div class="main">
@@ -40,9 +42,15 @@ function alert(headerMessage, message) {
 }
 
 function Logout() {
+
+    // Check the user's response
+        // User clicked "OK"
+        notificationPermission();
+
+
   var popup = document.querySelector('.popup-container');
   if (popup) {
-    window.location.href = '../pages/Login.html'
+    window.location.href = '../Login.html'
     popup.parentNode.removeChild(popup);
   }
  
