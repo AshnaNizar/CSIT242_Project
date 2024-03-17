@@ -258,7 +258,7 @@ body {
 \*-----------------------------------*/
 
 .hero {
-  background:  url(../images/keyboardWhite.jpg) no-repeat;
+  background: url(../images/keyboardWhite.jpg) no-repeat;
   background-size: cover;
   background-position: top center;
   background-attachment: fixed;
@@ -318,6 +318,56 @@ body {
   overflow: hidden;
   height: 60vh;
   border-radius: 3vh;
+}
+
+/* General for smaller screens */
+@media (max-width: 1200px) {
+  .about-img {
+    width: 100%;
+    max-width: 70vh;
+    max-height: 40vh;
+    margin: 0 auto;
+  }
+}
+
+/* general for smaller screens */
+@media (max-width: 768px) {
+  .about-img {
+    width: 100%;
+    max-width: 70vh;
+    max-height: 37vh;
+    margin: 0 auto;
+  }
+}
+
+/* Phones */
+@media (max-width: 430px) {
+  .about-img {
+    width: 100%;
+    max-width: 70vh;
+    max-height: 30vh;
+    margin: 0 auto;
+  }
+}
+
+/* Smaller Phones */
+@media (max-width: 375px) {
+  .about-img {
+    width: 100%;
+    max-width: 70vh;
+    max-height: 33vh;
+    margin: 0 auto;
+  }
+}
+
+/* Ipads/Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .about-img {
+    width: 100%;
+    max-width: 70vh;
+    max-height: 30vh;
+    margin: 0 auto;
+  }
 }
 
 .character {
@@ -751,7 +801,7 @@ body {
 
 .footer-bottom {
   padding: 25px 0;
-  background:#191717;
+  background: #191717;
   text-align: center;
 }
 

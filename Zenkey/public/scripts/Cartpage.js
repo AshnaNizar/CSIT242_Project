@@ -1,19 +1,67 @@
 // To display the cart items and update the cart details and payment summary on the cart page
 document.addEventListener("DOMContentLoaded", function () {
     const cartGrid = document.getElementById('cartGrid');
-    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartItemsContainer = document.querySelector('.cart-items-container');
     const cartItemCount = document.getElementById('cartItemCount');
     const subtotalElement = document.getElementById('subtotal');
     const shippingElement = document.getElementById('shipping');
     const totalElement = document.getElementById('total');
     const popup = document.getElementById('popup');
 
+    let cartProducts = [];
+
+    const updateCart = (prodcuts) => {
+        cartProducts = prodcuts;
+
+        cartItemsContainer.innerHTML = '';
+
+        // Add cart items back to the DOM
+        cartProducts.forEach((product, index) => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('cart-item');
+            const imageProduct = typeof product.image === 'string' ? product.image : product.image[0];
+
+            cartItemDiv.innerHTML = `
+                <div class="cart-item-image-container">
+                    <img src="${imageProduct}" alt="Product Image" class="cart-item-image">
+                </div>
+                <div class="cart-item-details">
+                    <div class="cart-item-name">${product.name}</div>
+                    <div class="cart-item-quantity">
+                        <span id="quantity-${index}" class="quantity">${product.quantity}</span>
+                        <div class="item-quantity-selector">
+                            <i class="fa-solid fa-caret-up fa-lg cursor-pointer" data-index="${index}" data-increment="true"></i>
+                            <i class="fa-solid fa-caret-down fa-lg cursor-pointer" data-index="${index}" data-increment="false"></i>
+                        </div>
+                    </div>
+                    <div class="cart-item-price" id="price-${index}">AED ${product.price.toFixed(2)}</div>
+                    <div class="cart-item-price" id="itemTotal-${index}">AED ${(product.price * product.quantity).toFixed(2)}</div>
+                    <div class="cart-item-remove">
+                        <i class="fa-solid fa-trash-can fa-lg cursor-pointer trash-icon" style="color: #6d6d6d;" data-index="${index}"></i>
+                    </div>
+                </div>
+            `;
+
+            cartItemsContainer.appendChild(cartItemDiv);
+        });
+
+        // Call updateSummary to display the subtotal, shipping, and total on page load
+        updateCartItemCount();
+        document.dispatchEvent(new Event('cartUpdated'));
+        updateSummary(cartProducts);
+    };
+
     // Retrieve cart products from array in local storage
-    let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    getCartProductsDB(function (cartProducts) {
+        // Update the cart with the retrieved products
+        updateCart(cartProducts);
+    });
 
     // Function to update cart array in local storage
-    const updateCartInStorage = () => {
-        localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+    const updateCartInDB = (cartProducts) => {
+        cartProducts.forEach(product => {
+            updateCartProductDB(product);
+        });
     };
 
     // Function to update subtotal, shipping, and total in the cart summary
@@ -37,10 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 cartProducts[index].quantity--;
             }
         }
-        updateCartInStorage();
-        updateSummary();
-        updateCartItem(index);
+        updateCart(cartProducts);
     };
+
+    // getCartProductsDB(updateCart);
 
     // Function to update cart item details
     const updateCartItem = (index) => {
@@ -51,6 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
         itemTotalSpan.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
     };
 
+    getCartProductsDB(updateCart);
+
     // Function to update cart item count in the header
     const updateCartItemCount = () => {
         if (cartProducts.length === 0) {
@@ -60,72 +110,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    updateCartItemCount();
-
-    // Loop through cart products and generate HTML for each product to display the cart items
-    cartProducts.forEach((product, index) => {
-        const cartItemDiv = document.createElement('div');
-        cartItemDiv.classList.add('cart-item');
-        if (typeof product.image === 'string') {
-            imageProduct = product.image;
-        }
-
-        else {
-            imageProduct = product.image[0];
-        }
-
-        cartItemDiv.innerHTML = `
-            <div class="cart-item-image-container">
-                <img src="${imageProduct}" alt="Product Image" class="cart-item-image">
-            </div>
-            <div class="cart-item-details">
-                <div class="cart-item-name">${product.name}</div>
-                <div class="cart-item-quantity">
-                    <span id="quantity-${index}" class="quantity">${product.quantity}</span>
-                    <div class="item-quantity-selector">
-                        <i class="fa-solid fa-caret-up fa-lg cursor-pointer" data-index="${index}" data-increment="true"></i>
-                        <i class="fa-solid fa-caret-down fa-lg cursor-pointer" data-index="${index}" data-increment="false"></i>
-                    </div>
-                </div>
-                <div class="cart-item-price" id="price-${index}">$${product.price.toFixed(2)}</div>
-                <div class="cart-item-price" id="itemTotal-${index}">$${(product.price * product.quantity).toFixed(2)}</div>
-                <div class="cart-item-remove">
-                    <i class="fa-solid fa-trash-can fa-lg cursor-pointer trash-icon" style="color: #6d6d6d;"></i>
-                </div>
-            </div>
-        `;
-
-        cartItemsContainer.appendChild(cartItemDiv);
-    });
-
-    // Call updateSummary to display the subtotal, shipping, and total on page load
-    updateSummary();
-
-    // Add event listeners for quantity buttons (up and down) in the cart items container to update the overall values in the page
     cartItemsContainer.addEventListener('click', function (event) {
         const target = event.target;
         if (target.classList.contains('fa-caret-up') || target.classList.contains('fa-caret-down')) {
-            const index = target.getAttribute('data-index');
+            const index = parseInt(target.getAttribute('data-index'));
             const increment = target.getAttribute('data-increment') === 'true';
             updateQuantity(index, increment);
-        }
-    });
+        } else if (target.classList.contains('fa-trash-can')) {
+            const index = target.closest('.cart-item-remove').querySelector('i').getAttribute('data-index');
+            const productId = cartProducts[index].id;
+            cartProducts.splice(index, 1);
+            removeFromCartDB(productId);
+            updateCart(cartProducts);
 
-    // Add event listener for trash can icon to remove the item from the cart and update the overall values in the page
-    cartItemsContainer.addEventListener('click', function (event) {
-        const target = event.target;
-        if (target.classList.contains('fa-trash-can')) {
-            const index = target.closest('.cart-item').dataset.index;
-            cartProducts.splice(index, 1); // Remove the item from the cartProducts array
-            updateCartInStorage(); // Update the cart in local storage
-            updateSummary(); // Update the summary
-            updateCartItemCount(); // Update cart item count
-
-            // Remove the corresponding cart item from the DOM
-            const removedCartItem = target.closest('.cart-item');
-            removedCartItem.remove();
-
-            // Show the pop-up
             popup.classList.add('show');
             setTimeout(() => {
                 popup.classList.remove('show');

@@ -55,19 +55,19 @@ var CART_CACHE_NAME = "cart-cache-v1";
 const homeCachedURLs = [
   // Favicon
   './favicon.svg',
-  
+
   // Custom CSS
   '../css/Home.css',
-  
+
   // Google Fonts
   'https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@400;500;700&display=swap',
-  
+
   // JS
   '../scripts/Navbar.js',
   '../scripts/Footer.js',
   '../scripts/Popups.js',
   'https://kit.fontawesome.com/8943e9eb68.js',
-  
+
   // CSS f
   '../css/Global.css',
   '../css/Notification.css',
@@ -175,7 +175,7 @@ self.addEventListener("install", function (event) {
       ])
     );
   });
-  
+
   // Activate event: Clean up old caches during activation
   self.addEventListener("activate", function (event) {
     event.waitUntil(
@@ -196,7 +196,7 @@ self.addEventListener("install", function (event) {
       })
     );
   });
-  
+
   // Fetch event: Network falling back to Cache strategy
   self.addEventListener("fetch", function (event) {
     event.respondWith(
@@ -207,7 +207,7 @@ self.addEventListener("install", function (event) {
       })
     );
   });
-  
+
   // Function to cache resources in a specified cache
   function cacheResources(cacheName, urls) {
     return caches.open(cacheName).then(function (cache) {

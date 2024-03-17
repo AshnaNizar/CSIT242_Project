@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('header');
     header.innerHTML = `
+    <script src="../scripts/indexedDB.js"></script>
     <div class="primary-nav">
         <div class="mobile-nav-header">
             <div class="nav-logo">
@@ -569,18 +570,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Set the cart count indicator
 document.addEventListener('DOMContentLoaded', function () {
-    // Get the number of cart products from local storage
-    const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
-    const cartCount = cartProducts.length;
+    // Function to update the cart count indicator
+    const updateCartCount = () => {
+        // Get the number of cart products from IndexedDB
+        getCartProductsDB(function(cartProducts) {
+            const cartCount = cartProducts.length;
 
-    // Find the cart icon link
-    const cartLink = document.querySelector('nav a[href="Cart.html"]');
+            // Find the cart icon link
+            const cartLink = document.querySelector('nav a[href="Cart.html"]');
 
-    // Create and append the circle indicator
-    const circle = document.createElement('div');
-    circle.classList.add('cart-count');
-    circle.textContent = cartCount;
-    cartLink.appendChild(circle);
+            // Check if the cart count indicator already exists
+            let circle = cartLink.querySelector('.cart-count');
+            if (!circle) {
+                // Create and append the circle indicator if it doesn't exist
+                circle = document.createElement('div');
+                circle.classList.add('cart-count');
+                cartLink.appendChild(circle);
+            }
+
+            // Update the cart count
+            circle.textContent = cartCount;
+        });
+    };
+
+    // Update the cart count on page load
+    updateCartCount();
+
+    // Update the cart count whenever the cart is updated
+    document.addEventListener('cartUpdated', updateCartCount);
 });
 
 // Function to toggle the display of the notification overlay

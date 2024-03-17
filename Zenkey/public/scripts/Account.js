@@ -157,11 +157,11 @@ function showPayment() {
         </div>
     </div>
     `;
-    
+
     paymentDetails.innerHTML = content;
 }
 
 function deleteAccount() {
-    confirmation("Are you sure?","This action will permanently delete your account.")
+    confirmation("Are you sure?", "This action will permanently delete your account.")
 
 }
