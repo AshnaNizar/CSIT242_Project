@@ -58,6 +58,13 @@ const globalCachedURLs = [
   './Fonts/REFAULT.ttf',
   './Fonts/REFAULT.woff',
   './Fonts/REFAULT.woff2',
+  './Fonts/Oswald-Bold.ttf',
+  './Fonts/Oswald-ExtraLight.ttf',
+  './Fonts/Oswald-Light.ttf',
+  './Fonts/Oswald-Medium.ttf',
+  './Fonts/Oswald-Regular.ttf',
+  './Fonts/Oswald-SemiBold.ttf',
+
 
 
 
@@ -71,6 +78,7 @@ const globalCachedURLs = [
   // CSS 
   "./css/Global.css",
   "./css/Notification.css",
+  "./css/Offline.css",
 
   // Products Images
   "./Images/key1.png",
@@ -106,9 +114,15 @@ const globalCachedURLs = [
   "./Images/DeskPad5.png",
   "./Images/DeskPad6.png",
 
+  //Offline Image
+  "./Images/Offline.jpg",
+
   //Icons
   "/css/all.min.css",
   "/css/fontawesome.min.css",
+
+  //HTML
+  "/OfflineFallback.html"
 ];
 
 const productsAndCartCachedURLs = [
@@ -271,7 +285,7 @@ self.addEventListener("fetch", function (event) {
                 return networkResponse;
               })
               .catch(function () {
-                // Handle fetch errors
+                return caches.match(event.request);
               })
           ]).then(function (responses) {
             // Return the cached response if available, otherwise return the network response
@@ -321,7 +335,7 @@ self.addEventListener("fetch", function (event) {
         fetch(event.request)
           .catch(function () {
             // If network request fails, serve a generic fallback page
-            return caches.match('/'); // Example of a generic fallback page
+            return caches.match('/OfflineFallback.html'); // Example of a generic fallback page
           })
       );
     }
