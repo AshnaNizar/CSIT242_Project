@@ -47,6 +47,53 @@ function validatePassword() {
     return false;
 
 }
+
+function offlinevalidatePassword() {
+    // check if passwords are equal
+    var pass = document.getElementById("password").value;
+    var pass2 = document.getElementById("confirm_password").value;
+    var lowercaseCheck = /[a-z]/;
+    var upperCaseCheck = /[A-Z]/;
+    var specialCheck = /[^a-zA-Z\d\s:]/;
+    var numCheck = /[0-9]/;
+    if (!lowercaseCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one lowercase letter";
+        passError.style.display = "flex";
+        return false;
+
+    }
+    if (!upperCaseCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one uppercase letter";
+        passError.style.display = "flex";
+        return false;
+    }
+    if (!specialCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one special character";
+        passError.style.display = "flex";
+        return false;
+    }
+
+    if (!numCheck.test(pass.trim())) {
+        document.getElementById("passError").innerHTML = "Password should include atleast one digit";
+        passError.style.display = "flex";
+        return false;
+    }
+
+    if (pass.trim().length < 8 | pass.trim().length > 15) {
+        document.getElementById("passError").innerHTML = "Password length should be between 8-15 characters";
+        passError.style.display = "flex";
+        return false;
+    }
+
+    if (pass.trim() != pass2.trim()) {
+        document.getElementById("passError").innerHTML = "Passwords do not match";
+        passError.style.display = "flex";
+        return false;    }
+
+    signUpUser(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value)
+    return false;
+
+}
 // Wait for the DOM to be loaded before running the script
 function signUpUser(name, email, password) {
     // Open a connection to the database.
