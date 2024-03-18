@@ -1,18 +1,28 @@
-function validatePassword() {
-    // Check if passwords are equal
-    var pass = document.getElementById("password").value;
-    var lowercaseCheck = /[a-z]/;
-    var upperCaseCheck = /[A-Z]/;
-    var specialNumCheck = /[^a-zA-Z\d\s:]/;
-    var numCheck = /[0-9]/;
+function validatePassword(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
 
-    if (!lowercaseCheck.test(pass.trim()) | !upperCaseCheck.test(pass.trim()) | !specialNumCheck.test(pass.trim()) | !numCheck.test(pass.trim()) | pass.trim().length < 6 | pass.trim().length > 15) {
-        var passError = document.getElementById("passError");
-        passError.innerHTML = "Incorrect Password";
-        passError.style.display = "flex";
-        return false;
-    }
+    loginUser(email, password);
+}
 
-    window.location.href = '/Home.html';
-    return false;
+function loginUser(email, password) {
+    fetch("/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = './Home.html';
+        } else {
+            document.getElementById("passError").innerHTML = "Invalid email or password";
+            passError.style.display = "flex";
+        }
+    })
+    .catch(error => {
+        console.error("Error logging in:", error);
+    });
 }

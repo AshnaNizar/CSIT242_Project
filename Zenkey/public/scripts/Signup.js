@@ -1,6 +1,6 @@
 
-
-function validatePassword() {
+function validatePassword(event) {
+    event.preventDefault();
     // check if passwords are equal
     var pass = document.getElementById("password").value;
     var pass2 = document.getElementById("confirm_password").value;
@@ -42,8 +42,29 @@ function validatePassword() {
         passError.style.display = "flex";
         return false;    }
 
-    window.location.href = './Home.html';
-    signUpUser(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value)
+        fetch("/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name: document.getElementById('firstname').value, email: document.getElementById('email').value, password: pass })
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = './Login.html';
+            } else {
+                return response.text(); // Return the error text for further processing
+            }
+        })
+        .then(text => {
+            if (text) {
+                document.getElementById("passError").innerHTML = text;
+                passError.style.display = "flex";
+            }
+        })
+        .catch(error => {
+            console.error("Error signing up:", error);
+        });
     return false;
 
 }
@@ -88,9 +109,10 @@ function offlinevalidatePassword() {
     if (pass.trim() != pass2.trim()) {
         document.getElementById("passError").innerHTML = "Passwords do not match";
         passError.style.display = "flex";
-        return false;    }
+        return false;}
 
     signUpUser(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value)
+    document.getElementById("passError").innerHTML = "You are Offline! Your will be signed up once you are online.";
     return false;
 
 }
@@ -125,7 +147,6 @@ function signUpUser(name, email, password) {
         addRequest.onsuccess = function() {
             // The user has been added to the database, handle the success case here
             console.log("User added to the database");
-            window.location.href = '../Home.html';
         };
 
         addRequest.onerror = function(event) {

@@ -209,7 +209,7 @@ self.addEventListener("fetch", function (event) {
         return caches.match('/OfflineCheckout.html');
       })
     );
-  }else if (pathname.endsWith('/Signup.html')) {
+  } else if (pathname.endsWith('/Signup.html')) {
     event.respondWith(
       fetch(event.request).then(networkResponse => {
         return networkResponse;
@@ -280,7 +280,7 @@ self.addEventListener("fetch", function (event) {
         fetch(event.request)
           .catch(function () {
             console.log("Looking offline")
-            return caches.match('/Account.html'); 
+            return caches.match('/Account.html');
 
 
           })
@@ -288,51 +288,51 @@ self.addEventListener("fetch", function (event) {
 
 
     } else if (section === 'payment') {
-  event.respondWith(
-    fetch(event.request)
-      .catch(function () {
-        console.log("Looking offline")
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            console.log("Looking offline")
 
-        // If network request fails, serve a generic fallback page
-        return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
-      })
-  );
-}
-else {
-  //Change to profile caching strategy
-  event.respondWith(
-    fetch(event.request)
-      .catch(function () {
-        // If network request fails, serve a generic fallback page
-        return caches.match('/Account.html'); // Example of a generic fallback page
-      })
-  );
+            // If network request fails, serve a generic fallback page
+            return caches.match('/OfflinePayment.html'); // Example of a generic fallback page
+          })
+      );
+    }
+    else {
+      //Change to profile caching strategy
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            // If network request fails, serve a generic fallback page
+            return caches.match('/Account.html'); // Example of a generic fallback page
+          })
+      );
 
-}
+    }
   }
   // Default behavior for all other requests - Dynamic Caching
   else {
-  if (pathname.indexOf(".html") === -1) {
-    event.respondWith(
-      fetch(event.request).then(networkResponse => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        });
-      }).catch(() => {
-        return caches.match(event.request);
-      })
-    );
-  } else {
-    event.respondWith(
-      fetch(event.request)
-        .catch(function () {
-          // If network request fails, serve a generic fallback page
-          return caches.match('/OfflineFallback.html'); // Example of a generic fallback page
+    if (pathname.indexOf(".html") === -1) {
+      event.respondWith(
+        fetch(event.request).then(networkResponse => {
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        }).catch(() => {
+          return caches.match(event.request);
         })
-    );
+      );
+    } else {
+      event.respondWith(
+        fetch(event.request)
+          .catch(function () {
+            // If network request fails, serve a generic fallback page
+            return caches.match('/OfflineFallback.html'); // Example of a generic fallback page
+          })
+      );
+    }
   }
-}
 });
 
 
@@ -340,6 +340,7 @@ else {
 self.addEventListener('sync', event => {
   if (event.tag === 'sync-signups') {
     event.waitUntil(syncSignups());
+    console.log("Synced Users")
   }
 });
 
@@ -347,39 +348,51 @@ function syncSignups() {
   // Open a connection to the database.
   var openRequest = indexedDB.open("UsersDB", 1);
 
-  // Create the schema if needed.
-  openRequest.onupgradeneeded = function(e) {
-      var db = e.target.result;
-      if (!db.objectStoreNames.contains('Users')) {
-          db.createObjectStore("Users", { keyPath: "email" });
-      }
-  };
-
-  openRequest.onerror = function(event) {
-      console.error("Error opening database: ", event.target.error);
+  openRequest.onerror = function (event) {
+    console.error("Error opening database: ", event.target.error);
   };
 
   // Called when the database has been successfully opened.
-  openRequest.onsuccess = function(e) {
-      var db = e.target.result;
+  openRequest.onsuccess = function (e) {
+    var db = e.target.result;
 
-      // Start a new transaction and get the object store.
-      var transaction = db.transaction("Users", "readwrite");
-      var store = transaction.objectStore("Users");
+    // Start a new transaction and get the object store.
+    var transaction = db.transaction("Users", "readonly");
+    var store = transaction.objectStore("Users");
 
-      // Make a request to add our newUser object to the object store
-      var addRequest = store.add({ name: "Hana", email: "hana.2601@outlook.com", password: "Hana@123", status: 'saved' });
+    // Get all users from the object store
+    var getAllRequest = store.getAll();
 
-      addRequest.onsuccess = function() {
-          // The user has been added to the database, handle the success case here
-          console.log("User added to the database");
-          window.location.href = '../Home.html';
-      };
+    getAllRequest.onsuccess = function () {
+      var users = getAllRequest.result;
 
-      addRequest.onerror = function(event) {
-          // Handle errors that occurred during the add operation.
-          console.error("Error adding user: ", event.target.error);
-      };
+      users.forEach(function (user) {
+        // Send a POST request to the server for each user
+        fetch("/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(user)
+        })
+          .then(response => {
+            if (response.ok) {
+              // If the signup is successful, delete the user from IndexedDB
+              var deleteTransaction = db.transaction("Users", "readwrite");
+              var deleteStore = deleteTransaction.objectStore("Users");
+              deleteStore.delete(user.email);
+              console.log("User synced and deleted from IndexedDB:", user.email);
+            }
+          })
+          .catch(error => {
+            console.error("Error syncing user:", error);
+          });
+      });
+    };
+
+    getAllRequest.onerror = function (event) {
+      console.error("Error getting users from IndexedDB:", event.target.error);
+    };
   };
 }
 
