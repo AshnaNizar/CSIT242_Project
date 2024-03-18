@@ -340,7 +340,6 @@ self.addEventListener("fetch", function (event) {
 self.addEventListener('sync', event => {
   if (event.tag === 'sync-signups') {
     event.waitUntil(syncSignups());
-    console.log("Synced Users")
   }
 });
 
@@ -381,7 +380,20 @@ function syncSignups() {
               var deleteTransaction = db.transaction("Users", "readwrite");
               var deleteStore = deleteTransaction.objectStore("Users");
               deleteStore.delete(user.email);
-              console.log("User synced and deleted from IndexedDB:", user.email);
+              self.registration.showNotification("You are signed up!", {
+                body: "Welcome to Zenkey!",
+                icon: "/Images/ZenkeyLogoSmall.png", 
+                badge: "/Images/ZenkeyLogoSmall.png"
+              });
+            } else if (response.status === 400) {
+              self.registration.showNotification("Signup Page: Account already exists", {
+                body: "Try Signing In",
+                icon: "/Images/ZenkeyLogoSmall.png", 
+                badge: "/Images/ZenkeyLogoSmall.png"
+              });
+              var deleteTransaction = db.transaction("Users", "readwrite");
+              var deleteStore = deleteTransaction.objectStore("Users");
+              deleteStore.delete(user.email);
             }
           })
           .catch(error => {
