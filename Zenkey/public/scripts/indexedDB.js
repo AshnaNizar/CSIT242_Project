@@ -4,7 +4,6 @@ let db;
 const dbName = 'cartDB';
 const storeName = 'cartStore';
 const dbVersion = 1;
-
 const dbRequest = indexedDB.open(dbName, dbVersion);
 
 dbRequest.onupgradeneeded = function (event) {

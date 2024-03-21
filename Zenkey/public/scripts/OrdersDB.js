@@ -9,8 +9,8 @@ const orderDbRequest = indexedDB.open(orderDbName, dbVersion);
 
 orderDbRequest.onupgradeneeded = function (event) {
     ordersDB = event.target.result;
-    if (!ordersDB.objectStoreNames.contains(storeName)) {
-        ordersDB.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
+    if (!ordersDB.objectStoreNames.contains(orderStoreName)) {
+        ordersDB.createObjectStore(orderStoreName, { keyPath: 'id', autoIncrement: true });
     }
 };
 
