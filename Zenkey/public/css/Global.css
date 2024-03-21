@@ -89,6 +89,12 @@ html {
   gap: 10px;
 }
 
+@media (max-width: 768px) {
+  .popup {
+    width: 80%;
+  }
+}
+
 .show {
   bottom: 25px;
 }

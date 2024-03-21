@@ -1,6 +1,3 @@
-importScripts("/scripts/progressive-ui-kitt/progressive-ui-kitt-sw-helper.js");
-importScripts("/scripts/Popup.js");
-
 document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.querySelector(".priced-checkout-button");
     const masterImage = document.querySelector(".master-image");
@@ -107,32 +104,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // If all input fields are valid, show success message
         if (isValid) {
-            alert("Payment has been made!", "");
-        
-            // Retrieve cart products from local storage
-            let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
-        
-            // Retrieve ordered products from local storage
-            let orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
-        
-            // Append ordered products to existing array if it exists
-            if (orderedProducts.length > 0) {
-                orderedProducts = orderedProducts.concat(cartProducts);
-            } else {
-                orderedProducts = [...cartProducts];
+            // Check if the user is offline
+            if (!navigator.onLine) {
+                // Show error message for offline checkout
+                handleOfflineCheckout();
+                return;
             }
-        
-            // Save ordered products to local storage
-            localStorage.setItem('orderedProducts', JSON.stringify(orderedProducts));
-        
-            // Delete cart products from local storage
-            localStorage.removeItem('cartProducts');
-        
-            // Redirect to home page after 3 seconds
-            setTimeout(function() {
-                window.location.href = "Home.html"; 
-            }, 3000);
+            
+            // Retrieve cart products from cartDB
+            getCartProductsDB(function (cartProducts) {
+                // Save ordered products to ordersDB
+                addOrderToDB(cartProducts);
+
+                // Clear cartDB
+                clearCartDB();
+
+                alert("Payment has been made!", "");
+
+                // Redirect to home page after 3 seconds
+                setTimeout(function () {
+                    window.location.href = "Home.html";
+                }, 3000);
+            });
         } else {
+            // Show error message for incorrect form details
             alert("Please enter the details correctly.", "");
         }
     });
@@ -142,12 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
         masterImage.classList.add("selected");
         visaImage.classList.remove("selected");
         const masterLabel = masterImage.previousElementSibling; // Get the label element
-        const visaLabel = visaImage.previousElementSibling; // Get the label element
-        const masterErrorIndicator = masterLabel.querySelector(".error-indicator");
-        const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
-        if (masterErrorIndicator) {
-            masterLabel.removeChild(masterErrorIndicator); // Remove asterisk from label
+        if (masterLabel) {
+            const masterErrorIndicator = masterLabel.querySelector(".error-indicator");
+            if (masterErrorIndicator) {
+                masterLabel.removeChild(masterErrorIndicator); // Remove asterisk from label
+            }
         }
+        const visaLabel = visaImage.previousElementSibling; // Get the label element
+        const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
         if (visaErrorIndicator) {
             visaLabel.removeChild(visaErrorIndicator); // Remove asterisk from label
         }
@@ -156,17 +153,20 @@ document.addEventListener("DOMContentLoaded", function () {
     visaImage.addEventListener("click", function () {
         visaImage.classList.add("selected");
         masterImage.classList.remove("selected");
-        const masterLabel = masterImage.previousElementSibling; // Get the label element
         const visaLabel = visaImage.previousElementSibling; // Get the label element
+        if (visaLabel) {
+            const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
+            if (visaErrorIndicator) {
+                visaLabel.removeChild(visaErrorIndicator); // Remove asterisk from label
+            }
+        }
+        const masterLabel = masterImage.previousElementSibling; // Get the label element
         const masterErrorIndicator = masterLabel.querySelector(".error-indicator");
-        const visaErrorIndicator = visaLabel.querySelector(".error-indicator");
         if (masterErrorIndicator) {
             masterLabel.removeChild(masterErrorIndicator); // Remove asterisk from label
         }
-        if (visaErrorIndicator) {
-            visaLabel.removeChild(visaErrorIndicator); // Remove asterisk from label
-        }
     });
+
 
     // Update summary based on cart products
     const subtotalElement = document.getElementById('subtotal');
@@ -175,19 +175,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const buttonPriceElement = document.getElementById('button-price');
 
     // Retrieve cart products from array in local storage
-    let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+    let cartProducts = [];
+
+    // Retrieve cart products from array in indexDB
+    getCartProductsDB(function (cartProducts) {
+        // Update the cart with the retrieved products
+        updateSummary(cartProducts);
+    });
 
     // Function to update subtotal, shipping, and total in the cart summary
-    const updateSummary = () => {
-        let subtotal = cartProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const updateSummary = (cartProducts) => {
+        console.log('Cart Products:', cartProducts); // Log the cart products object
+        let subtotal = 0;
+
+        // Iterate over each property (product) in the cartProducts object
+        for (let productId in cartProducts) {
+            if (cartProducts.hasOwnProperty(productId)) {
+                const product = cartProducts[productId];
+                subtotal += product.price * product.quantity;
+            }
+        }
+
+        console.log('Subtotal:', subtotal); // Log the calculated subtotal
+
         let shipping = 0;
         if (subtotal > 0 && subtotal < 1000) {
             shipping = 30;
         }
-        subtotalElement.textContent = 'AED ${subtotal.toFixed(2)}';
-        shippingElement.textContent = shipping === 0 ? 'Free' : 'AED ${shipping.toFixed(2)}';
-        totalElement.textContent = 'AED ${(subtotal + shipping).toFixed(2)}';
-        buttonPriceElement.textContent = 'AED ${(subtotal + shipping).toFixed(2)}';
+        subtotalElement.textContent = `AED ${subtotal.toFixed(2)}`;
+        shippingElement.textContent = shipping === 0 ? 'Free' : `AED ${shipping.toFixed(2)}`;
+        totalElement.textContent = `AED ${(subtotal + shipping).toFixed(2)}`;
+        buttonPriceElement.textContent = `AED ${(subtotal + shipping).toFixed(2)}`;
     };
 
     // Call updateSummary to display the subtotal, shipping, and total on page load
@@ -195,30 +213,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function handleOfflineCheckout(){
-    ProgressiveKITT.addMessage("You are currently offline. To proceed with checkout please go back online ", {hideAfter:2000});
+function handleOfflineCheckout() {
+    ProgressiveKITT.addMessage("You are currently offline. To proceed with checkout please go back online ", { hideAfter: 2000 });
 
 }
 
 function notificationPermission() {
     Notification.requestPermission().then(function (permission) {
-      if (permission === "granted") {
-        navigator.serviceWorker.ready.then(function (registration) {
-          registration.showNotification(
-            "Order Confirmation",
-            {
-              body:
-              "Would you like to continue with your checkout?",
-              icon: "/Images/ZenkeyLogoSmall.png",
-              actions: [
-                {action: "confirm1", title: "Yes", icon: "/img/icon-confirm.png"},
-                {action: "confirm2", title: "No", icon: "/img/icon-cal.png"}
-                ],
-                
-            }
-          );
-        });
-      }
+        if (permission === "granted") {
+            navigator.serviceWorker.ready.then(function (registration) {
+                registration.showNotification(
+                    "Order Confirmation",
+                    {
+                        body:
+                            "Would you like to continue with your checkout?",
+                        icon: "/Images/ZenkeyLogoSmall.png",
+                        actions: [
+                            { action: "confirm1", title: "Yes" },
+                            { action: "confirm2", title: "No" }
+                        ],
+
+                    }
+                );
+            });
+        }
     });
-  }
+}
 

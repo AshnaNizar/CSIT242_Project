@@ -24,7 +24,7 @@ window.onload = function () {
 
 //function to reload the page when the user selects an item on the menu
 function clicked(clickedLink) {
-    const baseUrl=`/Account.html`;
+    const baseUrl = `/Account.html`;
     const url = new URL(baseUrl, window.location.origin);
     const params = new URLSearchParams();
     params.append('section', clickedLink.id);
@@ -69,28 +69,28 @@ function showProfile() {
     var openRequest = indexedDB.open("UsersDB", 1);
 
     openRequest.onerror = function (event) {
-      console.error("Error opening database: ", event.target.error);
+        console.error("Error opening database: ", event.target.error);
     };
 
     openRequest.onsuccess = function (event) {
-      var db = event.target.result;
-  
-      // Start a new transaction and get the object store
-      var transaction = db.transaction("Users", "readonly");
-      var store = transaction.objectStore("Users");
+        var db = event.target.result;
 
-      // Get the last record in the store; assuming the users are added sequentially
-      // and auto-increment is used for the key
-      var cursorRequest = store.openCursor(null, 'prev');
+        // Start a new transaction and get the object store
+        var transaction = db.transaction("Users", "readonly");
+        var store = transaction.objectStore("Users");
 
-      cursorRequest.onsuccess = function (event) {
-        var cursor = event.target.result;
-        if (cursor) {
-          // Assuming 'name' and 'email' are the fields in your user object store
-          var user = cursor.value;
-          console.log("User from db is: ", user);
-          var profileDetails = document.getElementById('UserSelection');
-          profileDetails.innerHTML = `
+        // Get the last record in the store; assuming the users are added sequentially
+        // and auto-increment is used for the key
+        var cursorRequest = store.openCursor(null, 'prev');
+
+        cursorRequest.onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                // Assuming 'name' and 'email' are the fields in your user object store
+                var user = cursor.value;
+                console.log("User from db is: ", user);
+                var profileDetails = document.getElementById('UserSelection');
+                profileDetails.innerHTML = `
               <div class="infoTitle">User Info</div>
               <input class="inputFieldDiv" type="text" id="firstname" name="firstname"
                   value="${user.name}" placeholder="Full name" pattern="^[a-z|A-Z]{2,}$" required>
@@ -104,16 +104,16 @@ function showProfile() {
                   placeholder="Confirm password" required>
               <input class="submitButton" type="submit" value="Save" onclick="updateUserPassword(document.getElementById('firstname').value,document.getElementById('email').value,document.getElementById('password').value,document.getElementById('confirm_password').value)">
               `;
-        } else {
-          console.error("No users found in database.");
-          // Provide feedback to the user that no users were found
-        }
-      };
+            } else {
+                console.error("No users found in database.");
+                // Provide feedback to the user that no users were found
+            }
+        };
 
-      cursorRequest.onerror = function (event) {
-        console.error("Error fetching the last user: ", event.target.error);
-        // Provide feedback to the user that there was an error fetching the last user
-      };
+        cursorRequest.onerror = function (event) {
+            console.error("Error fetching the last user: ", event.target.error);
+            // Provide feedback to the user that there was an error fetching the last user
+        };
     };
 }
 
@@ -183,40 +183,42 @@ function registerBackgroundSync() {
 }
 
 // Function to display order details section
-
 function showOrderDetails() {
     var orderDetails = document.getElementById('UserSelection');
     orderDetails.innerHTML = '';
-    console.log("ORders are", Orders);
-    // Use the imported orders array directly
-    if (Orders.length === 0) {
-        orderDetails.innerHTML = '<p>No orders found.</p>';
-        return;
-    }
 
-    Orders.forEach(function(product) {
-        const orderItemDiv = document.createElement('div');
-        orderItemDiv.classList.add('order-item');
+    // Retrieve orders from ordersDB
+    getOrders(function (orders) {
+        if (orders.length === 0) {
+            orderDetails.innerHTML = '<p>No orders found.</p>';
+        } else {
+            orders.forEach(function (orderArray) {
+                orderArray.forEach(function (product) {
+                    const orderItemDiv = document.createElement('div');
+                    orderItemDiv.classList.add('order-item');
 
-        orderItemDiv.innerHTML = `
-            <div class="order-item-image-container">
-                <img src="${product.image}" alt="Product Image" class="order-item-image">
-            </div>
-            <div class="order-item-details">
-                <div class="order-item-name">${product.name}</div>
-                <div class="order-item-quantity">
-                    Quantity: ${product.quantity}
-                </div>
-                <div class="order-item-price">
-                    Price: AED ${product.price.toFixed(2)}
-                </div>
-                <div class="order-item-view-product">
-                    <a href="#" class="view-product-link" data-product-id="${product.id}">View Product</a>
-                </div>
-            </div>
-        `;
+                    orderItemDiv.innerHTML = `
+                        <div class="order-item-image-container">
+                            <img src="${product.image}" alt="Product Image" class="order-item-image">
+                        </div>
+                        <div class="order-item-details">
+                            <div class="order-item-name">${product.name}</div>
+                            <div class="order-item-quantity">
+                                Quantity: ${product.quantity}
+                            </div>
+                            <div class="order-item-price">
+                                Price: AED ${product.price ? product.price.toFixed(2) : 'N/A'}
+                            </div>
+                            <div class="order-item-view-product">
+                                <a href="#" class="view-product-link" data-product-id="${product.id}">View Product</a>
+                            </div>
+                        </div>
+                    `;
 
-        orderDetails.appendChild(orderItemDiv);
+                    orderDetails.appendChild(orderItemDiv);
+                });
+            });
+        }
     });
 
     // Add event listener to View Product links
@@ -229,6 +231,7 @@ function showOrderDetails() {
         });
     });
 }
+
 
 // Function to display payment section
 function showPayment() {

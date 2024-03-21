@@ -1,10 +1,9 @@
-importScripts("/scripts/Checkout.js");
-
 var htmlTemplate = `<!DOCTYPE html>
 <html>
   <head>
     <title>PopUp</title>
     <link rel="stylesheet" href="./css/Popup.css">
+    <script src="/scripts/Checkout.js"></script>
   </head>
   <body>
     <div class="main">

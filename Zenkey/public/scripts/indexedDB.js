@@ -35,6 +35,13 @@ function removeFromCartDB(productId) {
     store.delete(productId);
 }
 
+function clearCartDB() {
+    if (!db) return;
+    const transaction = db.transaction([storeName], 'readwrite');
+    const store = transaction.objectStore(storeName);
+    store.clear();
+}
+
 function getCartProductsDB(callback) {
     if (!db) {
         setTimeout(() => getCartProductsDB(callback), 100); // Retry after a delay

@@ -18,8 +18,6 @@ const landingCacheURLs = [
   '/scripts/Landing.js',
   '/scripts/progressive-ui-kitt/themes/flat.css',
   '/scripts/progressive-ui-kitt/progressive-ui-kitt.js',
-
-
 ]
 
 const checkoutCacheURLs = [
@@ -27,8 +25,6 @@ const checkoutCacheURLs = [
   '/css/Checkout.css',
   '/scripts/Checkout.js',
   '/Images/ms_logo.jpg',
-
-
 ]
 
 const accountCachedURLs = [
@@ -41,10 +37,6 @@ const accountCachedURLs = [
 
   // JS
   '/scripts/Account.js',
-  '/scripts/Orders.js'
-
-
-
 
 ]
 
@@ -272,7 +264,6 @@ self.addEventListener("fetch", function (event) {
           })
       );
 
-
     } else if (section === 'orders') {
       console.log("Here comes the orders event request:", event.request);
       // Add caching strategy for orders
@@ -280,12 +271,9 @@ self.addEventListener("fetch", function (event) {
         fetch(event.request)
           .catch(function () {
             console.log("Looking offline")
-            return caches.match('/Account.html');
-
-
+            return caches.match('/OfflinePayment.html');
           })
       );
-
 
     } else if (section === 'payment') {
       event.respondWith(
@@ -355,7 +343,14 @@ function syncSignups() {
   openRequest.onsuccess = function (e) {
     var db = e.target.result;
 
-    // Start a new transaction and get the object store.
+    // Check if the "Users" object store exists
+    if (!db.objectStoreNames.contains("Users")) {
+      // If it doesn't exist, create the object store
+      var objectStore = db.createObjectStore("Users", { keyPath: "email" });
+      // Additional configuration for the object store, if needed
+    }
+
+    // Now you can proceed with your transaction
     var transaction = db.transaction("Users", "readonly");
     var store = transaction.objectStore("Users");
 
@@ -382,13 +377,13 @@ function syncSignups() {
               deleteStore.delete(user.email);
               self.registration.showNotification("You are signed up!", {
                 body: "Welcome to Zenkey!",
-                icon: "/Images/ZenkeyLogoSmall.png", 
+                icon: "/Images/ZenkeyLogoSmall.png",
                 badge: "/Images/ZenkeyLogoSmall.png"
               });
             } else if (response.status === 400) {
               self.registration.showNotification("Signup Page: Account already exists", {
                 body: "Try Signing In",
-                icon: "/Images/ZenkeyLogoSmall.png", 
+                icon: "/Images/ZenkeyLogoSmall.png",
                 badge: "/Images/ZenkeyLogoSmall.png"
               });
               var deleteTransaction = db.transaction("Users", "readwrite");

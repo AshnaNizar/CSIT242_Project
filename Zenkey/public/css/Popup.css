@@ -1,71 +1,79 @@
 .main {
-    position: fixed;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    background-color: #ffffff;
-    height: 200px;
-    width: 430px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    border-radius: 10px;
-    box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
-    -webkit-box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
-    -moz-box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
-    font-size: 14px;
-  }
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  padding: 20px;
+  transform: translate(-50%, 0%);
+  background-color: #ffffff;
+  height: 200px;
+  width: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 1px 10px 19px -2px rgba(0, 0, 0, 0.48);
+  z-index: 99999;
+  gap: 20px;
+}
 
-  .background {
-    width: 400px;
-    height: 300px;
+.background {
+  width: 100%;
+  height: 75px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  }
+.mainButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .mainButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .message {
-    padding-left: 40px;
-    font-size: 12px;
-  }
+.message {
+  font-size: 12px;
+}
 
-  .headerMessage {
-    margin-top: 40px;
-    margin-bottom: 10px;
-    padding-left: 40px;
-    color: #030a0c;
-    font-size: 16px;
-    font-family: 'Poppins Bold';
-  }
-  .button1,
-  .button2 {
-    all: unset;
-    border-radius: 5px;
-    margin: 16px 8px;
-    padding: 6px 40px;
-    transition: background-color 0.3s ease;
-  }
-  .button1 {
-    background-color: #ffffff;
-    border: 1px solid #030a0c;
-  }
-  .button2 {
-    color: #ffffff;
-    background-color: #ee5417;
-    border: 1px solid #ffffff;
-    box-shadow: 0 0 0 2px #ee5417;
-  }
+.headerMessage {
+  color: #030a0c;
+  font-size: 16px;
+  font-family: 'Poppins SemiBold';
+}
 
-  .button1:hover {
-    background-color: #e4e4e4;
-    border: 1px solid #030a0c;
-  }
-  .button2:hover {
-    color: #ffffff;
-    background-color: #c64614;
-    border: 1px solid #ffffff;
-    box-shadow: 0 0 0 2px #c64614;
-  }
+.button1,
+.button2 {
+  all: unset;
+  border-radius: 10px;
+  width: 100px;
+  padding: 12px 20px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  font-family: 'Poppins SemiBold';
+}
+
+.button1 {
+  background-color: #ffffff;
+  border: 1px solid #030a0c;
+  box-shadow: 0 0 0 2px #000;
+}
+
+.button2 {
+  color: #ffffff;
+  background-color: #ee5417;
+}
+
+.button1:hover {
+  background-color: #afafaf;
+  cursor: pointer;
+}
+.button2:hover {
+  color: #ffffff;
+  background-color: #000;
+  cursor: pointer;
+}

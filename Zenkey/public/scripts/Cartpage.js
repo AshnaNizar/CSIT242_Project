@@ -51,13 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
         updateSummary(cartProducts);
     };
 
-    // Retrieve cart products from array in local storage
+    // Retrieve cart products from array in indexDB
     getCartProductsDB(function (cartProducts) {
         // Update the cart with the retrieved products
         updateCart(cartProducts);
     });
 
-    // Function to update cart array in local storage
+    // Function to update cart array in indexDB
     const updateCartInDB = (cartProducts) => {
         cartProducts.forEach(product => {
             updateCartProductDB(product);
@@ -85,10 +85,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 cartProducts[index].quantity--;
             }
         }
+
+        // Update the quantity in the IndexedDB
+        updateCartProductDB(cartProducts[index]);
+
+        // Update the cart display
         updateCart(cartProducts);
     };
-
-    // getCartProductsDB(updateCart);
 
     // Function to update cart item details
     const updateCartItem = (index) => {
